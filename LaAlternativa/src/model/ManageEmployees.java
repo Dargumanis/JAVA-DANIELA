@@ -627,7 +627,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         if (adminCheckbox.isSelected()) {
             type = 1;
         } else {
-            type = 1;
+            type = 0;
         }
         Employee e = new Employee(id, dni, name, surname, address, password, email, phone, type);
         employeebl.modifyEmployee(e);

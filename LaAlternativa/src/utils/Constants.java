@@ -16,7 +16,7 @@ public class Constants {
     public static String passwordBD = "H9u1oC";
     
     //STORED PROCEDURES: DISCOUNT
-    public static String addDiscountProcedure = "{call addToBDDiscount(?,?,?,?,?)}";
+    public static String addDiscountProcedure = "{call addToBDDiscount(?,?,?,?)}";
     public static String modifyDiscountProcedure = "updateInBDDiscount";
     public static String deleteDiscountProcedure = "deleteInBDDiscount"; 
     public static String searchDiscountProcedure = "searchInBDDiscount";
