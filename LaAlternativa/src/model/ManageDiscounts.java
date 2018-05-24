@@ -351,17 +351,17 @@ public class ManageDiscounts extends javax.swing.JFrame {
         descriptionField.setEditable(b);
         productField1.setEditable(b);
     }
-    
+
     private void emptyFields() {
         idField.setText("");
         productField.setText("");
-        
+
         idField1.setText("");
         productField1.setText("");
         pointsField.setText("");
         descriptionField.setText("");
         factorField.setText("");
-        
+
         model.setRowCount(0);
     }
 
@@ -375,10 +375,18 @@ public class ManageDiscounts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un descuento.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList<Discount> list = discountbl.searchDiscounts((Integer) discountTable.getValueAt(index, 0), null);
+        ArrayList<Discount> list = null;
+        try {
+            list = discountbl.searchDiscounts((Integer) discountTable.getValueAt(index, 0), null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
         Discount d = list.get(0);
         idField1.setText(String.valueOf(d.getId()));
         pointsField.setText(String.valueOf(d.getClientPointsRequired()));
+        descriptionField.setText(String.valueOf(d.getDescription()));
         productField1.setText(String.valueOf(d.getProductId()));
         factorField.setText(String.valueOf(d.getFactor()));
         enableFields(true);
@@ -386,7 +394,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
 
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
         this.dispose();
-        PantallaAdmin atras = new PantallaAdmin();
+        AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_botonRegresarActionPerformed
 
@@ -399,7 +407,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
     }//GEN-LAST:event_pointsFieldActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        if (!(!productField1.getText().equals("") && !pointsField.getText().equals("") && !factorField.getText().equals("") )) {
+        if (!(!productField1.getText().equals("") && !pointsField.getText().equals("") && !factorField.getText().equals(""))) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -407,18 +415,51 @@ public class ManageDiscounts extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             return;
         }
-        int id = Integer.parseInt(idField1.getText());
-        int points = Integer.parseInt(pointsField.getText());
-        int prod = Integer.parseInt(productField1.getText());
+        int id;
+        try {
+            id = Integer.parseInt(idField1.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en codigo: " + ex);
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int points;
+        try {
+            points = Integer.parseInt(pointsField.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en puntos: " + ex);
+            JOptionPane.showMessageDialog(null, "Los puntos deben ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int prod;
+        try {
+            prod = Integer.parseInt(productField1.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en puntos: " + ex);
+            JOptionPane.showMessageDialog(null, "Los puntos deben ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String description = descriptionField.getText();
-        double factor = Double.parseDouble(factorField.getText());
-
+        double factor;
+        try {
+            factor = Double.parseDouble(factorField.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en factor: " + ex);
+            JOptionPane.showMessageDialog(null, "El factor debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Discount d = new Discount(id, points, description, prod, factor);
-        discountbl.modifyDiscount(d);
+        try {
+            discountbl.modifyDiscount(d);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el descuento.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-   
+
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -426,20 +467,50 @@ public class ManageDiscounts extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             return;
         }
-        discountbl.deleteDiscount(Integer.parseInt(idField1.getText()));
+        try {
+            discountbl.deleteDiscount(Integer.parseInt(idField1.getText()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el descuento.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-    
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        Integer id = FieldGetter.getFieldInt(idField);
-        Integer product = FieldGetter.getFieldInt(idField);
+        Integer id;
+        try {
+            id = FieldGetter.getFieldInt(idField);
+        } catch (Exception ex) {
+            System.out.println("Error en codigo: " + ex);
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Integer product;
+        try {
+            product = FieldGetter.getFieldInt(productField);
+        } catch (Exception ex) {
+            System.out.println("Error en codigo de producto: " + ex);
+            JOptionPane.showMessageDialog(null, "El codigo del producto debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        emptyFields();
 
-        ArrayList<Discount> lista = discountbl.searchDiscounts(id, product);
+        ArrayList<Discount> list;
 
-        for (Discount fila : lista) {
+        try {
+            list = discountbl.searchDiscounts(id, product);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+
+        for (Discount fila : list) {
             model.addRow(new Object[]{fila.getId(), fila.getClientPointsRequired(), fila.getProductId(), fila.getDescription(), fila.getFactor()});
         }
     }//GEN-LAST:event_searchButtonActionPerformed

@@ -270,7 +270,7 @@ public class AddEmployee extends javax.swing.JFrame {
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         this.dispose();
-        PantallaAdmin atras = new PantallaAdmin();
+        AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_returnButtonActionPerformed
 
@@ -295,7 +295,13 @@ public class AddEmployee extends javax.swing.JFrame {
         if (!passwordField.getText().equals(confirmField.getText())) {
             JOptionPane.showMessageDialog(null, "Las contraseñas deben ser iguales.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
         String dni = dniField.getText();
+        if (dni.length() != 8 || !dni.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "El dni debe tener 8 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String name = nameField.getText();
         String surname = surnameField.getText();
         String address = addressField.getText();
@@ -309,7 +315,13 @@ public class AddEmployee extends javax.swing.JFrame {
             type = 0;
         }
         Employee e = new Employee(dni, name, surname, address, phoneNumber, email, password, type);
-        employeebl.addEmployee(e);
+        try {
+            employeebl.addEmployee(e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el empleado.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
     }//GEN-LAST:event_addButtonActionPerformed

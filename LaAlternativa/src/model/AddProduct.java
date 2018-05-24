@@ -274,7 +274,7 @@ public class AddProduct extends javax.swing.JFrame {
 
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
         this.dispose();
-        PantallaAdmin atras = new PantallaAdmin();
+        AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_botonRegresarActionPerformed
 

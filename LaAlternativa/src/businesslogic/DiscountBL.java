@@ -7,6 +7,7 @@ package businesslogic;
 
 import datastorage.DiscountDA;
 import entities.Discount;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,19 +21,19 @@ public class DiscountBL {
         dataAccess = new DiscountDA();
     }
     
-    public void addDiscount(Discount d) {
+    public void addDiscount(Discount d) throws SQLException {
         dataAccess.addDiscount(d);
     }
     
-    public void modifyDiscount(Discount d) {
+    public void modifyDiscount(Discount d) throws SQLException {
         dataAccess.modifyDiscount(d);
     }
     
-    public void deleteDiscount(int id) {
+    public void deleteDiscount(int id) throws SQLException {
         dataAccess.deleteDiscount(id);
     }
     
-    public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) {
+    public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) throws SQLException {
         ArrayList<Discount> list = dataAccess.searchDiscounts(id, productId);
         return list;
     }

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * @author Usuario
  */
 public class FieldGetter {
-    public static Integer getFieldInt(JTextField field) {
+    public static Integer getFieldInt(JTextField field) throws Exception {
         if ("".equals(field.getText())) {
             return null;
         } else {

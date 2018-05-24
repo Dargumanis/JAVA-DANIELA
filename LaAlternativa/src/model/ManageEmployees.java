@@ -507,16 +507,32 @@ public class ManageEmployees extends javax.swing.JFrame {
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         this.dispose();
-        PantallaAdmin atras = new PantallaAdmin();
+        AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_returnButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        Integer id = FieldGetter.getFieldInt(idField);
+        Integer id;
+        try {
+            id = FieldGetter.getFieldInt(idField);
+        } catch (Exception ex) {
+            System.out.println("Error en codigo: " + ex);
+            JOptionPane.showMessageDialog(null, "El código del empleado debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String dni = FieldGetter.getFieldString(dniField);
         String name = FieldGetter.getFieldString(nameField);
         String surname = FieldGetter.getFieldString(surnameField);
-        ArrayList<Employee> employees = employeebl.searchEmployees(id, dni, name, surname);
+        
+        ArrayList<Employee> employees;
+        try {
+            employees = employeebl.searchEmployees(id, dni, name, surname);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+        
         if (employees.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se encontraron empleados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
@@ -532,7 +548,16 @@ public class ManageEmployees extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList<Employee> list = employeebl.searchEmployees(Integer.parseInt((String) employeeTable.getValueAt(index, 0)), null, null, null);
+        
+        ArrayList<Employee> list;
+        try {
+            list = employeebl.searchEmployees(Integer.parseInt((String) employeeTable.getValueAt(index, 0)), null, null, null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+        
         Employee e = list.get(0);
         idField1.setText(String.valueOf(e.getId()));
         dniField1.setText(e.getDni());
@@ -630,7 +655,15 @@ public class ManageEmployees extends javax.swing.JFrame {
             type = 0;
         }
         Employee e = new Employee(id, dni, name, surname, address, password, email, phone, type);
-        employeebl.modifyEmployee(e);
+        
+        try {
+            employeebl.modifyEmployee(e);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+        
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha modificado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -649,7 +682,15 @@ public class ManageEmployees extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             return;
         }
-        employeebl.deleteEmployee(Integer.parseInt(idField1.getText()));
+        
+        try {
+            employeebl.deleteEmployee(Integer.parseInt(idField1.getText()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+        
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);

@@ -191,7 +191,7 @@ public class AddDiscount extends javax.swing.JFrame {
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         this.dispose();
-        PantallaAdmin atras = new PantallaAdmin();
+        AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_returnButtonActionPerformed
 
@@ -233,7 +233,13 @@ public class AddDiscount extends javax.swing.JFrame {
             return;
         } 
         Discount d = new Discount(points, description, prod, factor);
-        discountbl.addDiscount(d);
+        try {
+            discountbl.addDiscount(d);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el descuento.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_addButtonActionPerformed
 
