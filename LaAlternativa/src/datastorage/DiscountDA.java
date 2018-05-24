@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import utils.Constants;
 
@@ -42,8 +43,9 @@ public class DiscountDA {
             st.setInt(1, d.getId());
             st.setInt(2, d.getClientPointsRequired());
             st.setString(3, d.getDescription());
-            st.setDouble(4, d.getFactor());
-            st.setInt(5, d.getProductId());
+            st.setInt(4, d.getProductId());
+            st.setDouble(5, d.getFactor());
+            st.setInt(6, d.getState());
             st.executeUpdate();
             con.close();
         } catch (SQLException ex) {
@@ -59,32 +61,42 @@ public class DiscountDA {
             st.executeUpdate();
             con.close();
         } catch (SQLException ex) {
-            System.out.println("Error al anular descuento");
+            System.out.println("Error al anular descuento: " + ex.toString());
         }
     }
     
-    public ArrayList<Discount> searchDiscounts(int id, int clientPointsRequired, int productId, double factor) {
+    public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) {
         ArrayList<Discount> list = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
             PreparedStatement st = con.prepareStatement(Constants.searchDiscountProcedure);
-            st.setInt(1, id);
-            st.setInt(2, clientPointsRequired);
-            st.setInt(3, productId);
+            if (id == null) {
+                st.setNull(1, Types.INTEGER);
+            } else {
+                st.setInt(1, id);
+            }
+            if (productId == null) {
+                st.setNull(2, Types.INTEGER);
+            } else {
+                st.setInt(2, productId);
+            }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
+                int state = rs.getInt("State");
+                if (state == 0) {
+                    continue;
+                }
                 int dId = rs.getInt("IdDiscount");
                 int points = rs.getInt("ClientPointsRequired");
                 String description = rs.getString("Description");
                 int pId = rs.getInt("Product_IdProduct");
                 double fact = rs.getDouble("Factor");
-                int state = rs.getInt("State");
                 Discount d = new Discount(dId, points, description, pId, fact);
                 list.add(d);
             }
             con.close();
         } catch (SQLException ex) {
-            System.out.println("Error al buscar descuentos");
+            System.out.println("Error al buscar descuentos: " + ex.toString());
         }
         return list;
     }

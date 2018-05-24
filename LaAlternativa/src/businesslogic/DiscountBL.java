@@ -32,8 +32,8 @@ public class DiscountBL {
         dataAccess.deleteDiscount(id);
     }
     
-    public ArrayList<Discount> searchDiscounts(int id, int clientPointsRequired, int productId, double factor) {
-        ArrayList<Discount> list = dataAccess.searchDiscounts(id, clientPointsRequired, productId, factor);
+    public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) {
+        ArrayList<Discount> list = dataAccess.searchDiscounts(id, productId);
         return list;
     }
     

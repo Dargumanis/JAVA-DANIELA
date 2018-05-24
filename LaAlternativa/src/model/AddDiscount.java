@@ -197,7 +197,7 @@ public class AddDiscount extends javax.swing.JFrame {
 
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
         this.dispose();
-        GestionarDescuentos pantallaGestionar = new GestionarDescuentos();
+        ManageDiscounts pantallaGestionar = new ManageDiscounts();
         pantallaGestionar.setVisible(true);
     }//GEN-LAST:event_tabBuscarMouseClicked
 
