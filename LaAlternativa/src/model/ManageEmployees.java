@@ -513,6 +513,7 @@ public class ManageEmployees extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         Integer id;
+        model.setRowCount(0);
         try {
             id = FieldGetter.getFieldInt(idField);
         } catch (Exception ex) {
