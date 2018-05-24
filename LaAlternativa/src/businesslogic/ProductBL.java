@@ -15,19 +15,25 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class ProductBL {
+
     ProductDA dataAccess;
-    
+
     public ProductBL() {
         dataAccess = new ProductDA();
     }
-    
-     public ArrayList<Product> searchAllProducts() throws SQLException {
+
+    public ArrayList<Product> searchAllProducts() throws SQLException {
         ArrayList<Product> list = dataAccess.searchAllProducts();
         return list;
     }
-     
-     public Product searchProducts(String name) throws SQLException {
+
+    public Product searchProducts(String name) throws SQLException {
         Product p = dataAccess.searchProducts(name);
         return p;
+    }
+
+    public ArrayList<Product> searchProducts2(Integer _id, String _name, String _tag, Double _price) throws SQLException {
+        ArrayList<Product> list = dataAccess.searchProducts2(_id, _name, _tag, _price);
+        return list;
     }
 }
