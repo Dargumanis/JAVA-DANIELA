@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import utils.Constants;
 
 /**
@@ -34,20 +36,19 @@ public class SymptomDA {
         }
     }
     
-    public ArrayList<Symptom> searchSymptoms() {
-        ArrayList<Symptom> list = new ArrayList<>();
+    public Map<String, String> searchSymptoms() {
+        Map<String, String> map = new HashMap<>();
         try {
             Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Constants.searchSymptomQuery);
             while (rs.next()) {
-                Symptom s = new Symptom(rs.getInt("IdTag"), rs.getString("Descripcion"));
-                list.add(s);
+                map.put(rs.getString("Descripcion"), String.valueOf(rs.getInt("IdTag")));
             }
             con.close();
         } catch (SQLException ex) {
             System.out.println("Error al buscar sintomas: " + ex.toString());
         }
-        return list;
+        return map;
     }
 }

@@ -411,10 +411,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este descuento?", "Modificar", JOptionPane.YES_NO_OPTION);
-        if (response == JOptionPane.NO_OPTION) {
-            return;
-        }
+        
         int id;
         try {
             id = Integer.parseInt(idField1.getText());
@@ -446,6 +443,10 @@ public class ManageDiscounts extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Error en factor: " + ex);
             JOptionPane.showMessageDialog(null, "El factor debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este descuento?", "Modificar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
             return;
         }
         Discount d = new Discount(id, points, description, prod, factor);

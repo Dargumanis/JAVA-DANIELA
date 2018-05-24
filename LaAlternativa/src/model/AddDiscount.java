@@ -6,7 +6,14 @@
 package model;
 
 import businesslogic.DiscountBL;
+import businesslogic.ProductBL;
 import entities.Discount;
+import entities.Product;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +23,7 @@ import javax.swing.JOptionPane;
 public class AddDiscount extends javax.swing.JFrame {
 
     DiscountBL discountbl;
-
+    ProductBL productbl;
     /**
      * Creates new form EliminarCliente
      */
@@ -25,6 +32,22 @@ public class AddDiscount extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         discountbl = new DiscountBL();
+        productbl = new ProductBL();
+        defineProductCombo(); 
+    }
+    
+    public void defineProductCombo() {
+        productCombo.removeAllItems();
+        ArrayList<Product> list;
+        try {
+            list = productbl.searchAllProducts();
+        } catch (SQLException ex) {
+            System.out.println("Error en base de datos: " + ex);
+            return;
+        }
+        for (Product item : list) {
+            productCombo.addItem(item.getName());
+        }
     }
 
     /**
@@ -41,13 +64,13 @@ public class AddDiscount extends javax.swing.JFrame {
         returnButton = new javax.swing.JButton();
         pointsField = new javax.swing.JTextField();
         descriptionField = new javax.swing.JTextField();
-        prodField = new javax.swing.JTextField();
         addButton = new javax.swing.JButton();
         factorField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        productCombo = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -81,12 +104,6 @@ public class AddDiscount extends javax.swing.JFrame {
             }
         });
 
-        prodField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                prodFieldActionPerformed(evt);
-            }
-        });
-
         addButton.setText("Agregar Descuento");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +118,7 @@ public class AddDiscount extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Cod. Producto");
+        jLabel4.setText("Producto");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Puntos");
@@ -111,6 +128,13 @@ public class AddDiscount extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Descripción");
+
+        productCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        productCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productComboActionPerformed(evt);
+            }
+        });
 
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -136,25 +160,28 @@ public class AddDiscount extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(titulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(prodField, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(factorField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton))
-                .addContainerGap(93, Short.MAX_VALUE))
+                            .addComponent(factorField, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(144, 144, 144))
+                            .addComponent(productCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(titulo)
+                        .addComponent(addButton)
+                        .addComponent(jLabel7)
+                        .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(returnButton)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -164,18 +191,23 @@ public class AddDiscount extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(titulo)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prodField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(factorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(factorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(4, 4, 4)
+                        .addComponent(productCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,7 +238,7 @@ public class AddDiscount extends javax.swing.JFrame {
     }//GEN-LAST:event_tabAgregarMouseClicked
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        if (!(!pointsField.getText().equals("") && !prodField.getText().equals("") && !factorField.getText().equals(""))) {
+        if (!(!pointsField.getText().equals("") && !factorField.getText().equals(""))) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -218,11 +250,13 @@ public class AddDiscount extends javax.swing.JFrame {
             return;
         }
         String description = descriptionField.getText();
-        int prod;
+        String prod = (String) productCombo.getSelectedItem();
+        int productId;
         try {
-            prod = Integer.parseInt(prodField.getText());
+            productId = productbl.searchProducts(prod).getId();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "El código del producto debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al buscar producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
             return;
         }
         double factor;
@@ -232,7 +266,7 @@ public class AddDiscount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El factor debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         } 
-        Discount d = new Discount(points, description, prod, factor);
+        Discount d = new Discount(points, description, productId, factor);
         try {
             discountbl.addDiscount(d);
         } catch (Exception ex) {
@@ -242,10 +276,6 @@ public class AddDiscount extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el descuento.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_addButtonActionPerformed
-
-    private void prodFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_prodFieldActionPerformed
 
     private void pointsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointsFieldActionPerformed
         // TODO add your handling code here:
@@ -258,6 +288,10 @@ public class AddDiscount extends javax.swing.JFrame {
     private void factorFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_factorFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_factorFieldActionPerformed
+
+    private void productComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productComboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,7 +402,7 @@ public class AddDiscount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JTextField pointsField;
-    private javax.swing.JTextField prodField;
+    private javax.swing.JComboBox<String> productCombo;
     private javax.swing.JButton returnButton;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;

@@ -21,6 +21,11 @@ public class Product {
     private int maxStock;
     private String discounts;
 
+    public Product(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Product(int id, String name, double price, boolean needsPrescription, double utility, int points, int totalItems, int minStock, int maxStock, String discounts) {
         this.id = id;
         this.name = name;

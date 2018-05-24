@@ -33,6 +33,8 @@ public class Constants {
     public static String deletePackageProcedure = "deleteInBDPackage";
     
     //STORED PROCEDURES: PRODUCT
+    public static String searchProductQuery = "SELECT * FROM Product";
+    public static String searchProduct2Query = "SELECT * FROM Product where Name = '";
     public static String addProductProcedure = "{call listEmployees(?,?,?,?,?,?,?,?,?,?)}";
     
     //SYMPTOMS

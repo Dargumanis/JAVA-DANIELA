@@ -636,10 +636,6 @@ public class ManageEmployees extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este empleado?", "Modificar", JOptionPane.YES_NO_OPTION);
-        if (response == JOptionPane.NO_OPTION) {
-            return;
-        }
         int id = Integer.parseInt(idField1.getText());
         String dni = dniField1.getText();
         String name = nameField1.getText();
@@ -654,8 +650,12 @@ public class ManageEmployees extends javax.swing.JFrame {
         } else {
             type = 0;
         }
-        Employee e = new Employee(id, dni, name, surname, address, password, email, phone, type);
         
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este empleado?", "Modificar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        Employee e = new Employee(id, dni, name, surname, address, password, email, phone, type);
         try {
             employeebl.modifyEmployee(e);
         } catch (Exception ex) {

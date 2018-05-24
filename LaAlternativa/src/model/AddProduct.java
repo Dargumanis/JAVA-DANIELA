@@ -7,6 +7,7 @@ package model;
 
 import businesslogic.SymptomBL;
 import entities.Employee;
+import entities.Product;
 import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ public class AddProduct extends javax.swing.JFrame {
     
     public void defineSymptomCombo() {
         symptomCombo.removeAllItems();
-        ArrayList<Symptom> list = symptombl.searchSymptom();
+        ArrayList<Product> list = productbl.searchAllProducts();
         for (Symptom item : list) {
             symptomCombo.addItem(item.getName());
         }
