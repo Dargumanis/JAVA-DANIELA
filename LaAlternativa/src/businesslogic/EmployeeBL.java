@@ -32,7 +32,7 @@ public class EmployeeBL {
         dataAccess.deleteEmployee(id);
     }
     
-    public ArrayList<Employee> searchEmployees(int _id, String _dni, String _name, String _surname) {
+    public ArrayList<Employee> searchEmployees(Integer _id, String _dni, String _name, String _surname) {
         ArrayList<Employee> list = dataAccess.searchEmployees( _id,  _dni,  _name,  _surname);
         return list;
     }

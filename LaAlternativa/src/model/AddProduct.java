@@ -6,9 +6,11 @@
 package model;
 
 import businesslogic.SymptomBL;
+import entities.Employee;
 import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -17,13 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class AddProduct extends javax.swing.JFrame {
 
-    SymptomBL symptombl;    
+    SymptomBL symptombl;  
+    DefaultTableModel model;
     
     public AddProduct() {
         initComponents();
         this.setLocationRelativeTo(null);
+        model = (DefaultTableModel) symptomTable.getModel();
         symptombl = new SymptomBL();
-        defineSymptomCombo();
+        defineSymptomCombo(); 
     }
     
     public void defineSymptomCombo() {
@@ -124,23 +128,17 @@ public class AddProduct extends javax.swing.JFrame {
 
         symptomTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Código", "Nombre"
+                "Nombre"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -154,6 +152,11 @@ public class AddProduct extends javax.swing.JFrame {
         jScrollPane3.setViewportView(symptomTable);
 
         symptomCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        symptomCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                symptomComboItemStateChanged(evt);
+            }
+        });
         symptomCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 symptomComboActionPerformed(evt);
@@ -196,7 +199,7 @@ public class AddProduct extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(titulo)
                             .addComponent(jLabel9)
@@ -220,7 +223,7 @@ public class AddProduct extends javax.swing.JFrame {
                             .addComponent(prescriptionCheckbox)
                             .addComponent(symptomCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addSymptom)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(botonRegresar)))
@@ -305,30 +308,41 @@ public class AddProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_priceFieldActionPerformed
 
     private void addSymptomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSymptomActionPerformed
-        if ( nameField.getText().equals("") ) {
-            JOptionPane.showMessageDialog(null, "Debe completar al menos un dato.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_addSymptomActionPerformed
-
-    private void symptomFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomFieldActionPerformed
         if (symptomCombo.getSelectedItem().equals("NUEVO SINTOMA")) {
             if (symptomField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Debe definir el nombre del nuevo síntoma.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Symptom s = new Symptom(symptomCombo.getSelectedItem().toString());
+            Symptom s = new Symptom(symptomField.getText());
             symptombl.addSymptom(s);
             defineSymptomCombo();
-            symptomCombo.setSelectedItem(s.getName());
+            model.addRow(new Object[]{s.getName()});
+            symptomField.setText("");
+        } else {
+            model.addRow(new Object[]{symptomCombo.getSelectedItem()});
         }
+    }//GEN-LAST:event_addSymptomActionPerformed
+
+    private void symptomFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomFieldActionPerformed
         
     }//GEN-LAST:event_symptomFieldActionPerformed
 
     private void symptomComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomComboActionPerformed
-        if (symptomCombo.getSelectedItem().equals("NUEVO SINTOMA")) {
-            symptomField.setEnabled(true);
-        }
+        
     }//GEN-LAST:event_symptomComboActionPerformed
+
+    private void symptomComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_symptomComboItemStateChanged
+        if (symptomCombo.getSelectedItem() == null) {
+            return;
+        }
+        if (symptomCombo.getSelectedItem().toString().equals("NUEVO SINTOMA")) {
+            symptomField.setEditable(true);
+            symptomField.setEnabled(true);
+        } else {
+            symptomField.setEditable(false);
+            symptomField.setEnabled(false);
+        }
+    }//GEN-LAST:event_symptomComboItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -382,11 +396,11 @@ public class AddProduct extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold        //</editor-fold>
+        //</editor-fold>>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

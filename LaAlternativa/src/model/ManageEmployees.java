@@ -9,6 +9,7 @@ import businesslogic.EmployeeBL;
 import entities.Employee;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utils.FieldGetter;
 
@@ -28,6 +29,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         initComponents();
         employeebl = new EmployeeBL();
         model = (DefaultTableModel) employeeTable.getModel();
+        enableFields(false);
     }
 
     /**
@@ -49,14 +51,11 @@ public class ManageEmployees extends javax.swing.JFrame {
         idField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        adminCheckbox = new javax.swing.JCheckBox();
         searchButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         employeeTable = new javax.swing.JTable();
         acceptButton = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        idField1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         dniField1 = new javax.swing.JTextField();
         nameField1 = new javax.swing.JTextField();
@@ -67,6 +66,17 @@ public class ManageEmployees extends javax.swing.JFrame {
         returnButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        addressField = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        phoneField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        adminCheckbox = new javax.swing.JCheckBox();
+        idField1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -120,8 +130,6 @@ public class ManageEmployees extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("Apellidos");
 
-        adminCheckbox.setText("¿Es administrador?");
-
         searchButton.setText("Buscar");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,22 +142,17 @@ public class ManageEmployees extends javax.swing.JFrame {
 
         employeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "DNI", "Email", "Dirección", "Teléfono", "Puesto"
+                "Id", "Dni", "Nombre", "Apellidos", "Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -163,30 +166,23 @@ public class ManageEmployees extends javax.swing.JFrame {
         jScrollPane2.setViewportView(employeeTable);
 
         acceptButton.setText("Aceptar");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel10.setText("Id");
-
-        idField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                idField1FocusGained(evt);
-            }
-        });
-        idField1.addActionListener(new java.awt.event.ActionListener() {
+        acceptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idField1ActionPerformed(evt);
+                acceptButtonActionPerformed(evt);
             }
         });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("DNI");
 
+        dniField1.setEditable(false);
         dniField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dniField1ActionPerformed(evt);
             }
         });
 
+        nameField1.setEditable(false);
         nameField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameField1ActionPerformed(evt);
@@ -199,6 +195,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Apellidos");
 
+        surnameField1.setEditable(false);
         surnameField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 surnameField1ActionPerformed(evt);
@@ -218,8 +215,77 @@ public class ManageEmployees extends javax.swing.JFrame {
         });
 
         updateButton.setText("Modificar");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Eliminar");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel14.setText("Direccion");
+
+        addressField.setEditable(false);
+        addressField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                addressFieldFocusGained(evt);
+            }
+        });
+        addressField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addressFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel15.setText("Telefono");
+
+        phoneField.setEditable(false);
+        phoneField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phoneFieldActionPerformed(evt);
+            }
+        });
+
+        passwordField.setEditable(false);
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel16.setText("Contraseña");
+
+        adminCheckbox.setText("¿Es administrador?");
+        adminCheckbox.setEnabled(false);
+
+        idField1.setEditable(false);
+        idField1.setEnabled(false);
+        idField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel17.setText("Id");
+
+        emailField.setEditable(false);
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel18.setText("Email");
 
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,15 +310,8 @@ public class ManageEmployees extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(returnButton)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(updateButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteButton))
                     .addComponent(jLabel3)
                     .addComponent(titulo)
                     .addComponent(searchButton)
@@ -260,15 +319,12 @@ public class ManageEmployees extends javax.swing.JFrame {
                     .addComponent(acceptButton)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(adminCheckbox)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dniField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))))
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dniField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,26 +333,54 @@ public class ManageEmployees extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(surnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel10))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dniField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel11))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13)
-                                .addComponent(surnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(adminCheckbox)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel14))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel15))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel16)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(dniField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel11))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel12))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(surnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel18)))))))
+                    .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17))
+                .addContainerGap(65, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(returnButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(updateButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteButton)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,9 +401,7 @@ public class ManageEmployees extends javax.swing.JFrame {
                     .addComponent(dniField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(surnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(adminCheckbox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(searchButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
@@ -329,19 +411,45 @@ public class ManageEmployees extends javax.swing.JFrame {
                 .addComponent(acceptButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dniField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(surnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(3, 3, 3)
+                        .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(2, 2, 2)
+                        .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel16))
+                                .addGap(1, 1, 1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(2, 2, 2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dniField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(surnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(adminCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateButton)
                     .addComponent(deleteButton))
@@ -385,14 +493,6 @@ public class ManageEmployees extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tabBuscarMouseClicked
 
-    private void idField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_idField1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idField1FocusGained
-
-    private void idField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idField1ActionPerformed
-
     private void dniField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dniField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dniField1ActionPerformed
@@ -416,16 +516,148 @@ public class ManageEmployees extends javax.swing.JFrame {
         String dni = FieldGetter.getFieldString(dniField);
         String name = FieldGetter.getFieldString(nameField);
         String surname = FieldGetter.getFieldString(surnameField);
-        System.out.println(id + dni + name + surname);
         ArrayList<Employee> employees = employeebl.searchEmployees(id, dni, name, surname);
+        if (employees.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron empleados.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         for (Employee e : employees) {
-            model.addRow(new Object[]{e.getId(), e.getName(), e.getSurname(), e.getType()});
+            model.addRow(new Object[]{String.valueOf(e.getId()), e.getDni(), e.getName(), e.getSurname(), String.valueOf(e.getType())});
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
+        int index = employeeTable.getSelectedRow();
+        if (index == -1) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un empleado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Employee> list = employeebl.searchEmployees(Integer.parseInt((String) employeeTable.getValueAt(index, 0)), null, null, null);
+        Employee e = list.get(0);
+        idField1.setText(String.valueOf(e.getId()));
+        dniField1.setText(e.getDni());
+        nameField1.setText(e.getName());
+        surnameField1.setText(e.getSurname());
+        addressField.setText(e.getAddress());
+        phoneField.setText(e.getPhoneNumber());
+        passwordField.setText(e.getPhoneNumber());
+        emailField.setText(e.getEmail());
+        if (e.getType() == 1) {
+            adminCheckbox.setSelected(true);
+        }
+        enableFields(true);
+
+    }//GEN-LAST:event_acceptButtonActionPerformed
+
+    private void addressFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addressFieldFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressFieldFocusGained
+
+    private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addressFieldActionPerformed
+
+    private void phoneFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_phoneFieldActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void enableFields(Boolean b) {
+        dniField1.setEnabled(b);
+        nameField1.setEnabled(b);
+        surnameField1.setEnabled(b);
+        emailField.setEnabled(b);
+        addressField.setEnabled(b);
+        phoneField.setEnabled(b);
+        passwordField.setEnabled(b);
+        adminCheckbox.setEnabled(b);
+        
+        dniField1.setEditable(b);
+        nameField1.setEditable(b);
+        surnameField1.setEditable(b);
+        emailField.setEditable(b);
+        addressField.setEditable(b);
+        phoneField.setEditable(b);
+        passwordField.setEditable(b);
+    }
+    
+    private void emptyFields() {
+        idField.setText("");
+        dniField.setText("");
+        nameField.setText("");
+        surnameField.setText("");
+        
+        idField1.setText("");
+        dniField1.setText("");
+        nameField1.setText("");
+        surnameField1.setText("");
+        emailField.setText("");
+        addressField.setText("");
+        phoneField.setText("");
+        passwordField.setText("");
+        adminCheckbox.setSelected(false);
+        
+        model.setRowCount(0);
+    }
+    
+     
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (!(!idField1.getText().equals("") && !dniField1.getText().equals("") && !nameField1.getText().equals("") 
+                && !surnameField1.getText().equals("") && !emailField.getText().equals("") && !addressField.getText().equals("")
+                && !phoneField.getText().equals("") && !passwordField.getText().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este empleado?", "Modificar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        int id = Integer.parseInt(idField1.getText());
+        String dni = dniField1.getText();
+        String name = nameField1.getText();
+        String surname = surnameField1.getText();
+        String email = emailField.getText();
+        String address = addressField.getText();
+        String phone = phoneField.getText();
+        String password = passwordField.getText();
+        int type;
+        if (adminCheckbox.isSelected()) {
+            type = 1;
+        } else {
+            type = 1;
+        }
+        Employee e = new Employee(id, dni, name, surname, address, password, email, phone, type);
+        employeebl.modifyEmployee(e);
+        enableFields(false);
+        emptyFields();
+        JOptionPane.showMessageDialog(null, "Se ha modificado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void idField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idField1ActionPerformed
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar este empleado?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        employeebl.deleteEmployee(Integer.parseInt(idField1.getText()));
+        enableFields(false);
+        emptyFields();
+        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500, 600);
+        return new Dimension(500, 700);
     }
 
     /**
@@ -467,17 +699,23 @@ public class ManageEmployees extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
+    private javax.swing.JTextField addressField;
     private javax.swing.JCheckBox adminCheckbox;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField dniField;
     private javax.swing.JTextField dniField1;
+    private javax.swing.JTextField emailField;
     private javax.swing.JTable employeeTable;
     private javax.swing.JTextField idField;
     private javax.swing.JTextField idField1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -489,6 +727,8 @@ public class ManageEmployees extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField nameField1;
+    private javax.swing.JTextField passwordField;
+    private javax.swing.JTextField phoneField;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField surnameField;

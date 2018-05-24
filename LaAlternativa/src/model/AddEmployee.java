@@ -276,8 +276,8 @@ public class AddEmployee extends javax.swing.JFrame {
 
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
         this.dispose();
-        GestionarUsuarios pantallaGestionar = new GestionarUsuarios();
-        pantallaGestionar.setVisible(true);
+        ManageEmployees manageScreen = new ManageEmployees();
+        manageScreen.setVisible(true);
     }//GEN-LAST:event_tabBuscarMouseClicked
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
@@ -299,13 +299,7 @@ public class AddEmployee extends javax.swing.JFrame {
         String name = nameField.getText();
         String surname = surnameField.getText();
         String address = addressField.getText();
-        int phoneNumber;
-        try {
-            phoneNumber = Integer.parseInt(phoneField.getText());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "El teléfono solo debe tener números.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        String phoneNumber = phoneField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
         int type;

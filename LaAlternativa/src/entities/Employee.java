@@ -16,13 +16,13 @@ public class Employee {
     private String name; 
     private String surname;
     private String address; 
-    private int phoneNumber; 
+    private String phoneNumber; 
     private String email; 
     private String password; 
     private int type; 
     private int changePassword;
 
-    public Employee(String dni, String name, String surname, String address, int phoneNumber, String email, String password, int type) {
+    public Employee(String dni, String name, String surname, String address, String phoneNumber, String email, String password, int type) {
         this.dni = dni;
         this.name = name;
         this.surname = surname;
@@ -32,8 +32,21 @@ public class Employee {
         this.password = password;
         this.type = type;
     }
+   
     
-    public Employee(int id, String dni, String name, String surname, String address, int phoneNumber, String email, String password, int type, int changePassword) {
+    public Employee(int id, String dni, String name, String surname, String address, String password, String email, String phoneNumber, int type) {
+        this.id = id;
+        this.dni = dni;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.type = type;
+    }
+    
+    public Employee(int id, String dni, String name, String surname, String address, String phoneNumber, String email, String password, int type, int changePassword) {
         this.id = id;
         this.dni = dni;
         this.name = name;
@@ -86,20 +99,6 @@ public class Employee {
      */
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    /**
-     * @return the phoneNumber
-     */
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * @param phoneNumber the phoneNumber to set
-     */
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     /**
@@ -184,6 +183,20 @@ public class Employee {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the phoneNumber
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * @param phoneNumber the phoneNumber to set
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
 }

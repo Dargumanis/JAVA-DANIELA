@@ -50,7 +50,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <Component id="titulo" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
                           <Component id="prescriptionCheckbox" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="symptomCombo" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
                           <Component id="addSymptom" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -242,18 +242,12 @@
         <Component class="javax.swing.JTable" name="symptomTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="7">
-                <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
+              <Table columnCount="1" rowCount="0">
                 <Column editable="false" title="Nombre" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -280,6 +274,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="symptomComboItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="symptomComboActionPerformed"/>
       </Events>
       <AuxValues>

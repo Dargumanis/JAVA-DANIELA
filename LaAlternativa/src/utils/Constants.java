@@ -24,13 +24,16 @@ public class Constants {
     //STORED PROCEDURES: EMPLOYEE
     public static String addEmployeeProcedure = "{call addToBDEmployee(?,?,?,?,?,?,?,?)}";
     public static String modifyEmployeeProcedure = "{call updateInBDEmployee(?,?,?,?,?,?,?,?,?)}";
-    public static String deleteEmployeeProcedure = "deleteInBDEmployee"; 
+    public static String deleteEmployeeProcedure = "{call deleteInBDEmployee(?)}";
     public static String searchEmployeeProcedure = "{call listEmployees(?,?,?,?)}";
     
     //STORED PROCEDURES: PACKAGE
     public static String addPackageProcedure = "addToBDPackage";
     public static String modifyPackageProcedure = "updateInBDPackage";
     public static String deletePackageProcedure = "deleteInBDPackage";
+    
+    //STORED PROCEDURES: PRODUCT
+    public static String addProductProcedure = "{call listEmployees(?,?,?,?,?,?,?,?,?,?)}";
     
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag";
