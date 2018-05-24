@@ -540,7 +540,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         surnameField1.setText(e.getSurname());
         addressField.setText(e.getAddress());
         phoneField.setText(e.getPhoneNumber());
-        passwordField.setText(e.getPhoneNumber());
+        passwordField.setText(e.getPassword());
         emailField.setText(e.getEmail());
         if (e.getType() == 1) {
             adminCheckbox.setSelected(true);
