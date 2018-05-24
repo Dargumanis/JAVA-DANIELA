@@ -32,12 +32,12 @@ public class AddProduct extends javax.swing.JFrame {
     }
     
     public void defineSymptomCombo() {
-        symptomCombo.removeAllItems();
-        ArrayList<Product> list = productbl.searchAllProducts();
-        for (Symptom item : list) {
-            symptomCombo.addItem(item.getName());
-        }
-        symptomCombo.addItem("NUEVO SINTOMA");
+//        symptomCombo.removeAllItems();
+//        ArrayList<Product> list = productbl.searchAllProducts();
+//        for (Symptom item : list) {
+//            symptomCombo.addItem(item.getName());
+//        }
+//        symptomCombo.addItem("NUEVO SINTOMA");
     }
 
     /**
