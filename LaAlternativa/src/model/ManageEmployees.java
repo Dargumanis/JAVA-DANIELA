@@ -643,11 +643,12 @@ public class ManageEmployees extends javax.swing.JFrame {
             return;
         }
         int id = Integer.parseInt(idField1.getText());
-        String dni = dniField.getText();
+        String dni = dniField1.getText();
         if (dni.length() != 8 || !dni.matches("[0-9]+")) {
             JOptionPane.showMessageDialog(null, "El dni debe tener 8 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         String name = nameField1.getText();
         String surname = surnameField1.getText();
         String email = emailField.getText();
