@@ -33,10 +33,8 @@ public class Constants {
     public static String deletePackageProcedure = "deleteInBDPackage";
     
     //STORED PROCEDURES: PRODUCT
-    public static String searchProductProcedure = "{call listProducts(?,?,?,?)}"; 
-    public static String searchProductQuery = "SELECT * FROM Product";
-    public static String searchProduct2Query = "SELECT * FROM Product where Name = '";
-    public static String addProductProcedure = "{call listEmployees(?,?,?,?,?,?,?,?,?,?)}";
+    public static String searchProductProcedure = "{call listProducts(?,?,?)}"; 
+    public static String addProductProcedure = "{call addToBDProduct(?,?,?,?,?,?)}";
     
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag";

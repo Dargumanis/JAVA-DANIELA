@@ -5,7 +5,6 @@
  */
 package datastorage;
 
-import entities.Employee;
 import entities.Symptom;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import utils.Constants;
 
 /**
@@ -36,19 +33,20 @@ public class SymptomDA {
         }
     }
     
-    public Map<String, String> searchSymptoms() {
-        Map<String, String> map = new HashMap<>();
+    public ArrayList<Symptom> searchSymptoms() {
+        ArrayList<Symptom> list = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(Constants.searchSymptomQuery);
             while (rs.next()) {
-                map.put(rs.getString("Descripcion"), String.valueOf(rs.getInt("IdTag")));
+                Symptom s = new Symptom(rs.getInt("IdTag"), rs.getString("Descripcion"));
+                list.add(s);
             }
             con.close();
         } catch (SQLException ex) {
             System.out.println("Error al buscar sintomas: " + ex.toString());
         }
-        return map;
+        return list;
     }
 }

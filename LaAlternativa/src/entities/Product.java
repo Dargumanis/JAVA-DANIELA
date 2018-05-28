@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package entities;
-
+import java.util.ArrayList;
 /**
  *
  * @author alulab14
@@ -13,26 +13,34 @@ public class Product {
     private int id;
     private String name;
     private double price;
-    private boolean needsPrescription;
-    private double utility;
+    private int needsPrescription;
     private int points;
     private int totalItems;
     private int minStock;
     private int maxStock;
     private String discounts;
+    ArrayList<Symptom> symptoms;
 
     public Product(int id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
+    
+    public Product(String name, double price, int needsPrescription, int points, int minStock, int maxStock) {
+        this.name = name;
+        this.price = price;
+        this.needsPrescription = needsPrescription;
+        this.points = points;
+        this.minStock = minStock;
+        this.maxStock = maxStock;        
+    }
 
-    public Product(int id, String name, double price, boolean needsPrescription, double utility, int points, int totalItems, int minStock, int maxStock, String discounts) {
+    public Product(int id, String name, double price, int needsPrescription, int points, int totalItems, int minStock, int maxStock, String discounts) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.needsPrescription = needsPrescription;
-        this.utility = utility;
         this.points = points;
         this.totalItems = totalItems;
         this.minStock = minStock;
@@ -85,29 +93,15 @@ public class Product {
     /**
      * @return the needsPrescription
      */
-    public boolean isNeedsPrescription() {
+    public int getNeedsPrescription() {
         return needsPrescription;
     }
 
     /**
      * @param needsPrescription the needsPrescription to set
      */
-    public void setNeedsPrescription(boolean needsPrescription) {
+    public void setNeedsPrescription(int needsPrescription) {
         this.needsPrescription = needsPrescription;
-    }
-
-    /**
-     * @return the utility
-     */
-    public double getUtility() {
-        return utility;
-    }
-
-    /**
-     * @param utility the utility to set
-     */
-    public void setUtility(double utility) {
-        this.utility = utility;
     }
 
     /**
@@ -182,6 +176,13 @@ public class Product {
     public void setDiscounts(String discounts) {
         this.discounts = discounts;
     }
-
+    
+    public String getTag() {
+        return symptoms.get(0).getName();
+    }
+    
+    public void addSymptom(Symptom s) {
+        symptoms.add(s);
+    }
     
 }

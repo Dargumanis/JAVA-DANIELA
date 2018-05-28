@@ -40,7 +40,7 @@ public class AddDiscount extends javax.swing.JFrame {
         productCombo.removeAllItems();
         ArrayList<Product> list;
         try {
-            list = productbl.searchAllProducts();
+            list = productbl.searchProducts(null, null, null);
         } catch (SQLException ex) {
             System.out.println("Error en base de datos: " + ex);
             return;
@@ -253,7 +253,7 @@ public class AddDiscount extends javax.swing.JFrame {
         String prod = (String) productCombo.getSelectedItem();
         int productId;
         try {
-            productId = productbl.searchProducts(prod).getId();
+            productId = productbl.searchProducts(null, prod, null).get(0).getId();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al buscar producto.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println(ex);

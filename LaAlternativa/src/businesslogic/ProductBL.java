@@ -22,18 +22,12 @@ public class ProductBL {
         dataAccess = new ProductDA();
     }
 
-    public ArrayList<Product> searchAllProducts() throws SQLException {
-        ArrayList<Product> list = dataAccess.searchAllProducts();
-        return list;
+    public void addProduct(Product p) throws SQLException {
+        dataAccess.addProduct(p);
     }
-
-    public Product searchProducts(String name) throws SQLException {
-        Product p = dataAccess.searchProducts(name);
-        return p;
-    }
-
-    public ArrayList<Product> searchProducts2(Integer _id, String _name, String _tag, Double _price) throws SQLException {
-        ArrayList<Product> list = dataAccess.searchProducts2(_id, _name, _tag, _price);
+    
+    public ArrayList<Product> searchProducts(Integer _id, String _name, Double _price) throws SQLException {
+        ArrayList<Product> list = dataAccess.searchProducts(_id, _name, _price);
         return list;
     }
 }

@@ -6,11 +6,9 @@
 package businesslogic;
 
 import datastorage.SymptomDA;
-import entities.Employee;
 import entities.Symptom;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  *
@@ -28,8 +26,8 @@ public class SymptomBL {
     }
     
 
-    public Map<String, String> searchSymptom() throws SQLException {
-        Map<String, String> map = dataAccess.searchSymptoms();
-        return map;
+    public ArrayList<Symptom> searchSymptom() throws SQLException {
+        ArrayList<Symptom> list = dataAccess.searchSymptoms();
+        return list;
     }
 }
