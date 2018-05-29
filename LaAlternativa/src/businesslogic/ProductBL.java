@@ -22,8 +22,12 @@ public class ProductBL {
         dataAccess = new ProductDA();
     }
 
-    public void addProduct(Product p) throws SQLException {
-        dataAccess.addProduct(p);
+    public int addProduct(Product p) throws SQLException {
+        return dataAccess.addProduct(p);
+    }
+    
+    public void addProductXTag(int idProd, int idTag) throws SQLException {
+        dataAccess.addProductXTag(idProd, idTag);
     }
     
     public void updateProduct(Product p) throws SQLException {

@@ -6,6 +6,7 @@
 package datastorage;
 
 import entities.Product;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,18 +22,30 @@ import utils.Constants;
  */
 public class ProductDA {
 
-    public void addProduct(Product p) throws SQLException {
+    public int addProduct(Product p) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-        PreparedStatement st = con.prepareStatement(Constants.addProductProcedure);
+        CallableStatement st = con.prepareCall(Constants.addProductProcedure);
         st.setString(1, p.getName());
         st.setDouble(2, p.getPrice());
         st.setInt(3, p.getNeedsPrescription());
         st.setInt(4, p.getPoints());
         st.setInt(5, p.getMinStock());
         st.setInt(6, p.getMaxStock());
+        st.registerOutParameter("_idProduct", java.sql.Types.INTEGER);
+        st.executeUpdate();
+        int id = st.getInt("_idProduct");
+        con.close();
+        return id;
+    }
+    
+    public void addProductXTag(int prodId, int tagId) throws SQLException {
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        PreparedStatement st = con.prepareStatement(Constants.addProductXTagProcedure);
+        st.setInt(1, prodId);
+        st.setInt(2, tagId);
         st.executeUpdate();
         con.close();
-    }
+    }    
 
     public void updateProduct(Product p) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);

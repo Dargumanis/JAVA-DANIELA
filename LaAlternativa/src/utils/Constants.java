@@ -34,12 +34,13 @@ public class Constants {
     
     //STORED PROCEDURES: PRODUCT
     public static String searchProductProcedure = "{call listProducts(?,?,?)}"; 
-    public static String addProductProcedure = "{call addToBDProduct(?,?,?,?,?,?)}";
+    public static String addProductProcedure = "{call addToBDProduct(?,?,?,?,?,?,?)}";
     public static String modifyProductProcedure = "{call updateInBDProduct(?,?,?,?,?,?,?)}";
     public static String deleteProductProcedure = "{call deleteInBDProduct(?)}";
+    public static String addProductXTagProcedure = "{call addToBDProductXTag(?,?)}";
     
     //SYMPTOMS
-    public static String searchSymptomQuery = "SELECT * FROM Tag";
+    public static String searchSymptomQuery = "SELECT * FROM Tag ";
     public static String addSymptomProcedure = "{call addToBDTag(?)}";
     
 }

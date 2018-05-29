@@ -331,7 +331,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 .addComponent(botonBuscar1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonModificar)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jLabel8)

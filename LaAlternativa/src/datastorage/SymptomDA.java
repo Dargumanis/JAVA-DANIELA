@@ -20,19 +20,19 @@ import utils.Constants;
  * @author Usuario
  */
 public class SymptomDA {
-    
+
     public void addSymptom(Symptom s) {
-        try {                    
+        try {
             Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
             PreparedStatement st = con.prepareStatement(Constants.addSymptomProcedure);
             st.setString(1, s.getName());
             st.executeUpdate();
             con.close();
         } catch (Exception ex) {
-            System.out.println("Error al agregar síntoma: "  + ex.toString());
+            System.out.println("Error al agregar síntoma: " + ex.toString());
         }
     }
-    
+
     public ArrayList<Symptom> searchSymptoms() {
         ArrayList<Symptom> list = new ArrayList<>();
         try {
@@ -48,5 +48,17 @@ public class SymptomDA {
             System.out.println("Error al buscar sintomas: " + ex.toString());
         }
         return list;
+    }
+
+    public int searchSymptoms(String name) throws SQLException{
+        int id = -1;
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        Statement st = con.createStatement();
+        String query = Constants.searchSymptomQuery + "WHERE Descripcion = '" + name + "'";
+        ResultSet rs = st.executeQuery(query);
+        rs.next();
+        id = rs.getInt("IdTag");
+        con.close();
+        return id;
     }
 }

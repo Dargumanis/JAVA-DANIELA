@@ -196,7 +196,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmButton)
                     .addComponent(deleteButton))
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -257,7 +257,6 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         if (symptomTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println(index);
         model.removeRow(index);
     }//GEN-LAST:event_deleteButtonActionPerformed
 

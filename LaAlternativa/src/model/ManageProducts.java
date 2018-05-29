@@ -6,6 +6,7 @@
 package model;
 
 import businesslogic.ProductBL;
+import businesslogic.SymptomBL;
 import entities.Product;
 import entities.Symptom;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ManageProducts extends javax.swing.JFrame {
      */
     DefaultTableModel model;
     ProductBL productbl;
+    SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
 
     public ManageProducts() {
@@ -31,6 +33,7 @@ public class ManageProducts extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
+        symptombl = new SymptomBL();
         enableFields(false);
         addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled);
     }
@@ -556,6 +559,16 @@ public class ManageProducts extends javax.swing.JFrame {
             productbl.updateProduct(p);
         } catch (Exception ex) {
             System.out.println("Error al modificar producto " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            for (int i = 0; i < addSymptoms.symptoms.size(); i++) {
+                productbl.addProductXTag(id, symptombl.searchSymptom(addSymptoms.symptoms.get(i)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Error al agregar síntomas." + ex);
             JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }

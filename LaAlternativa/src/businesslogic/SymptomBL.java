@@ -30,4 +30,8 @@ public class SymptomBL {
         ArrayList<Symptom> list = dataAccess.searchSymptoms();
         return list;
     }
+    
+    public int searchSymptom(String name) throws SQLException {
+        return dataAccess.searchSymptoms(name);
+    }
 }

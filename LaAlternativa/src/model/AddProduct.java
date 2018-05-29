@@ -6,6 +6,7 @@
 package model;
 
 import businesslogic.ProductBL;
+import businesslogic.SymptomBL;
 import entities.Product;
 import entities.Symptom;
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ public class AddProduct extends javax.swing.JFrame {
 
     ProductBL productbl;
     AddSymptomsToProduct addSymptoms;
+    SymptomBL symptombl;
 
     public AddProduct() {
         initComponents();
         this.setLocationRelativeTo(null);
         productbl = new ProductBL();
+        symptombl = new SymptomBL();
         addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled);
         
     }
@@ -336,13 +339,25 @@ public class AddProduct extends javax.swing.JFrame {
             return;
         }
         Product p = new Product(name, price, prescription, points, minStock, maxStock);
+        int id;
         try {
-            productbl.addProduct(p);
+            id = productbl.addProduct(p);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error en base de datos " + ex);
             return;
         }
+        
+        try {
+            for (int i = 0; i < addSymptoms.symptoms.size(); i++) {
+                productbl.addProductXTag(id, symptombl.searchSymptom(addSymptoms.symptoms.get(i)));
+            }
+        } catch (Exception ex) {
+            System.out.println("Error al agregar síntomas." + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el producto.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         emptyFields();
     }//GEN-LAST:event_addProductActionPerformed
