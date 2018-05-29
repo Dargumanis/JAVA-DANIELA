@@ -101,6 +101,8 @@
                               <Component id="modifyButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="symptomButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="acceptButton" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -127,7 +129,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -215,6 +217,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="modifyButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="symptomButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="returnButton" min="-2" max="-2" attributes="0"/>
@@ -488,6 +491,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xbf;Necesita prescripci&#xf3;n?"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="symptomButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir S&#xed;ntomas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="symptomButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

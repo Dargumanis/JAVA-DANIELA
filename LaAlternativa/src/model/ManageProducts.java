@@ -7,6 +7,7 @@ package model;
 
 import businesslogic.ProductBL;
 import entities.Product;
+import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ public class ManageProducts extends javax.swing.JFrame {
      */
     DefaultTableModel model;
     ProductBL productbl;
+    AddSymptomsToProduct addSymptoms;
 
     public ManageProducts() {
         initComponents();
@@ -30,6 +32,7 @@ public class ManageProducts extends javax.swing.JFrame {
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         enableFields(false);
+        addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled);
     }
 
     /**
@@ -73,6 +76,7 @@ public class ManageProducts extends javax.swing.JFrame {
         totalField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         prescriptionCheckbox = new javax.swing.JCheckBox();
+        symptomButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -255,6 +259,13 @@ public class ManageProducts extends javax.swing.JFrame {
 
         prescriptionCheckbox.setText("¿Necesita prescripción?");
 
+        symptomButton.setText("Añadir Síntomas");
+        symptomButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                symptomButtonActionPerformed(evt);
+            }
+        });
+
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -319,7 +330,9 @@ public class ManageProducts extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(modifyButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(deleteButton))
+                                .addComponent(deleteButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(symptomButton))
                             .addComponent(jLabel5)
                             .addComponent(acceptButton)
                             .addComponent(jLabel3)
@@ -338,7 +351,7 @@ public class ManageProducts extends javax.swing.JFrame {
                                     .addComponent(jLabel7)
                                     .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +421,8 @@ public class ManageProducts extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(modifyButton)
-                    .addComponent(deleteButton))
+                    .addComponent(deleteButton)
+                    .addComponent(symptomButton))
                 .addGap(7, 7, 7)
                 .addComponent(returnButton)
                 .addContainerGap())
@@ -430,18 +444,18 @@ public class ManageProducts extends javax.swing.JFrame {
         minStockField.setEditable(b);
         maxStockField.setEditable(b);
     }
-    
-     private void emptyFields() {
+
+    private void emptyFields() {
         nameField.setText("");
         priceField.setText("");
         pointsField.setText("");
-        
+
         nameField1.setText("");
         priceField1.setText("");
         pointsField.setText("");
         minStockField.setText("");
         maxStockField.setText("");
-        
+
         prescriptionCheckbox.setSelected(false);
 
         model.setRowCount(0);
@@ -487,6 +501,10 @@ public class ManageProducts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (addSymptoms.symptoms.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El producto debe tener al menos un síntoma.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int id = Integer.parseInt(idField1.getText());
         int totalItems = Integer.parseInt(totalField.getText());
         String name = nameField1.getText();
@@ -528,7 +546,7 @@ public class ManageProducts extends javax.swing.JFrame {
         } else {
             prescription = 0;
         }
-        
+
         int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este producto?", "Modificar", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.NO_OPTION) {
             return;
@@ -541,11 +559,11 @@ public class ManageProducts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-        
+
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -553,7 +571,7 @@ public class ManageProducts extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             return;
         }
-        
+
         try {
             productbl.deleteProduct(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {
@@ -561,11 +579,11 @@ public class ManageProducts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-    
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
@@ -600,7 +618,7 @@ public class ManageProducts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No se encontraron productos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         for (Product fila : products) {
             model.addRow(new Object[]{fila.getId(), fila.getName(), fila.getPrice(), fila.getNeedsPrescription()});
         }
@@ -656,6 +674,10 @@ public class ManageProducts extends javax.swing.JFrame {
     private void totalFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalFieldActionPerformed
+
+    private void symptomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomButtonActionPerformed
+        addSymptoms.setVisible(true);
+    }//GEN-LAST:event_symptomButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -787,6 +809,7 @@ public class ManageProducts extends javax.swing.JFrame {
     private javax.swing.JTable productTable;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton searchButton;
+    private javax.swing.JButton symptomButton;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;
     private javax.swing.JLabel titulo;
