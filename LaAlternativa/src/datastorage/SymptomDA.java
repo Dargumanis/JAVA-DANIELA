@@ -50,7 +50,7 @@ public class SymptomDA {
         return list;
     }
 
-    public int searchSymptoms(String name) throws SQLException{
+    public int searchSymptoms(String name) throws SQLException {
         int id = -1;
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         Statement st = con.createStatement();
@@ -60,5 +60,30 @@ public class SymptomDA {
         id = rs.getInt("IdTag");
         con.close();
         return id;
+    }
+    
+    public String searchSymptoms(int id) throws SQLException {
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        Statement st = con.createStatement();
+        String query = Constants.searchSymptomQuery + "WHERE IdTag = " + id;
+        ResultSet rs = st.executeQuery(query);
+        rs.next();
+        String name = rs.getString("Descripcion");
+        con.close();
+        return name;
+    }
+
+    public ArrayList<Integer> searchProductSymptoms(int id) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        Statement st = con.createStatement();
+        String query = Constants.searchProductSymptomQuery + id;
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()) {
+            Integer _id = rs.getInt("Tag_IdTag");
+            list.add(_id);
+        }
+        con.close();
+        return list;
     }
 }

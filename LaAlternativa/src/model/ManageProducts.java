@@ -27,6 +27,7 @@ public class ManageProducts extends javax.swing.JFrame {
     ProductBL productbl;
     SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
+    ArrayList<String> symptoms;
 
     public ManageProducts() {
         initComponents();
@@ -34,8 +35,9 @@ public class ManageProducts extends javax.swing.JFrame {
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         symptombl = new SymptomBL();
+        symptoms = new ArrayList<>();
+        addSymptoms = null;
         enableFields(false);
-        addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled);
     }
 
     /**
@@ -474,11 +476,31 @@ public class ManageProducts extends javax.swing.JFrame {
             list = productbl.searchProducts((Integer) productTable.getValueAt(index, 0), null, null);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            System.out.println("Error al buscar producto: " + ex);
             return;
         }
+
         enableFields(true);
         Product p = list.get(0);
+        ArrayList<Integer> codSymptoms;
+        try {
+            codSymptoms = symptombl.searchProductSymptoms(p.getId());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al buscar sintomas: " + ex);
+            return;
+        }
+        try {
+            for (int i = 0; i < codSymptoms.size(); i++) {
+                String symptomName = symptombl.searchSymptoms(codSymptoms.get(i));
+                symptoms.add(symptomName);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al buscar nombres de sintomas: " + ex);
+            return;
+        }
+        
         idField1.setText(String.valueOf(p.getId()));
         totalField.setText(String.valueOf(p.getTotalItems()));
         nameField1.setText(p.getName());
@@ -689,6 +711,9 @@ public class ManageProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_totalFieldActionPerformed
 
     private void symptomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomButtonActionPerformed
+        if (addSymptoms == null) {
+            addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptoms);
+        }
         addSymptoms.setVisible(true);
     }//GEN-LAST:event_symptomButtonActionPerformed
 

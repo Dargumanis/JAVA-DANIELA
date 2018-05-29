@@ -34,4 +34,13 @@ public class SymptomBL {
     public int searchSymptom(String name) throws SQLException {
         return dataAccess.searchSymptoms(name);
     }
+    
+    public ArrayList<Integer> searchProductSymptoms(int id) throws SQLException {
+        return dataAccess.searchProductSymptoms(id);
+    }
+    
+    public String searchSymptoms(int id) throws SQLException {
+        return dataAccess.searchSymptoms(id);
+    }
+    
 }

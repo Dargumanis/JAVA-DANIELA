@@ -42,5 +42,6 @@ public class Constants {
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag ";
     public static String addSymptomProcedure = "{call addToBDTag(?)}";
+    public static String searchProductSymptomQuery = "SELECT * FROM ProductXTag WHERE Product_IdProduct = ";
     
 }
