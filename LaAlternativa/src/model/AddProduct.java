@@ -33,6 +33,15 @@ public class AddProduct extends javax.swing.JFrame {
         defineSymptomCombo();
     }
 
+    private void emptyFields() {
+        nameField.setText("");
+        priceField.setText("");
+        pointsField.setText("");
+        minStockField.setText("");
+        maxStockField.setText("");
+        model.setRowCount(0);
+    }
+    
     public void defineSymptomCombo() {
         symptomCombo.removeAllItems();
         ArrayList<Symptom> list = null;
@@ -408,7 +417,7 @@ public class AddProduct extends javax.swing.JFrame {
             return;
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el producto.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-
+        emptyFields();
     }//GEN-LAST:event_addProductActionPerformed
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed

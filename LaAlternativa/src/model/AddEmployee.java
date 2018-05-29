@@ -23,6 +23,19 @@ public class AddEmployee extends javax.swing.JFrame {
         employeebl = new EmployeeBL();
     }
 
+    private void emptyFields() {
+        nameField.setText("");
+        dniField.setText("");
+        surnameField.setText("");
+        addressField.setText("");
+        phoneField.setText("");
+        emailField.setText("");
+        adminCheckbox.setSelected(false);
+        passwordField.setText("");
+        confirmField.setText("");
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,7 +336,7 @@ public class AddEmployee extends javax.swing.JFrame {
             return;
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el empleado.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
-
+        emptyFields();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed

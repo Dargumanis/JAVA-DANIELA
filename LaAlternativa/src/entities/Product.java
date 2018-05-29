@@ -18,13 +18,23 @@ public class Product {
     private int totalItems;
     private int minStock;
     private int maxStock;
-    private String discounts;
     ArrayList<Symptom> symptoms;
 
     public Product(int id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Product(int id, String name, double price, int needsPrescription, int points, int totalItems, int minStock, int maxStock) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.needsPrescription = needsPrescription;
+        this.points = points;
+        this.totalItems = totalItems;
+        this.minStock = minStock;
+        this.maxStock = maxStock;
     }
     
     public Product(String name, double price, int needsPrescription, int points, int minStock, int maxStock) {
@@ -36,17 +46,7 @@ public class Product {
         this.maxStock = maxStock;        
     }
 
-    public Product(int id, String name, double price, int needsPrescription, int points, int totalItems, int minStock, int maxStock, String discounts) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.needsPrescription = needsPrescription;
-        this.points = points;
-        this.totalItems = totalItems;
-        this.minStock = minStock;
-        this.maxStock = maxStock;
-        this.discounts = discounts;
-    }
+    
     
     /**
      * @return the id
@@ -163,20 +163,6 @@ public class Product {
         this.maxStock = maxStock;
     }
 
-    /**
-     * @return the discounts
-     */
-    public String getDiscounts() {
-        return discounts;
-    }
-
-    /**
-     * @param discounts the discounts to set
-     */
-    public void setDiscounts(String discounts) {
-        this.discounts = discounts;
-    }
-    
     public String getTag() {
         return symptoms.get(0).getName();
     }

@@ -36,6 +36,14 @@ public class AddDiscount extends javax.swing.JFrame {
         defineProductCombo(); 
     }
     
+    private void emptyFields() {
+        pointsField.setText("");
+        factorField.setText("");
+        pointsField.setText("");
+        descriptionField.setText("");
+    }
+    
+    
     public void defineProductCombo() {
         productCombo.removeAllItems();
         ArrayList<Product> list;
@@ -275,6 +283,7 @@ public class AddDiscount extends javax.swing.JFrame {
             return;
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el descuento.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        emptyFields();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void pointsFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pointsFieldActionPerformed

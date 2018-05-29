@@ -27,6 +27,7 @@ public class ManageEmployees extends javax.swing.JFrame {
 
     public ManageEmployees() {
         initComponents();
+        this.setLocationRelativeTo(null);
         employeebl = new EmployeeBL();
         model = (DefaultTableModel) employeeTable.getModel();
         enableFields(false);
@@ -677,7 +678,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         
         enableFields(false);
         emptyFields();
-        JOptionPane.showMessageDialog(null, "Se ha modificado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void idField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idField1ActionPerformed
@@ -704,7 +705,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         
         enableFields(false);
         emptyFields();
-        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente al empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el empleado.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     @Override

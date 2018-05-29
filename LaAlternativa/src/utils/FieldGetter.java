@@ -20,6 +20,14 @@ public class FieldGetter {
         }
     }
     
+    public static Double getFieldDouble(JTextField field) throws Exception {
+        if ("".equals(field.getText())) {
+            return null;
+        } else {
+            return Double.parseDouble(field.getText());
+        }
+    }
+    
     public static String getFieldString(JTextField field) {
         if ("".equals(field.getText())) {
             return null;

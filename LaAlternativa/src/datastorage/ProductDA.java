@@ -34,6 +34,28 @@ public class ProductDA {
         con.close();
     }
 
+    public void updateProduct(Product p) throws SQLException {
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        PreparedStatement st = con.prepareStatement(Constants.modifyProductProcedure);
+        st.setInt(1, p.getId());
+        st.setString(2, p.getName());
+        st.setDouble(3, p.getPrice());
+        st.setInt(4, p.getNeedsPrescription());
+        st.setInt(5, p.getPoints());
+        st.setInt(6, p.getMinStock());
+        st.setInt(7, p.getMaxStock());
+        st.executeUpdate();
+        con.close();
+    }
+
+    public void deleteProduct(int id) throws SQLException {
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        PreparedStatement st = con.prepareStatement(Constants.deleteProductProcedure);
+        st.setInt(1, id);
+        st.executeUpdate();
+        con.close();
+    }
+
     public ArrayList<Product> searchProducts(Integer _id, String _name, Double _price) throws SQLException {
         ArrayList<Product> list = new ArrayList<>();
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
@@ -58,12 +80,12 @@ public class ProductDA {
             int id = rs.getInt("IdProduct");
             String name = rs.getString("Name");
             double price = rs.getDouble("Price");
-//            int presc = rs.getInt("Prescription");
-//            int points = rs.getInt("Points");
-//            int totalItems = rs.getInt("TotalItems");
-//            int minS = rs.getInt("MinStock");
-//            int maxS = rs.getInt("MaxStock");
-            Product p = new Product(id, name, price);
+            int presc = rs.getInt("NeedsPrescription");
+            int points = rs.getInt("Points");
+            int totalItems = rs.getInt("TotalItems");
+            int minS = rs.getInt("MinStock");
+            int maxS = rs.getInt("MaxStock");
+            Product p = new Product(id, name, price, presc, points, totalItems, minS, maxS);
             list.add(p);
         }
         con.close();

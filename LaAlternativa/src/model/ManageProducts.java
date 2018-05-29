@@ -5,8 +5,12 @@
  */
 package model;
 
+import businesslogic.ProductBL;
+import entities.Product;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
+import utils.FieldGetter;
 
 /**
  *
@@ -17,9 +21,15 @@ public class ManageProducts extends javax.swing.JFrame {
     /**
      * Creates new form EliminarCliente
      */
+    DefaultTableModel model;
+    ProductBL productbl;
+
     public ManageProducts() {
         initComponents();
         this.setLocationRelativeTo(null);
+        model = (DefaultTableModel) productTable.getModel();
+        productbl = new ProductBL();
+        enableFields(false);
     }
 
     /**
@@ -35,7 +45,7 @@ public class ManageProducts extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
+        productTable = new javax.swing.JTable();
         acceptButton = new javax.swing.JButton();
         returnButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -62,6 +72,7 @@ public class ManageProducts extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         totalField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        prescriptionCheckbox = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -81,7 +92,7 @@ public class ManageProducts extends javax.swing.JFrame {
             }
         });
 
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -109,9 +120,9 @@ public class ManageProducts extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tablaClientes);
-        if (tablaClientes.getColumnModel().getColumnCount() > 0) {
-            tablaClientes.getColumnModel().getColumn(3).setHeaderValue("Prescripción");
+        jScrollPane1.setViewportView(productTable);
+        if (productTable.getColumnModel().getColumnCount() > 0) {
+            productTable.getColumnModel().getColumn(3).setHeaderValue("Prescripción");
         }
 
         acceptButton.setText("Aceptar");
@@ -242,6 +253,8 @@ public class ManageProducts extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Total de Items");
 
+        prescriptionCheckbox.setText("¿Necesita prescripción?");
+
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -265,67 +278,67 @@ public class ManageProducts extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(returnButton)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel14)
-                                        .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel15)
-                                        .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel10)
-                                        .addComponent(priceField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel11)
-                                        .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel13)
-                                        .addComponent(minStockField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel12)
-                                        .addComponent(maxStockField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(33, 33, 33)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(modifyButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(deleteButton))
-                                .addComponent(jLabel5)
-                                .addComponent(acceptButton)
-                                .addComponent(jLabel3)
-                                .addComponent(titulo)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8)
-                                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(searchButton))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(returnButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(nameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(priceField1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(pointsField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addComponent(minStockField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(maxStockField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(prescriptionCheckbox)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(modifyButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(deleteButton))
+                            .addComponent(jLabel5)
+                            .addComponent(acceptButton)
+                            .addComponent(jLabel3)
+                            .addComponent(titulo)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,6 +404,8 @@ public class ManageProducts extends javax.swing.JFrame {
                     .addComponent(minStockField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(maxStockField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(prescriptionCheckbox)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(modifyButton)
                     .addComponent(deleteButton))
@@ -402,9 +417,62 @@ public class ManageProducts extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void enableFields(Boolean b) {
+        nameField1.setEnabled(b);
+        priceField1.setEnabled(b);
+        pointsField.setEnabled(b);
+        minStockField.setEnabled(b);
+        maxStockField.setEnabled(b);
+
+        nameField1.setEditable(b);
+        priceField1.setEditable(b);
+        pointsField.setEditable(b);
+        minStockField.setEditable(b);
+        maxStockField.setEditable(b);
+    }
+    
+     private void emptyFields() {
+        nameField.setText("");
+        priceField.setText("");
+        pointsField.setText("");
+        
+        nameField1.setText("");
+        priceField1.setText("");
+        pointsField.setText("");
+        minStockField.setText("");
+        maxStockField.setText("");
+        
+        prescriptionCheckbox.setSelected(false);
+
+        model.setRowCount(0);
+    }
+
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-        if (tablaClientes.getSelectedRow() == -1) {
+        int index = productTable.getSelectedRow();
+        if (productTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        ArrayList<Product> list = null;
+        try {
+            list = productbl.searchProducts((Integer) productTable.getValueAt(index, 0), null, null);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error en la base de datos: " + ex);
+            return;
+        }
+        enableFields(true);
+        Product p = list.get(0);
+        idField1.setText(String.valueOf(p.getId()));
+        totalField.setText(String.valueOf(p.getTotalItems()));
+        nameField1.setText(p.getName());
+        priceField1.setText(String.valueOf(p.getPrice()));
+        pointsField.setText(String.valueOf(p.getPoints()));
+        minStockField.setText(String.valueOf(p.getMinStock()));
+        maxStockField.setText(String.valueOf(p.getMaxStock()));
+        if (p.getNeedsPrescription() == 1) {
+            prescriptionCheckbox.setSelected(true);
+        } else {
+            prescriptionCheckbox.setSelected(false);
         }
     }//GEN-LAST:event_acceptButtonActionPerformed
 
@@ -415,25 +483,132 @@ public class ManageProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_returnButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        if (!campoNombre2.getText().equals("") && !campoPrecio2.getText().equals("") && !campoPrescripcion2.getText().equals("") && !campoSintomas2.getText().equals("")) {
-            JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este producto?", "Modificar", JOptionPane.YES_NO_OPTION);
-        } else {
-            JOptionPane.showMessageDialog(null, "Todos los datos deben tener un valor.", "Error", JOptionPane.ERROR_MESSAGE); 
+        if (!(!nameField1.getText().equals("") && !priceField1.getText().equals("") && !pointsField.getText().equals("") && !minStockField.getText().equals("") && !maxStockField.getText().equals(""))) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        int id = Integer.parseInt(idField1.getText());
+        int totalItems = Integer.parseInt(totalField.getText());
+        String name = nameField1.getText();
+        double price;
+        try {
+            price = Double.parseDouble(priceField1.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en precio: " + ex);
+            JOptionPane.showMessageDialog(null, "El precio debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int points;
+        try {
+            points = Integer.parseInt(pointsField.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en puntos: " + ex);
+            JOptionPane.showMessageDialog(null, "Los puntos deben ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int minStock;
+        try {
+            minStock = Integer.parseInt(minStockField.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en puntos: " + ex);
+            JOptionPane.showMessageDialog(null, "El stock mínimo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int maxStock;
+        try {
+            maxStock = Integer.parseInt(maxStockField.getText());
+        } catch (Exception ex) {
+            System.out.println("Error en puntos: " + ex);
+            JOptionPane.showMessageDialog(null, "El stock máximo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int prescription;
+        if (prescriptionCheckbox.isSelected()) {
+            prescription = 1;
+        } else {
+            prescription = 0;
+        }
+        
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este producto?", "Modificar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        Product p = new Product(id, name, price, prescription, points, totalItems, minStock, maxStock);
+        try {
+            productbl.updateProduct(p);
+        } catch (Exception ex) {
+            System.out.println("Error al modificar producto " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        enableFields(false);
+        emptyFields();
+        JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar este producto?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar este producto?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        
+        try {
+            productbl.deleteProduct(Integer.parseInt(idField1.getText()));
+        } catch (Exception ex) {
+            System.out.println("Error al eliminar producto: " + ex);
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        enableFields(false);
+        emptyFields();
+        JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+    
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        if (campoCodigo.getText().equals("") && campoNombre.getText().equals("") && campoSintomas.getText().equals("") && campoPrecio.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar al menos un dato.", "Error", JOptionPane.ERROR_MESSAGE);
+        model.setRowCount(0);
+        Integer id;
+        try {
+            id = FieldGetter.getFieldInt(idField);
+        } catch (Exception ex) {
+            System.out.println("Error en codigo: " + ex);
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        String name = FieldGetter.getFieldString(nameField);
+        Double price;
+        try {
+            price = FieldGetter.getFieldDouble(priceField);
+        } catch (Exception ex) {
+            System.out.println("Error en codigo: " + ex);
+            JOptionPane.showMessageDialog(null, "El precio debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        ArrayList<Product> products;
+        try {
+            products = productbl.searchProducts(id, name, price);
+        } catch (Exception ex) {
+            System.out.println("Error al buscar producto " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (products.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron productos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        for (Product fila : products) {
+            model.addRow(new Object[]{fila.getId(), fila.getName(), fila.getPrice(), fila.getNeedsPrescription()});
+        }
+
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
-        
+
     }//GEN-LAST:event_tabBuscarMouseClicked
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
@@ -606,13 +781,14 @@ public class ManageProducts extends javax.swing.JFrame {
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField nameField1;
     private javax.swing.JTextField pointsField;
+    private javax.swing.JCheckBox prescriptionCheckbox;
     private javax.swing.JTextField priceField;
     private javax.swing.JTextField priceField1;
+    private javax.swing.JTable productTable;
     private javax.swing.JButton returnButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;
-    private javax.swing.JTable tablaClientes;
     private javax.swing.JLabel titulo;
     private javax.swing.JTextField totalField;
     // End of variables declaration//GEN-END:variables

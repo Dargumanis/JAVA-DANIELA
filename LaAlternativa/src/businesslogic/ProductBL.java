@@ -26,6 +26,14 @@ public class ProductBL {
         dataAccess.addProduct(p);
     }
     
+    public void updateProduct(Product p) throws SQLException {
+        dataAccess.updateProduct(p);
+    }
+    
+    public void deleteProduct(int id) throws SQLException {
+        dataAccess.deleteProduct(id);
+    }
+    
     public ArrayList<Product> searchProducts(Integer _id, String _name, Double _price) throws SQLException {
         ArrayList<Product> list = dataAccess.searchProducts(_id, _name, _price);
         return list;

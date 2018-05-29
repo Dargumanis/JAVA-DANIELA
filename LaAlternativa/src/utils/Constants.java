@@ -35,6 +35,8 @@ public class Constants {
     //STORED PROCEDURES: PRODUCT
     public static String searchProductProcedure = "{call listProducts(?,?,?)}"; 
     public static String addProductProcedure = "{call addToBDProduct(?,?,?,?,?,?)}";
+    public static String modifyProductProcedure = "{call updateInBDProduct(?,?,?,?,?,?,?)}";
+    public static String deleteProductProcedure = "{call deleteInBDProduct(?)}";
     
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag";
