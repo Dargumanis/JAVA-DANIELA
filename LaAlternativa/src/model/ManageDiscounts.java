@@ -44,6 +44,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
             System.out.println("Error en base de datos: " + ex);
             return;
         }
+        productCombo.addItem("Todos");
         for (Product item : list) {
             productCombo.addItem(item.getName());
         }
@@ -496,16 +497,21 @@ public class ManageDiscounts extends javax.swing.JFrame {
             return;
         }
         String prod = (String) productCombo.getSelectedItem();
-        Product p;
-        try {
-            p = productbl.searchProducts(null, prod, null).get(0);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar producto.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
-            return;
+        Integer productId;
+        if (prod.equals("Todos")) {
+            productId = null;
+        } else {
+            Product p;
+            try {
+                p = productbl.searchProducts(null, prod, null).get(0);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error al buscar producto.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex);
+                return;
+            }
+            emptyFields();
+            productId = p.getId();
         }
-        emptyFields();
-        int productId = p.getId();
 
         ArrayList<Discount> listD;
 
