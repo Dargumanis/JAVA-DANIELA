@@ -32,7 +32,7 @@ public class SymptomBL {
     }
     
     public int searchSymptom(String name) throws SQLException {
-        return dataAccess.searchSymptoms(name);
+        return dataAccess.searchSymptom(name);
     }
     
     public ArrayList<Integer> searchProductSymptoms(int id) throws SQLException {
@@ -43,4 +43,7 @@ public class SymptomBL {
         return dataAccess.searchSymptoms(id);
     }
     
+    public void deleteProductXTag(int prodId, int tagId) throws SQLException {
+        dataAccess.deleteProductXTag(prodId, tagId);
+    }
 }

@@ -50,7 +50,7 @@ public class SymptomDA {
         return list;
     }
 
-    public int searchSymptoms(String name) throws SQLException {
+    public int searchSymptom(String name) throws SQLException {
         int id = -1;
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         Statement st = con.createStatement();
@@ -61,7 +61,7 @@ public class SymptomDA {
         con.close();
         return id;
     }
-    
+
     public String searchSymptoms(int id) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         Statement st = con.createStatement();
@@ -86,4 +86,16 @@ public class SymptomDA {
         con.close();
         return list;
     }
+
+    public void deleteProductXTag(int prodId, int tagId) throws SQLException {
+
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        PreparedStatement st = con.prepareStatement(Constants.deleteProductXTagProcedure);
+        st.setInt(1, prodId);
+        st.setInt(2, tagId);
+        st.executeUpdate();
+        con.close();
+
+    }
+
 }

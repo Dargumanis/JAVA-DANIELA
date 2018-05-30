@@ -31,7 +31,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         symptombl = new SymptomBL();
         symptoms = new ArrayList<>();
         defineSymptomCombo();
-        if (productSymptoms != null) {
+        if (productSymptoms != null && !productSymptoms.isEmpty()) {
             for (String symptom : productSymptoms) {
                 model.addRow(new Object[]{symptom});
             }

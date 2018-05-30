@@ -8,7 +8,6 @@ package model;
 import businesslogic.ProductBL;
 import businesslogic.SymptomBL;
 import entities.Product;
-import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +26,8 @@ public class ManageProducts extends javax.swing.JFrame {
     ProductBL productbl;
     SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
-    ArrayList<String> symptoms;
+    ArrayList<String> symptomsList;
+    boolean symptomsAdded = false;
 
     public ManageProducts() {
         initComponents();
@@ -35,7 +35,7 @@ public class ManageProducts extends javax.swing.JFrame {
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         symptombl = new SymptomBL();
-        symptoms = new ArrayList<>();
+        symptomsList = new ArrayList<>();
         addSymptoms = null;
         enableFields(false);
     }
@@ -470,6 +470,7 @@ public class ManageProducts extends javax.swing.JFrame {
         int index = productTable.getSelectedRow();
         if (productTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una fila.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         ArrayList<Product> list = null;
         try {
@@ -491,16 +492,17 @@ public class ManageProducts extends javax.swing.JFrame {
             return;
         }
         try {
+            symptomsList.clear();
             for (int i = 0; i < codSymptoms.size(); i++) {
                 String symptomName = symptombl.searchSymptoms(codSymptoms.get(i));
-                symptoms.add(symptomName);
+                symptomsList.add(symptomName);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar nombres de sintomas: " + ex);
             return;
         }
-        
+
         idField1.setText(String.valueOf(p.getId()));
         totalField.setText(String.valueOf(p.getTotalItems()));
         nameField1.setText(p.getName());
@@ -513,6 +515,8 @@ public class ManageProducts extends javax.swing.JFrame {
         } else {
             prescriptionCheckbox.setSelected(false);
         }
+        symptomsAdded = false;
+
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
@@ -587,10 +591,25 @@ public class ManageProducts extends javax.swing.JFrame {
 
         try {
             for (int i = 0; i < addSymptoms.symptoms.size(); i++) {
+                if (symptomsList.contains(addSymptoms.symptoms.get(i))) {
+                    continue;
+                }
                 productbl.addProductXTag(id, symptombl.searchSymptom(addSymptoms.symptoms.get(i)));
             }
         } catch (Exception ex) {
-            System.out.println("Error al agregar síntomas." + ex);
+            System.out.println("Error al agregar síntomas " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            for (String symptom : symptomsList) {
+                if (!addSymptoms.symptoms.contains(symptom)) {
+                    int symId = symptombl.searchSymptom(symptom);
+                    symptombl.deleteProductXTag(Integer.parseInt(idField1.getText()), symId);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Error al eliminar síntomas " + ex);
             JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -608,9 +627,20 @@ public class ManageProducts extends javax.swing.JFrame {
         }
 
         try {
+            for (String symptom : symptomsList) {
+                int id = symptombl.searchSymptom(symptom);
+                symptombl.deleteProductXTag(Integer.parseInt(idField1.getText()), id);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error al eliminar síntoma del producto: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
             productbl.deleteProduct(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {
-            System.out.println("Error al eliminar producto: " + ex);
+            System.out.println("Error al eliminar producto: " + ex.toString());
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -618,7 +648,6 @@ public class ManageProducts extends javax.swing.JFrame {
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
@@ -666,8 +695,8 @@ public class ManageProducts extends javax.swing.JFrame {
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
         this.dispose();
-        AddProduct pantallaAgregar = new AddProduct();
-        pantallaAgregar.setVisible(true);
+        AddProduct addProduct = new AddProduct();
+        addProduct.setVisible(true);
     }//GEN-LAST:event_tabAgregarMouseClicked
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
@@ -711,8 +740,9 @@ public class ManageProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_totalFieldActionPerformed
 
     private void symptomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomButtonActionPerformed
-        if (addSymptoms == null) {
-            addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptoms);
+        if (!symptomsAdded) {
+            addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptomsList);
+            symptomsAdded = true;
         }
         addSymptoms.setVisible(true);
     }//GEN-LAST:event_symptomButtonActionPerformed
