@@ -58,6 +58,14 @@ public class DiscountDA {
         con.close();
 
     }
+    
+    public void deleteAllForProduct(int id) throws SQLException {
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        PreparedStatement st = con.prepareStatement(Constants.deleteAllDiscounts);
+        st.setInt(1, id);
+        st.executeUpdate();
+        con.close();
+    }
 
     public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) throws SQLException {
         ArrayList<Discount> list = new ArrayList<>();
@@ -91,5 +99,7 @@ public class DiscountDA {
         con.close();
         return list;
     }
+    
+    
 
 }

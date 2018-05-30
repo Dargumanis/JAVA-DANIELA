@@ -26,6 +26,7 @@ public class Constants {
     public static String modifyEmployeeProcedure = "{call updateInBDEmployee(?,?,?,?,?,?,?,?,?)}";
     public static String deleteEmployeeProcedure = "{call deleteInBDEmployee(?)}";
     public static String searchEmployeeProcedure = "{call listEmployees(?,?,?,?)}";
+    public static String deleteAllDiscounts = "{call deleteInBDAllDiscountsForAProduct(?)}";
     
     //STORED PROCEDURES: PACKAGE
     public static String addPackageProcedure = "addToBDPackage";

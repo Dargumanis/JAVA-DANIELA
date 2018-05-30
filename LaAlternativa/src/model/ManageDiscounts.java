@@ -361,7 +361,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enableFields(Boolean b) {
-        pointsField.setEnabled(b);
+        pointsField.setEnabled(b);  
         factorField.setEnabled(b);
         descriptionField.setEnabled(b);
 

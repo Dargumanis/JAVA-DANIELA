@@ -5,6 +5,7 @@
  */
 package model;
 
+import businesslogic.DiscountBL;
 import businesslogic.ProductBL;
 import businesslogic.SymptomBL;
 import entities.Product;
@@ -24,6 +25,7 @@ public class ManageProducts extends javax.swing.JFrame {
      */
     DefaultTableModel model;
     ProductBL productbl;
+    DiscountBL discountbl;
     SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
     ArrayList<String> symptomsList;
@@ -35,6 +37,7 @@ public class ManageProducts extends javax.swing.JFrame {
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         symptombl = new SymptomBL();
+        discountbl = new DiscountBL();
         symptomsList = new ArrayList<>();
         addSymptoms = null;
         enableFields(false);
@@ -637,6 +640,13 @@ public class ManageProducts extends javax.swing.JFrame {
             return;
         }
 
+        try {
+            discountbl.deleteAllForProduct(Integer.parseInt(idField1.getText()));
+        } catch (Exception ex) {
+            System.out.println("Error al eliminar descuentos del producto: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         try {
             productbl.deleteProduct(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {

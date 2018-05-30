@@ -33,6 +33,10 @@ public class DiscountBL {
         dataAccess.deleteDiscount(id);
     }
     
+    public void deleteAllForProduct(int id) throws SQLException {
+        dataAccess.deleteAllForProduct(id);
+    }
+    
     public ArrayList<Discount> searchDiscounts(Integer id, Integer productId) throws SQLException {
         ArrayList<Discount> list = dataAccess.searchDiscounts(id, productId);
         return list;
