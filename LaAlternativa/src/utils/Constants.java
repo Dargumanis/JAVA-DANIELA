@@ -40,6 +40,9 @@ public class Constants {
     public static String deleteProductProcedure = "{call deleteInBDProduct(?)}";
     public static String addProductXTagProcedure = "{call addToBDProductXTag(?,?)}";
     
+    //STORED PROCEDURES: SUPPLIERS
+    public static String addSupplierProcedure = "{call addToBDSupplier(?,?,?,?)}";
+    
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag ";
     public static String addSymptomProcedure = "{call addToBDTag(?)}";

@@ -520,7 +520,7 @@ public class GestionarProveedores extends javax.swing.JFrame {
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
         this.dispose();
-        AgregarProveedor pantallaAgregar = new AgregarProveedor();
+        AddSupplier pantallaAgregar = new AddSupplier();
         pantallaAgregar.setVisible(true);
     }//GEN-LAST:event_tabAgregarMouseClicked
 

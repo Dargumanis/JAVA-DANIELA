@@ -29,7 +29,7 @@ public class ManageProducts extends javax.swing.JFrame {
     SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
     ArrayList<String> symptomsList;
-    boolean symptomsAdded = false;
+//    boolean symptomsAdded = false;
 
     public ManageProducts() {
         initComponents();
@@ -518,7 +518,7 @@ public class ManageProducts extends javax.swing.JFrame {
         } else {
             prescriptionCheckbox.setSelected(false);
         }
-        symptomsAdded = false;
+        addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptomsList);
 
     }//GEN-LAST:event_acceptButtonActionPerformed
 
@@ -750,10 +750,6 @@ public class ManageProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_totalFieldActionPerformed
 
     private void symptomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomButtonActionPerformed
-        if (!symptomsAdded) {
-            addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptomsList);
-            symptomsAdded = true;
-        }
         addSymptoms.setVisible(true);
     }//GEN-LAST:event_symptomButtonActionPerformed
 

@@ -35,8 +35,8 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
             for (String symptom : productSymptoms) {
                 model.addRow(new Object[]{symptom});
             }
+            symptoms = productSymptoms;
         }
-
         this.setLocationRelativeTo(null);
     }
 

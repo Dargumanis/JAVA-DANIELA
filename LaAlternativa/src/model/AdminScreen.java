@@ -219,7 +219,7 @@ public class AdminScreen extends javax.swing.JFrame {
 
     private void botonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProveedoresActionPerformed
         this.dispose();
-        AgregarProveedor pantallaProveedores = new AgregarProveedor();
+        AddSupplier pantallaProveedores = new AddSupplier();
         pantallaProveedores.setVisible(true);
     }//GEN-LAST:event_botonProveedoresActionPerformed
 
