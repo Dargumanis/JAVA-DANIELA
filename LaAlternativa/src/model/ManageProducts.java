@@ -520,14 +520,14 @@ public class ManageProducts extends javax.swing.JFrame {
         }
         addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, symptomsList);
 
-        System.out.println("0");
-        if (symptomsList.isEmpty()) {
-            System.out.println("Symptoms vacio");
-        } else {
-            for (int i = 0; i < symptomsList.size(); i++) {
-                System.out.println(symptomsList.get(i));
-            }
-        }
+//        System.out.println("0");
+//        if (symptomsList.isEmpty()) {
+//            System.out.println("Symptoms vacio");
+//        } else {
+//            for (int i = 0; i < symptomsList.size(); i++) {
+//                System.out.println(symptomsList.get(i));
+//            }
+//        }
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
@@ -537,22 +537,22 @@ public class ManageProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_returnButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        System.out.println("1");
-        if (symptomsList.isEmpty()) {
-            System.out.println("Symptoms vacio");
-        } else {
-            for (int i = 0; i < symptomsList.size(); i++) {
-                System.out.println(symptomsList.get(i));
-            }
-        }
-        System.out.println("2");
-        if (addSymptoms.symptoms.isEmpty()) {
-            System.out.println("Symptoms vacio");
-        } else {
-            for (int i = 0; i < addSymptoms.symptoms.size(); i++) {
-                System.out.println(addSymptoms.symptoms.get(i));
-            }
-        }
+//        System.out.println("1");
+//        if (symptomsList.isEmpty()) {
+//            System.out.println("Symptoms vacio");
+//        } else {
+//            for (int i = 0; i < symptomsList.size(); i++) {
+//                System.out.println(symptomsList.get(i));
+//            }
+//        }
+//        System.out.println("2");
+//        if (addSymptoms.symptoms.isEmpty()) {
+//            System.out.println("Symptoms vacio");
+//        } else {
+//            for (int i = 0; i < addSymptoms.symptoms.size(); i++) {
+//                System.out.println(addSymptoms.symptoms.get(i));
+//            }
+//        }
         
         if (!(!nameField1.getText().equals("") && !priceField1.getText().equals("") && !pointsField.getText().equals("") && !minStockField.getText().equals("") && !maxStockField.getText().equals(""))) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -633,6 +633,7 @@ public class ManageProducts extends javax.swing.JFrame {
             for (String symptom : symptomsList) {
                 if (!addSymptoms.symptoms.contains(symptom)) {
                     int symId = symptombl.searchSymptom(symptom);
+                    System.out.println(symId);
                     symptombl.deleteProductXTag(Integer.parseInt(idField1.getText()), symId);
                 }
             }

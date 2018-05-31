@@ -484,6 +484,11 @@ public class ManageSuppliers extends javax.swing.JFrame {
         String phone = phoneField.getText();
         String email = emailField.getText();
         
+        int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este proveedor?", "Modificar", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.NO_OPTION) {
+            return;
+        }
+        
         Supplier s = new Supplier(id, ruc, name, address, phone, email);
         try {
             supplierbl.modifySupplier(s);

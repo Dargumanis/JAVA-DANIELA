@@ -77,7 +77,7 @@ public class SymptomDA {
         ArrayList<Integer> list = new ArrayList<>();
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         Statement st = con.createStatement();
-        String query = Constants.searchProductSymptomQuery + id;
+        String query = Constants.searchProductSymptomQuery + id + " AND State = 1";
         ResultSet rs = st.executeQuery(query);
         while (rs.next()) {
             Integer _id = rs.getInt("Tag_IdTag");

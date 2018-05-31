@@ -17,7 +17,7 @@ public class Constants {
     
     //STORED PROCEDURES: DISCOUNT
     public static String addDiscountProcedure = "{call addToBDDiscount(?,?,?,?,?)}";
-    public static String modifyDiscountProcedure = "{call updateDiscount(?,?,?,?,?,?)}";
+    public static String modifyDiscountProcedure = "{call updateInBDDiscount(?,?,?,?,?,?)}";
     public static String deleteDiscountProcedure = "{call deleteInBDDiscount(?)}";
     public static String searchDiscountProcedure = "{call listDiscounts(?,?)}";
     
