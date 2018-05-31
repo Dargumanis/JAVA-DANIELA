@@ -6,6 +6,7 @@
 package datastorage;
 
 import entities.Employee;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,9 +22,9 @@ import utils.Constants;
  */
 public class EmployeeDA {
 
-    public void addEmployee(Employee e) throws SQLException {
+    public int addEmployee(Employee e) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-        PreparedStatement st = con.prepareStatement(Constants.addEmployeeProcedure);
+        CallableStatement st = con.prepareCall(Constants.addEmployeeProcedure);
         st.setString(1, e.getAddress());
         st.setString(2, e.getPhoneNumber());
         st.setString(3, e.getEmail());
@@ -32,7 +33,11 @@ public class EmployeeDA {
         st.setString(6, e.getSurname());
         st.setString(7, e.getPassword());
         st.setInt(8, e.getType());
+        st.registerOutParameter("_idPerson", java.sql.Types.INTEGER);
         st.executeUpdate();
+        int id = st.getInt("_idPerson");
+        con.close();
+        return id;
     }
 
     public void modifyEmployee(Employee e) throws SQLException {

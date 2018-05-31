@@ -21,8 +21,8 @@ public class EmployeeBL {
         dataAccess = new EmployeeDA();
     }
     
-    public void addEmployee(Employee e) throws SQLException {
-        dataAccess.addEmployee(e);
+    public int addEmployee(Employee e) throws SQLException {
+        return dataAccess.addEmployee(e);
     }
     
     public void modifyEmployee(Employee e) throws SQLException {

@@ -34,8 +34,8 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         if (productSymptoms != null && !productSymptoms.isEmpty()) {
             for (String symptom : productSymptoms) {
                 model.addRow(new Object[]{symptom});
+                symptoms.add(symptom);
             }
-            symptoms = productSymptoms;
         }
         this.setLocationRelativeTo(null);
     }
@@ -209,6 +209,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        symptoms.clear();
         for (int i = 0; i < model.getRowCount(); i++) {
             symptoms.add((String) model.getValueAt(i, 0));
         }

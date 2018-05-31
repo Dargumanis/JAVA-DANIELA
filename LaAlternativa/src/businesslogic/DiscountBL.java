@@ -21,8 +21,8 @@ public class DiscountBL {
         dataAccess = new DiscountDA();
     }
     
-    public void addDiscount(Discount d) throws SQLException {
-        dataAccess.addDiscount(d);
+    public int addDiscount(Discount d) throws SQLException {
+        return dataAccess.addDiscount(d);
     }
     
     public void modifyDiscount(Discount d) throws SQLException {

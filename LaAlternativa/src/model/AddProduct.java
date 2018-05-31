@@ -300,7 +300,10 @@ public class AddProduct extends javax.swing.JFrame {
             price = Double.parseDouble(priceField.getText());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "El valor del precio debe ser un número decimal.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en precio " + ex);
+            return;
+        }
+        if (price < 0) {
+            JOptionPane.showMessageDialog(null, "El valor del precio no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int points;
@@ -308,7 +311,10 @@ public class AddProduct extends javax.swing.JFrame {
             points = Integer.parseInt(pointsField.getText());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Los puntos deben tener un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en puntos " + ex);
+            return;
+        }
+        if (points < 0) {
+            JOptionPane.showMessageDialog(null, "El valor de los puntos no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int prescription;
@@ -322,7 +328,10 @@ public class AddProduct extends javax.swing.JFrame {
             minStock = Integer.parseInt(minStockField.getText());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "El stock mínimo debe tener un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en stock mínimo " + ex);
+            return;
+        }
+        if (minStock < 0) {
+            JOptionPane.showMessageDialog(null, "El valor del mínimo stock no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int maxStock;
@@ -330,7 +339,10 @@ public class AddProduct extends javax.swing.JFrame {
             maxStock = Integer.parseInt(maxStockField.getText());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "El stock máximo debe tener un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en stock máximo " + ex);
+            return;
+        }
+        if (maxStock < 0) {
+            JOptionPane.showMessageDialog(null, "El valor del máximo stock no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (maxStock <= minStock) {

@@ -6,6 +6,7 @@
 package datastorage;
 
 import entities.Discount;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,16 +22,19 @@ import utils.Constants;
  */
 public class DiscountDA {
 
-    public void addDiscount(Discount d) throws SQLException {
+    public int addDiscount(Discount d) throws SQLException {
 
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-        PreparedStatement st = con.prepareStatement(Constants.addDiscountProcedure);
+        CallableStatement st = con.prepareCall(Constants.addDiscountProcedure);
         st.setInt(1, d.getClientPointsRequired());
         st.setString(2, d.getDescription());
         st.setDouble(3, d.getFactor());
         st.setInt(4, d.getProductId());
+        st.registerOutParameter("_idDiscount", java.sql.Types.INTEGER);
         st.executeUpdate();
+        int id = st.getInt("_idDiscount");
         con.close();
+        return id;
 
     }
 
@@ -58,7 +62,7 @@ public class DiscountDA {
         con.close();
 
     }
-    
+
     public void deleteAllForProduct(int id) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         PreparedStatement st = con.prepareStatement(Constants.deleteAllDiscounts);
@@ -99,7 +103,5 @@ public class DiscountDA {
         con.close();
         return list;
     }
-    
-    
 
 }

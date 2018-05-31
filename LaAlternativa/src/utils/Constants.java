@@ -16,13 +16,13 @@ public class Constants {
     public static String passwordBD = "H9u1oC";
     
     //STORED PROCEDURES: DISCOUNT
-    public static String addDiscountProcedure = "{call addToBDDiscount(?,?,?,?)}";
+    public static String addDiscountProcedure = "{call addToBDDiscount(?,?,?,?,?)}";
     public static String modifyDiscountProcedure = "{call updateDiscount(?,?,?,?,?,?)}";
     public static String deleteDiscountProcedure = "{call deleteInBDDiscount(?)}";
     public static String searchDiscountProcedure = "{call listDiscounts(?,?)}";
     
     //STORED PROCEDURES: EMPLOYEE
-    public static String addEmployeeProcedure = "{call addToBDEmployee(?,?,?,?,?,?,?,?)}";
+    public static String addEmployeeProcedure = "{call addToBDEmployee(?,?,?,?,?,?,?,?,?)}";
     public static String modifyEmployeeProcedure = "{call updateInBDEmployee(?,?,?,?,?,?,?,?,?)}";
     public static String deleteEmployeeProcedure = "{call deleteInBDEmployee(?)}";
     public static String searchEmployeeProcedure = "{call listEmployees(?,?,?,?)}";
@@ -41,7 +41,10 @@ public class Constants {
     public static String addProductXTagProcedure = "{call addToBDProductXTag(?,?)}";
     
     //STORED PROCEDURES: SUPPLIERS
-    public static String addSupplierProcedure = "{call addToBDSupplier(?,?,?,?)}";
+    public static String addSupplierProcedure = "{call addToBDSupplier(?,?,?,?,?)}";
+    public static String modifySupplierProcedure = "{call updateInBDSupplier(?,?,?,?,?,?)}";
+    public static String deleteSupplierProcedure = "{call deleteInBDSupplier(?)}";
+    public static String searchSupplierProcedure = "{call listSupplier(?,?,?)}";
     
     //SYMPTOMS
     public static String searchSymptomQuery = "SELECT * FROM Tag ";

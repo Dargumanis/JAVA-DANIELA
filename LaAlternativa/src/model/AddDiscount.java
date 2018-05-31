@@ -254,7 +254,11 @@ public class AddDiscount extends javax.swing.JFrame {
         try {
             points = Integer.parseInt(pointsField.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "El número de puntos debe ser un entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El número de puntos debe ser un entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (points < 0) {
+            JOptionPane.showMessageDialog(null, "El número de puntos debe ser un entero positivo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String description = descriptionField.getText();
@@ -271,9 +275,13 @@ public class AddDiscount extends javax.swing.JFrame {
         try {
             factor = Double.parseDouble(factorField.getText());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "El factor debe ser un número.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El factor debe ser un número decimal entre 0 y 1.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         } 
+        if (factor >= 1 || factor <= 0) {
+            JOptionPane.showMessageDialog(null, "El factor debe ser un número decimal entre 0 y 1.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Discount d = new Discount(points, description, productId, factor);
         try {
             discountbl.addDiscount(d);
