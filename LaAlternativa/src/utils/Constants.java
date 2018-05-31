@@ -52,4 +52,15 @@ public class Constants {
     public static String searchProductSymptomQuery = "SELECT * FROM ProductXTag WHERE Product_IdProduct = ";
     public static String deleteProductXTagProcedure = "{call deleteInBDProductXTag(?,?)}";
     
+    //ORDERS
+    public static String addOrderProcedure = "{call addToBDSupplierOrder(?,?,?)}";
+    public static String modifyOrderProcedure = "{call updateInBDSupplierOrder(?,?,?)}";
+    public static String deleteOrderProcedure = "{call deleteInBDSupplierOrder(?)}";
+    public static String searchOrdersProcedure= "{call listSupplierOrder(?,?,?)}";
+    
+    //BUNDLES
+    public static String addBundleProcedure = "{call addToBDBundle(?,?,?,?,?)}";
+    public static String modifyBundleProcedure = "{call updateInBDBundle(?,?,?,?,?,?,?,?,?,?)}";
+    public static String deleteBundleProcedure = "{call deleteInBDBundle(?)}";
+    
 }
