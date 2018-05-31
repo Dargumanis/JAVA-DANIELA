@@ -217,6 +217,7 @@ public class AddSupplier extends javax.swing.JFrame {
     private void emptyFields() {
         rucField.setText("");
         nameField.setText("");
+        addressField.setText("");
         phoneField.setText("");
         emailField.setText("");
     }

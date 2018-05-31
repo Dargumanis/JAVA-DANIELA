@@ -492,6 +492,9 @@ public class ManageSuppliers extends javax.swing.JFrame {
             System.out.println("Error al modificar proveedor " + ex);
             return;
         }
+        
+        enableFields(false);
+        emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha modificado correctamente el proveedor.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_modifyButtonActionPerformed
 
