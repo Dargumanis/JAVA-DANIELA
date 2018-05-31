@@ -235,7 +235,7 @@ public class AdminScreen extends javax.swing.JFrame {
 
     private void botonOrdenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenesActionPerformed
         this.dispose();
-        AgregarCompra pantallaCompras = new AgregarCompra();
+        AddSupplierOrder pantallaCompras = new AddSupplierOrder();
         pantallaCompras.setVisible(true);
     }//GEN-LAST:event_botonOrdenesActionPerformed
 

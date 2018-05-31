@@ -385,7 +385,7 @@ public class GestionarCompras extends javax.swing.JFrame {
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
         this.dispose();
-        AgregarCompra pantallaAgregar = new AgregarCompra();
+        AddSupplierOrder pantallaAgregar = new AddSupplierOrder();
         pantallaAgregar.setVisible(true);
     }//GEN-LAST:event_tabAgregarMouseClicked
 

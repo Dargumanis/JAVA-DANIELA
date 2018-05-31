@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author alulab14
  */
-public class AgregarCompra extends javax.swing.JFrame {
+public class AddSupplierOrder extends javax.swing.JFrame {
 
     private ProductBL productBL;
     private OrderBL orderBL;
@@ -32,7 +32,7 @@ public class AgregarCompra extends javax.swing.JFrame {
     SearchOrders pantallaCompras;
 
 
-    public AgregarCompra() {
+    public AddSupplierOrder() {
         initComponents();
         //pantallaCompras = new SearchOrders(this, rootPaneCheckingEnabled);
         productBL= new ProductBL();
@@ -397,10 +397,11 @@ public class AgregarCompra extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(titulo)
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(4, 4, 4)
@@ -560,13 +561,13 @@ public class AgregarCompra extends javax.swing.JFrame {
                     java.sql.Date sqlDate = new java.sql.Date(dateUtil.getTime());
                     bundle.setExpirationDate(sqlDate);
                 } catch (ParseException ex) {
-                    Logger.getLogger(AgregarCompra.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AddSupplierOrder.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 bundles.add(bundle);
             }
            try {
                bundleBL.addBundles(bundles);
-               JOptionPane.showMessageDialog(null, "Registro exitoso de suministros", "Error", JOptionPane.ERROR_MESSAGE);
+               JOptionPane.showMessageDialog(null, "Registro exitoso de suministros", "Operacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
            } catch (SQLException ex) {               
                JOptionPane.showMessageDialog(null, "Error en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -694,7 +695,7 @@ public class AgregarCompra extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AgregarCompra().setVisible(true);
+                new AddSupplierOrder().setVisible(true);
             }
         });
     }
