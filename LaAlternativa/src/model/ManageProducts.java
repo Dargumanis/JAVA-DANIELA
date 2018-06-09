@@ -23,22 +23,22 @@ public class ManageProducts extends javax.swing.JFrame {
     /**
      * Creates new form EliminarCliente
      */
-    DefaultTableModel model;
     ProductBL productbl;
     DiscountBL discountbl;
     SymptomBL symptombl;
     AddSymptomsToProduct addSymptoms;
     ArrayList<String> symptomsList;
+    SearchProducts searchProducts;
 //    boolean symptomsAdded = false;
 
     public ManageProducts() {
         initComponents();
         this.setLocationRelativeTo(null);
-        model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         symptombl = new SymptomBL();
         discountbl = new DiscountBL();
         symptomsList = new ArrayList<>();
+        searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
         addSymptoms = null;
         enableFields(false);
     }
@@ -53,22 +53,11 @@ public class ManageProducts extends javax.swing.JFrame {
     private void initComponents() {
 
         titulo = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        searchButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        productTable = new javax.swing.JTable();
         acceptButton = new javax.swing.JButton();
         returnButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         modifyButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        nameField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        priceField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        idField = new javax.swing.JTextField();
         nameField1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -94,50 +83,7 @@ public class ManageProducts extends javax.swing.JFrame {
         titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titulo.setText("Editar Productos");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Ingrese uno o más datos para buscar un producto:");
-
-        searchButton.setText("Buscar");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
-
-        productTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Código", "Nombre", "Precio", "Prescripción"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(productTable);
-        if (productTable.getColumnModel().getColumnCount() > 0) {
-            productTable.getColumnModel().getColumn(3).setHeaderValue("Prescripción");
-        }
-
-        acceptButton.setText("Aceptar");
+        acceptButton.setText("Buscar Producto");
         acceptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptButtonActionPerformed(evt);
@@ -167,36 +113,6 @@ public class ManageProducts extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Seleccione un producto:");
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("Nombre");
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Precio");
-
-        priceField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                priceFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel8.setText("Código");
-
-        idField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idFieldActionPerformed(evt);
             }
         });
 
@@ -341,25 +257,9 @@ public class ManageProducts extends javax.swing.JFrame {
                                 .addComponent(deleteButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(symptomButton))
-                            .addComponent(jLabel5)
                             .addComponent(acceptButton)
-                            .addComponent(jLabel3)
-                            .addComponent(titulo)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(searchButton))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                            .addComponent(titulo))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,30 +267,8 @@ public class ManageProducts extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(acceptButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -454,8 +332,6 @@ public class ManageProducts extends javax.swing.JFrame {
     }
 
     private void emptyFields() {
-        nameField.setText("");
-        priceField.setText("");
         pointsField.setText("");
 
         nameField1.setText("");
@@ -466,26 +342,16 @@ public class ManageProducts extends javax.swing.JFrame {
 
         prescriptionCheckbox.setSelected(false);
 
-        model.setRowCount(0);
     }
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
-        int index = productTable.getSelectedRow();
-        if (productTable.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila.", "Error", JOptionPane.ERROR_MESSAGE);
+        searchProducts.setVisible(true);
+        Product p = searchProducts.product;
+        if (p == null)  {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        ArrayList<Product> list = null;
-        try {
-            list = productbl.searchProducts((Integer) productTable.getValueAt(index, 0), null, null);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error al buscar producto: " + ex);
-            return;
-        }
-
         enableFields(true);
-        Product p = list.get(0);
         ArrayList<Integer> codSymptoms;
         try {
             codSymptoms = symptombl.searchProductSymptoms(p.getId());
@@ -686,45 +552,6 @@ public class ManageProducts extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el producto.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        model.setRowCount(0);
-        Integer id;
-        try {
-            id = FieldGetter.getFieldInt(idField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
-            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String name = FieldGetter.getFieldString(nameField);
-        Double price;
-        try {
-            price = FieldGetter.getFieldDouble(priceField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
-            JOptionPane.showMessageDialog(null, "El precio debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        ArrayList<Product> products;
-        try {
-            products = productbl.searchProducts(id, name, price);
-        } catch (Exception ex) {
-            System.out.println("Error al buscar producto " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (products.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se encontraron productos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        for (Product fila : products) {
-            model.addRow(new Object[]{fila.getId(), fila.getName(), fila.getPrice(), fila.getNeedsPrescription()});
-        }
-
-    }//GEN-LAST:event_searchButtonActionPerformed
-
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
 
     }//GEN-LAST:event_tabBuscarMouseClicked
@@ -734,18 +561,6 @@ public class ManageProducts extends javax.swing.JFrame {
         AddProduct addProduct = new AddProduct();
         addProduct.setVisible(true);
     }//GEN-LAST:event_tabAgregarMouseClicked
-
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
-
-    private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_priceFieldActionPerformed
-
-    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idFieldActionPerformed
 
     private void nameField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameField1ActionPerformed
         // TODO add your handling code here:
@@ -880,7 +695,6 @@ public class ManageProducts extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JTextField idField;
     private javax.swing.JTextField idField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -888,27 +702,17 @@ public class ManageProducts extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField maxStockField;
     private javax.swing.JTextField minStockField;
     private javax.swing.JButton modifyButton;
-    private javax.swing.JTextField nameField;
     private javax.swing.JTextField nameField1;
     private javax.swing.JTextField pointsField;
     private javax.swing.JCheckBox prescriptionCheckbox;
-    private javax.swing.JTextField priceField;
     private javax.swing.JTextField priceField1;
-    private javax.swing.JTable productTable;
     private javax.swing.JButton returnButton;
-    private javax.swing.JButton searchButton;
     private javax.swing.JButton symptomButton;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;

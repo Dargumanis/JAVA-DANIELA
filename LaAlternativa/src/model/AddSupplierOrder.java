@@ -29,8 +29,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private BundleBL bundleBL;
     private DefaultTableModel productsModel;
     private DefaultTableModel productsOrderModel;
-    SearchOrders pantallaCompras;
-
 
     public AddSupplierOrder() {
         initComponents();
@@ -74,6 +72,9 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         campoPrecio = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         fechaExp = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        campoProv1 = new javax.swing.JTextField();
+        botonBuscar1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -95,6 +96,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
+        campoProv.setEnabled(false);
         campoProv.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 campoProvFocusGained(evt);
@@ -253,7 +255,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Código de Proveedor");
+        jLabel1.setText("Cod. Proveedor");
 
         jLabel2.setText("Código de Producto");
 
@@ -303,6 +305,30 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Nombre del Proveedor");
+
+        campoProv1.setEnabled(false);
+        campoProv1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                campoProv1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                campoProv1FocusLost(evt);
+            }
+        });
+        campoProv1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoProv1ActionPerformed(evt);
+            }
+        });
+
+        botonBuscar1.setText("Buscar Proveedor");
+        botonBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscar1ActionPerformed(evt);
+            }
+        });
+
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -326,9 +352,29 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(botonAgregar)
+                                        .addGap(28, 28, 28))))
+                            .addComponent(botonRegresar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
+                        .addComponent(botonConfirmar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonQuitar)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titulo)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,9 +402,10 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(jLabel10))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel8)
+                                                    .addComponent(jLabel10))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(fechaExp, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
@@ -366,30 +413,21 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                                             .addComponent(campoCantidad))
                                         .addGap(34, 34, 34))))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jLabel3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titulo)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(botonAgregar)
-                                        .addGap(28, 28, 28))))
-                            .addComponent(botonRegresar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(275, 275, 275)
-                        .addComponent(botonConfirmar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botonQuitar)))
-                .addContainerGap())
+                                        .addComponent(campoProv1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(botonBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,14 +435,20 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(titulo)
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel11))
+                        .addGap(1, 1, 1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoProv1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBuscar1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -436,7 +480,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fechaExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(botonAgregar)
                         .addGap(29, 29, 29)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -492,7 +536,8 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
         this.dispose();
-        pantallaCompras.setVisible(true);
+        ManageSupplierOrders manageScreen = new ManageSupplierOrders();
+        manageScreen.setVisible(true);
     }//GEN-LAST:event_tabBuscarMouseClicked
 
     private void tabAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabAgregarMouseClicked
@@ -688,6 +733,22 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaExpActionPerformed
 
+    private void campoProv1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProv1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoProv1FocusGained
+
+    private void campoProv1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProv1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoProv1FocusLost
+
+    private void campoProv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoProv1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoProv1ActionPerformed
+
+    private void botonBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonBuscar1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -703,6 +764,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonBuscar1;
     private javax.swing.JButton botonConfirmar;
     private javax.swing.JButton botonQuitar;
     private javax.swing.JButton botonRegresar;
@@ -711,9 +773,11 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoPrecio;
     private javax.swing.JTextField campoProv;
+    private javax.swing.JTextField campoProv1;
     private javax.swing.JTextField fechaExp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

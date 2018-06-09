@@ -74,6 +74,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         symptomField = new javax.swing.JTextField();
         titulo = new javax.swing.JLabel();
         deleteButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -154,6 +155,13 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
             }
         });
 
+        cancelButton.setText("Cancelar");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,7 +184,9 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(confirmButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton)))
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -201,7 +211,8 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmButton)
-                    .addComponent(deleteButton))
+                    .addComponent(deleteButton)
+                    .addComponent(cancelButton))
                 .addGap(27, 27, 27))
         );
 
@@ -267,6 +278,10 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         model.removeRow(index);
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -311,6 +326,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JButton confirmButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel6;
