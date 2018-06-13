@@ -20,7 +20,7 @@ public class SearchProducts extends javax.swing.JDialog {
 
     ProductBL productbl;
     DefaultTableModel model;
-    Product product;
+    public Product product;
     /**
      * Creates new form SearchProducts
      */

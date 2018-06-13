@@ -20,7 +20,7 @@ public class SearchSupplier extends javax.swing.JDialog {
     
     SupplierBL supplierbl;
     DefaultTableModel model;
-    Supplier supplier;
+    public Supplier supplier;
     
     /**
      * Creates new form SearchSupplier
@@ -31,6 +31,7 @@ public class SearchSupplier extends javax.swing.JDialog {
         model = (DefaultTableModel) supplierTable.getModel();
         supplierbl = new SupplierBL();
         supplier = null;
+        this.setLocationRelativeTo(null);
     }
 
     /**
