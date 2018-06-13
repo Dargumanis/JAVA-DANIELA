@@ -61,6 +61,7 @@ public class Constants {
     //BUNDLES
     public static String addBundleProcedure = "{call addToBDBundle(?,?,?,?,?)}";
     public static String modifyBundleProcedure = "{call updateInBDBundle(?,?,?,?,?,?,?,?,?,?)}";
-    public static String deleteBundleProcedure = "{call deleteInBDBundle(?)}";
-    
+    //public static String deleteBundleProcedure = "{call deleteInBDBundle(?)}";
+    public static String deleteBundlesProcedure = "{call deleteInBDBundles(?)}";
+    public static String searchBundleQuery = "SELECT * FROM Bundle WHERE idSupplierOrder = ";
 }

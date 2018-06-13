@@ -30,7 +30,7 @@ public class OrderBL {
     public void deleteOrder(int id) throws SQLException{
         orderDA.deleteOrder(id);
     }
-    public ArrayList<Order> searchOrders(Integer idOrder, Integer idSupplier, Date transactionDate) throws SQLException{
+    public ArrayList<Order> searchOrders(Integer idOrder, Integer idSupplier, String transactionDate) throws SQLException{
         return orderDA.searchOrders(idOrder, idSupplier, transactionDate);
     }
 }

@@ -640,7 +640,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             return;
         }
         for (int i = 0; i < productsOrderModel.getRowCount(); i++) {
-            if (productsOrderModel.getValueAt(i, 0).equals(productIdField.getText())) {
+            if ((int) productsOrderModel.getValueAt(i, 0) == Integer.parseInt(productIdField.getText())) {
                 JOptionPane.showMessageDialog(null, "El producto seleccionado ya ha sido agregado a la orden de compra.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }

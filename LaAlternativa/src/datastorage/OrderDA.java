@@ -45,7 +45,7 @@ public class OrderDA {
         con.close();
     }
     
-    public ArrayList<Order> searchOrders(Integer _idOrder, Integer _idSupplier, Date _transactionDate) throws SQLException {
+    public ArrayList<Order> searchOrders(Integer _idOrder, Integer _idSupplier, String _transactionDate) throws SQLException {
         ArrayList<Order> list = new ArrayList<>();
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         CallableStatement cst = con.prepareCall(Constants.searchOrdersProcedure);
@@ -62,7 +62,7 @@ public class OrderDA {
         if (_transactionDate == null) {
             cst.setNull("_fecha", Types.DATE);
         } else {
-            cst.setDate("_fecha", _transactionDate);
+            cst.setDate("_fecha", Date.valueOf(_transactionDate));
         }
         
         ResultSet rs = cst.executeQuery();

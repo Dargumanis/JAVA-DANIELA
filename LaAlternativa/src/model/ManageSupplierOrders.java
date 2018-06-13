@@ -5,7 +5,16 @@
  */
 package model;
 
+import businesslogic.BundleBL;
+import businesslogic.OrderBL;
+import businesslogic.ProductBL;
+import entities.Bundle;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,9 +25,40 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
     /**
      * Creates new form EliminarCliente
      */
+    SearchOrder searchOrder;
+    SearchProducts searchProduct;
+    DefaultTableModel productsOrderModel;
+    BundleBL bundlebl;
+    OrderBL orderbl;
+    ProductBL productbl;
+    ArrayList<Bundle> bundles;
+
     public ManageSupplierOrders() {
         initComponents();
+        searchOrder = new SearchOrder(this, rootPaneCheckingEnabled);
+        searchProduct = new SearchProducts(this, rootPaneCheckingEnabled);
+        productsOrderModel = (DefaultTableModel) productsOrderTable.getModel();
+        bundlebl = new BundleBL();
+        orderbl = new OrderBL();
+        productbl = new ProductBL();
+        bundles = null;
         this.setLocationRelativeTo(null);
+    }
+
+    private void resetProducts() {
+        productIdField.setText("");
+        productNameField.setText("");
+        quantityField.setText("");
+        priceField.setText("");
+        expirationField.setText("");
+
+        productIdField.setEnabled(false);
+        productNameField.setEnabled(false);
+        quantityField.setEnabled(false);
+        priceField.setEnabled(false);
+        expirationField.setEnabled(false);
+
+        searchProduct.product = null;
     }
 
     /**
@@ -31,27 +71,33 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
     private void initComponents() {
 
         titulo = new javax.swing.JLabel();
-        campoProveedor2 = new javax.swing.JTextField();
+        supplierIdField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        botonModificar = new javax.swing.JButton();
-        botonAnular = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        campoCodProd = new javax.swing.JTextField();
-        campoNombre = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaClientes1 = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        campoCantidad = new javax.swing.JTextField();
-        botonAgregar = new javax.swing.JButton();
-        botonBuscar1 = new javax.swing.JButton();
+        modifyButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tablaClientes2 = new javax.swing.JTable();
+        productsOrderTable = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
-        botonQuitar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        idField = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        dateField = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        searchSupplierButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        priceField = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        expirationField = new javax.swing.JTextField();
+        quantityField = new javax.swing.JTextField();
+        productIdField = new javax.swing.JTextField();
+        productNameField = new javax.swing.JTextField();
+        addButton = new javax.swing.JButton();
+        searchProductButton = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        removeButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -61,88 +107,43 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
         titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         titulo.setText("Editar Órden de Compra");
 
-        campoProveedor2.addActionListener(new java.awt.event.ActionListener() {
+        supplierIdField.setEnabled(false);
+        supplierIdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoProveedor2ActionPerformed(evt);
+                supplierIdFieldActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Órden de Compra:");
 
-        botonModificar.setText("Modificar");
-        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+        modifyButton.setText("Modificar");
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonModificarActionPerformed(evt);
+                modifyButtonActionPerformed(evt);
             }
         });
 
-        botonAnular.setText("Anular Orden");
-        botonAnular.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Anular Orden");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAnularActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Agregar Producto:");
-
-        campoCodProd.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                campoCodProdFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                campoCodProdFocusLost(evt);
-            }
-        });
-        campoCodProd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoCodProdMouseClicked(evt);
-            }
-        });
-        campoCodProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoCodProdActionPerformed(evt);
-            }
-        });
-
-        campoNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                campoNombreFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                campoNombreFocusLost(evt);
-            }
-        });
-        campoNombre.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoNombreMouseClicked(evt);
-            }
-        });
-        campoNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNombreActionPerformed(evt);
-            }
-        });
-
-        tablaClientes1.setModel(new javax.swing.table.DefaultTableModel(
+        productsOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Código", "Nombre", "Síntomas", "Precio", "Prescripción"
+                "Código", "Nombre", "Caducidad", "Precio Compra", "Cantidad", "Subtotal", "Quitar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -153,91 +154,171 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tablaClientes1);
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Datos del producto:");
-
-        campoCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                campoCantidadFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                campoCantidadFocusLost(evt);
-            }
-        });
-        campoCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoCantidadMouseClicked(evt);
-            }
-        });
-        campoCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoCantidadActionPerformed(evt);
-            }
-        });
-
-        botonAgregar.setText("Agregar");
-        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAgregarActionPerformed(evt);
-            }
-        });
-
-        botonBuscar1.setText("Buscar");
-        botonBuscar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonBuscar1ActionPerformed(evt);
-            }
-        });
-
-        tablaClientes2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Código", "Nombre", "Síntomas", "Precio", "Prescripción", "Cantidad", "Fecha de vencimiento", "Quitar"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tablaClientes2);
+        jScrollPane3.setViewportView(productsOrderTable);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Productos de la orden:");
 
-        botonQuitar.setText("Quitar Productos");
-        botonQuitar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel10.setText("Código de Proveedor");
+
+        idField.setEnabled(false);
+        idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonQuitarActionPerformed(evt);
+                idFieldActionPerformed(evt);
             }
         });
 
-        jLabel10.setText("Código de Proveedor");
+        jLabel14.setText("Código de Compra");
 
-        jLabel11.setText("Cantidad");
+        dateField.setEnabled(false);
+        dateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateFieldActionPerformed(evt);
+            }
+        });
 
-        jLabel12.setText("Nombre");
+        jLabel15.setText("Fecha de Transacción");
 
-        jLabel13.setText("Código de Producto");
+        searchSupplierButton.setText("Buscar Compra");
+        searchSupplierButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchSupplierButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Nombre del Producto");
+
+        jLabel9.setText("Cantidad");
+
+        jLabel16.setText("Precio de Compra");
+
+        priceField.setEnabled(false);
+        priceField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                priceFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                priceFieldFocusLost(evt);
+            }
+        });
+        priceField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                priceFieldMouseClicked(evt);
+            }
+        });
+        priceField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Fec. Caducidad (dd-MM-yyyy)");
+
+        expirationField.setEnabled(false);
+        expirationField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                expirationFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                expirationFieldFocusLost(evt);
+            }
+        });
+        expirationField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                expirationFieldMouseClicked(evt);
+            }
+        });
+        expirationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expirationFieldActionPerformed(evt);
+            }
+        });
+
+        quantityField.setEnabled(false);
+        quantityField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                quantityFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                quantityFieldFocusLost(evt);
+            }
+        });
+        quantityField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quantityFieldMouseClicked(evt);
+            }
+        });
+        quantityField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quantityFieldActionPerformed(evt);
+            }
+        });
+
+        productIdField.setEnabled(false);
+        productIdField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                productIdFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                productIdFieldFocusLost(evt);
+            }
+        });
+        productIdField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productIdFieldMouseClicked(evt);
+            }
+        });
+        productIdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productIdFieldActionPerformed(evt);
+            }
+        });
+
+        productNameField.setEnabled(false);
+        productNameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                productNameFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                productNameFieldFocusLost(evt);
+            }
+        });
+        productNameField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productNameFieldMouseClicked(evt);
+            }
+        });
+        productNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productNameFieldActionPerformed(evt);
+            }
+        });
+
+        addButton.setText("Agregar");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        searchProductButton.setText("Buscar Producto");
+        searchProductButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchProductButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Agregar Producto:");
+
+        jLabel2.setText("Código de Producto");
+
+        removeButton.setText("Quitar Productos");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
 
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -262,100 +343,116 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(campoProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6)
-                    .addComponent(titulo)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 691, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botonQuitar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoCodProd)
-                                    .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(30, 30, 30)
-                                    .addComponent(botonBuscar1))
-                                .addComponent(jLabel12)
-                                .addComponent(jLabel13))
-                            .addGap(26, 26, 26)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addComponent(titulo))
+                            .addGap(398, 398, 398))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
+                                .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel14))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel10)
+                                .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel15)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(43, 43, 43)
-                                    .addComponent(botonAgregar))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(29, 29, 29)
-                                    .addComponent(jLabel11)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(campoCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(searchSupplierButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(removeButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(productIdField)
+                            .addComponent(jLabel9)
+                            .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(productNameField)
+                            .addComponent(jLabel5)
+                            .addComponent(priceField)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(searchProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(14, 14, 14))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(addButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titulo)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(campoProveedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCodProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonBuscar1))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(campoCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addGap(27, 27, 27)
-                                .addComponent(botonAgregar)))
-                        .addGap(19, 19, 19)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(searchSupplierButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchProductButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addButton)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonModificar)
-                    .addComponent(botonAnular)
-                    .addComponent(botonQuitar))
+                    .addComponent(modifyButton)
+                    .addComponent(deleteButton)
+                    .addComponent(removeButton))
                 .addGap(31, 31, 31))
         );
 
@@ -363,21 +460,34 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void campoProveedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoProveedor2ActionPerformed
+    private void supplierIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIdFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoProveedor2ActionPerformed
+    }//GEN-LAST:event_supplierIdFieldActionPerformed
 
-    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-        if (tablaClientes1.getComponentCount() == 0){
-            JOptionPane.showMessageDialog(null, "La orden de compra debe tener al menos un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar esta orden de compra?", "Modificar", JOptionPane.YES_NO_OPTION);
-        }
-    }//GEN-LAST:event_botonModificarActionPerformed
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
 
-    private void botonAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnularActionPerformed
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         JOptionPane.showConfirmDialog(null, "¿Seguro que quiere anular esta compra?", "Anular", JOptionPane.YES_NO_OPTION);
-    }//GEN-LAST:event_botonAnularActionPerformed
+        try {
+            orderbl.deleteOrder(Integer.parseInt(idField.getText()));
+            bundlebl.deleteBundles(Integer.parseInt(idField.getText()));
+        } catch (SQLException ex) {
+            System.out.println("Error en base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Se anuló correctamente la orden de compra.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        resetProducts();
+        while (productsOrderModel.getRowCount() != 0) {
+            productsOrderModel.removeRow(productsOrderModel.getRowCount()-1);
+        }
+        idField.setText("");
+        supplierIdField.setText("");
+        dateField.setText("");
+        
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
 
@@ -389,70 +499,192 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
         pantallaAgregar.setVisible(true);
     }//GEN-LAST:event_tabAgregarMouseClicked
 
-    private void campoCodProdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCodProdFocusGained
+    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCodProdFocusGained
+    }//GEN-LAST:event_idFieldActionPerformed
 
-    private void campoCodProdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCodProdFocusLost
+    private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCodProdFocusLost
+    }//GEN-LAST:event_dateFieldActionPerformed
 
-    private void campoCodProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoCodProdMouseClicked
+    private void searchSupplierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSupplierButtonActionPerformed
+
+        searchOrder.setVisible(true);
+        if (searchOrder.order == null) {
+            return;
+        }
+        
+        while (productsOrderModel.getRowCount() != 0) {
+            productsOrderModel.removeRow(productsOrderModel.getRowCount()-1);
+        }
+        
+        idField.setText(String.valueOf(searchOrder.order.getId()));
+        supplierIdField.setText(String.valueOf(searchOrder.order.getIdSupplier()));
+        dateField.setText(String.valueOf(searchOrder.order.getTransactionDate()));
+        try {
+            bundles = bundlebl.searchBundles(searchOrder.order.getId());
+        } catch (Exception ex) {
+            System.out.println("Error en base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        for (Bundle b : bundles) {
+            Object[] fila = new Object[7];
+            fila[0] = b.getIdProduct();
+            
+            String name;
+            try {
+            name = productbl.searchProducts(b.getIdProduct(), null, null).get(0).getName();
+            } catch (Exception ex) {
+                System.out.println("Error en base de datos: " + ex);
+                JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            fila[1] = name;
+            fila[2] = b.getExpirationDate();
+            fila[3] = b.getAdqPrice();
+            fila[4] = b.getQuantity();
+            fila[5] = b.getAdqPrice() * b.getQuantity();
+            fila[6] = false;
+            productsOrderModel.addRow(fila);
+        }
+    }//GEN-LAST:event_searchSupplierButtonActionPerformed
+
+    private void priceFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_priceFieldFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCodProdMouseClicked
+    }//GEN-LAST:event_priceFieldFocusGained
 
-    private void campoCodProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCodProdActionPerformed
+    private void priceFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_priceFieldFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCodProdActionPerformed
+    }//GEN-LAST:event_priceFieldFocusLost
 
-    private void campoNombreFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoNombreFocusGained
+    private void priceFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_priceFieldMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoNombreFocusGained
+    }//GEN-LAST:event_priceFieldMouseClicked
 
-    private void campoNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoNombreFocusLost
+    private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoNombreFocusLost
+    }//GEN-LAST:event_priceFieldActionPerformed
 
-    private void campoNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNombreMouseClicked
+    private void expirationFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_expirationFieldFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoNombreMouseClicked
+    }//GEN-LAST:event_expirationFieldFocusGained
 
-    private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
+    private void expirationFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_expirationFieldFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoNombreActionPerformed
+    }//GEN-LAST:event_expirationFieldFocusLost
 
-    private void campoCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCantidadFocusGained
+    private void expirationFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_expirationFieldMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCantidadFocusGained
+    }//GEN-LAST:event_expirationFieldMouseClicked
 
-    private void campoCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCantidadFocusLost
+    private void expirationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expirationFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCantidadFocusLost
+    }//GEN-LAST:event_expirationFieldActionPerformed
 
-    private void campoCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoCantidadMouseClicked
+    private void quantityFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_quantityFieldFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCantidadMouseClicked
+    }//GEN-LAST:event_quantityFieldFocusGained
 
-    private void campoCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCantidadActionPerformed
+    private void quantityFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_quantityFieldFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoCantidadActionPerformed
+    }//GEN-LAST:event_quantityFieldFocusLost
 
-    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
-        if (tablaClientes1.getSelectedRow() == -1) {
+    private void quantityFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quantityFieldMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantityFieldMouseClicked
+
+    private void quantityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quantityFieldActionPerformed
+
+    private void productIdFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_productIdFieldFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productIdFieldFocusGained
+
+    private void productIdFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_productIdFieldFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productIdFieldFocusLost
+
+    private void productIdFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productIdFieldMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productIdFieldMouseClicked
+
+    private void productIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productIdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productIdFieldActionPerformed
+
+    private void productNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_productNameFieldFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameFieldFocusGained
+
+    private void productNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_productNameFieldFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameFieldFocusLost
+
+    private void productNameFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productNameFieldMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameFieldMouseClicked
+
+    private void productNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productNameFieldActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (productIdField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (campoCantidad.getText().equals("")) {
+        if (quantityField.getText().equals("") || priceField.getText().equals("") || expirationField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    }//GEN-LAST:event_botonAgregarActionPerformed
+        for (int i = 0; i < productsOrderModel.getRowCount(); i++) {
+            if ((int) productsOrderModel.getValueAt(i, 0) == Integer.parseInt(productIdField.getText())) {
+                JOptionPane.showMessageDialog(null, "El producto seleccionado ya ha sido agregado a la orden de compra.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
 
-    private void botonBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscar1ActionPerformed
+        Object[] fila = new Object[7];
+        fila[0] = Integer.parseInt(productIdField.getText());
+        fila[1] = productNameField.getText();
+        fila[2] = expirationField.getText();
+        double price = Double.parseDouble(priceField.getText());
+        int cant = Integer.parseInt(quantityField.getText());
+        fila[3] = price;
+        fila[4] = cant;
+        fila[5] = price * cant;
+        fila[6] = false;
+        productsOrderModel.addRow(fila);
 
-    }//GEN-LAST:event_botonBuscar1ActionPerformed
+        resetProducts();
+    }//GEN-LAST:event_addButtonActionPerformed
 
-    private void botonQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonQuitarActionPerformed
-        JOptionPane.showConfirmDialog(null, "¿Seguro que quiere quitar estos productos?", "Quitar", JOptionPane.YES_NO_OPTION);
-    }//GEN-LAST:event_botonQuitarActionPerformed
+    private void searchProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductButtonActionPerformed
+        searchProduct.setVisible(true);
+        if (searchProduct.product != null) {
+            productIdField.setText(String.valueOf(searchProduct.product.getId()));
+            productNameField.setText(searchProduct.product.getName());
+            quantityField.setEnabled(true);
+            priceField.setEnabled(true);
+            expirationField.setEnabled(true);
+        }
+    }//GEN-LAST:event_searchProductButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        int answer = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere quitar los productos seleccionados?", "Quitar", JOptionPane.YES_NO_OPTION);
+        if (answer == 0) {
+            for (int i = 0; i < productsOrderModel.getRowCount(); i++) {
+                if ((boolean) productsOrderModel.getValueAt(i, 6)) {
+                    productsOrderModel.removeRow(i);
+                    i--;
+                }
+            }
+        }
+    }//GEN-LAST:event_removeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -745,30 +977,36 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonAgregar;
-    private javax.swing.JButton botonAnular;
-    private javax.swing.JButton botonBuscar1;
-    private javax.swing.JButton botonModificar;
-    private javax.swing.JButton botonQuitar;
-    private javax.swing.JTextField campoCantidad;
-    private javax.swing.JTextField campoCodProd;
-    private javax.swing.JTextField campoNombre;
-    private javax.swing.JTextField campoProveedor2;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextField dateField;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField expirationField;
+    private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton modifyButton;
+    private javax.swing.JTextField priceField;
+    private javax.swing.JTextField productIdField;
+    private javax.swing.JTextField productNameField;
+    private javax.swing.JTable productsOrderTable;
+    private javax.swing.JTextField quantityField;
+    private javax.swing.JButton removeButton;
+    private javax.swing.JButton searchProductButton;
+    private javax.swing.JButton searchSupplierButton;
+    private javax.swing.JTextField supplierIdField;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;
-    private javax.swing.JTable tablaClientes1;
-    private javax.swing.JTable tablaClientes2;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

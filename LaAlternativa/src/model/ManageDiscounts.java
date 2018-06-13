@@ -69,7 +69,6 @@ public class ManageDiscounts extends javax.swing.JFrame {
         productField1 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        searchButton1 = new javax.swing.JButton();
         searchButton2 = new javax.swing.JButton();
         prodIdField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -211,8 +210,6 @@ public class ManageDiscounts extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Descripción");
 
-        searchButton1.setText("Buscar Producto");
-
         searchButton2.setText("Buscar Producto");
         searchButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,11 +315,6 @@ public class ManageDiscounts extends javax.swing.JFrame {
                                     .addComponent(acceptButton, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(searchButton1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,11 +372,6 @@ public class ManageDiscounts extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(botonRegresar)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(searchButton1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -671,7 +658,6 @@ public class ManageDiscounts extends javax.swing.JFrame {
     private javax.swing.JTextField prodIdField;
     private javax.swing.JTextField productField1;
     private javax.swing.JButton searchButton;
-    private javax.swing.JButton searchButton1;
     private javax.swing.JButton searchButton2;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;

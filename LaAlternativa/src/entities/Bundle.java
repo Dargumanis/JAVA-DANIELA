@@ -14,6 +14,25 @@ import java.sql.Date;
  */
 public class Bundle {
 
+    private int id;
+    private int idProduct;
+    private int idOrder;
+    private int quantity;
+    private double adqPrice;
+    private Date expirationDate;    
+
+    public Bundle(int idOrder, int idProduct, int quantity, Date expirationDate, double adqPrice) {
+        this.idProduct = idProduct;
+        this.idOrder = idOrder;
+        this.quantity = quantity;
+        this.adqPrice = adqPrice;
+        this.expirationDate = expirationDate;
+    }
+
+    
+    public Bundle(){
+    }
+    
     /**
      * @return the adqPrice
      */
@@ -85,34 +104,6 @@ public class Bundle {
     }
 
     /**
-     * @return the boxQuantity
-     */
-    public int getBoxQuantity() {
-        return boxQuantity;
-    }
-
-    /**
-     * @param boxQuantity the boxQuantity to set
-     */
-    public void setBoxQuantity(int boxQuantity) {
-        this.boxQuantity = boxQuantity;
-    }
-
-    /**
-     * @return the boxSize
-     */
-    public int getBoxSize() {
-        return boxSize;
-    }
-
-    /**
-     * @param boxSize the boxSize to set
-     */
-    public void setBoxSize(int boxSize) {
-        this.boxSize = boxSize;
-    }
-
-    /**
      * @return the expirationDate
      */
     public Date getExpirationDate() {
@@ -125,17 +116,7 @@ public class Bundle {
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
-    private int id;
-    private int idProduct;
-    private int idOrder;
-    private int quantity;
-    private int boxQuantity;
-    private int boxSize;
-    private double adqPrice;
-    private Date expirationDate;    
     
-    public Bundle(){
-    }
             
     
     

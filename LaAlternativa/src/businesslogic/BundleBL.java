@@ -23,4 +23,12 @@ public class BundleBL {
         bundleDA.addBundles(bundles); //FALTA IMPLEMENTAR
     }
     
+    public void deleteBundles(int orderId) throws SQLException {
+        bundleDA.deleteBundles(orderId);
+    }
+    
+    public ArrayList<Bundle> searchBundles (int orderId) throws SQLException {
+        return bundleDA.searchBundles(orderId);
+    }
+    
 }
