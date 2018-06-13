@@ -138,12 +138,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="titulo" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="campoProv" min="-2" pref="115" max="-2" attributes="0"/>
+                              <Component id="supplierIdField" min="-2" pref="115" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="campoProv1" min="-2" pref="115" max="-2" attributes="0"/>
+                                      <Component id="supplierNameField" min="-2" pref="115" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="botonBuscar1" min="-2" pref="132" max="-2" attributes="0"/>
                                   </Group>
@@ -162,22 +162,22 @@
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Component id="titulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Group type="102" alignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="campoProv" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoProv1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="supplierIdField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="supplierNameField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botonBuscar1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel3" alignment="3" min="-2" pref="0" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -264,14 +264,14 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonRegresarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="campoProv">
+    <Component class="javax.swing.JTextField" name="supplierIdField">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="campoProvFocusGained"/>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="campoProvFocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoProvActionPerformed"/>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="supplierIdFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="supplierIdFieldFocusLost"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supplierIdFieldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botonBuscar">
@@ -519,14 +519,14 @@
         <Property name="text" type="java.lang.String" value="Nombre del Proveedor"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="campoProv1">
+    <Component class="javax.swing.JTextField" name="supplierNameField">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="campoProv1FocusGained"/>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="campoProv1FocusLost"/>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campoProv1ActionPerformed"/>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="supplierNameFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="supplierNameFieldFocusLost"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supplierNameFieldActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botonBuscar1">

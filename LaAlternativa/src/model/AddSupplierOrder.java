@@ -29,6 +29,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private BundleBL bundleBL;
     private DefaultTableModel productsModel;
     private DefaultTableModel productsOrderModel;
+    private SearchSupplier searchSupplier;
 
     public AddSupplierOrder() {
         initComponents();
@@ -38,6 +39,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         bundleBL = new BundleBL();
         productsModel = (DefaultTableModel) productsTable.getModel();
         productsOrderModel = (DefaultTableModel) productsOrderTable.getModel();
+        searchSupplier = new SearchSupplier(this, rootPaneCheckingEnabled);
         this.setLocationRelativeTo(null);
         
     }
@@ -49,7 +51,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         titulo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         botonRegresar = new javax.swing.JButton();
-        campoProv = new javax.swing.JTextField();
+        supplierIdField = new javax.swing.JTextField();
         botonBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         productsTable = new javax.swing.JTable();
@@ -73,7 +75,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         fechaExp = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        campoProv1 = new javax.swing.JTextField();
+        supplierNameField = new javax.swing.JTextField();
         botonBuscar1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
@@ -96,18 +98,18 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
-        campoProv.setEnabled(false);
-        campoProv.addFocusListener(new java.awt.event.FocusAdapter() {
+        supplierIdField.setEnabled(false);
+        supplierIdField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                campoProvFocusGained(evt);
+                supplierIdFieldFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                campoProvFocusLost(evt);
+                supplierIdFieldFocusLost(evt);
             }
         });
-        campoProv.addActionListener(new java.awt.event.ActionListener() {
+        supplierIdField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoProvActionPerformed(evt);
+                supplierIdFieldActionPerformed(evt);
             }
         });
 
@@ -307,18 +309,18 @@ public class AddSupplierOrder extends javax.swing.JFrame {
 
         jLabel11.setText("Nombre del Proveedor");
 
-        campoProv1.setEnabled(false);
-        campoProv1.addFocusListener(new java.awt.event.FocusAdapter() {
+        supplierNameField.setEnabled(false);
+        supplierNameField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                campoProv1FocusGained(evt);
+                supplierNameFieldFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                campoProv1FocusLost(evt);
+                supplierNameFieldFocusLost(evt);
             }
         });
-        campoProv1.addActionListener(new java.awt.event.ActionListener() {
+        supplierNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoProv1ActionPerformed(evt);
+                supplierNameFieldActionPerformed(evt);
             }
         });
 
@@ -419,12 +421,12 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titulo)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(campoProv1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(supplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(botonBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -435,15 +437,15 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(titulo)
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel11))
                         .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(campoProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoProv1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(supplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonBuscar1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5))
@@ -526,12 +528,12 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botonBuscarActionPerformed
 
-    private void campoProvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoProvActionPerformed
-        campoProv.getText();
-    }//GEN-LAST:event_campoProvActionPerformed
+    private void supplierIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierIdFieldActionPerformed
+        supplierIdField.getText();
+    }//GEN-LAST:event_supplierIdFieldActionPerformed
 
     private void campoNombres1Clicked(java.awt.event.ActionEvent evt) {
-        campoProv.setText("");
+        supplierIdField.setText("");
     }
     
     private void tabBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabBuscarMouseClicked
@@ -544,13 +546,13 @@ public class AddSupplierOrder extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tabAgregarMouseClicked
 
-    private void campoProvFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProvFocusGained
+    private void supplierIdFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_supplierIdFieldFocusGained
    
-    }//GEN-LAST:event_campoProvFocusGained
+    }//GEN-LAST:event_supplierIdFieldFocusGained
 
-    private void campoProvFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProvFocusLost
+    private void supplierIdFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_supplierIdFieldFocusLost
      
-    }//GEN-LAST:event_campoProvFocusLost
+    }//GEN-LAST:event_supplierIdFieldFocusLost
 
     private void campoCantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoCantidadFocusGained
         // TODO add your handling code here:
@@ -571,8 +573,8 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private void botonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConfirmarActionPerformed
        Order order = new Order();
        ArrayList<Bundle> bundles = new ArrayList<>();
-        if (campoProv.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar el código del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (supplierIdField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (productsOrderTable.getComponentCount() == 0){
@@ -582,7 +584,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         
         int ans = JOptionPane.showConfirmDialog(null, "¿Confirma que desea agregar la compra?", "Agregar", JOptionPane.YES_NO_OPTION);
         if(ans==0){
-            order.setIdSupplier(Integer.parseInt(campoProv.getText()));
+            order.setIdSupplier(Integer.parseInt(supplierIdField.getText()));
             long millis=System.currentTimeMillis();  
             java.sql.Date date=new java.sql.Date(millis);  
             order.setTransactionDate(date);
@@ -733,20 +735,24 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaExpActionPerformed
 
-    private void campoProv1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProv1FocusGained
+    private void supplierNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_supplierNameFieldFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoProv1FocusGained
+    }//GEN-LAST:event_supplierNameFieldFocusGained
 
-    private void campoProv1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoProv1FocusLost
+    private void supplierNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_supplierNameFieldFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoProv1FocusLost
+    }//GEN-LAST:event_supplierNameFieldFocusLost
 
-    private void campoProv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoProv1ActionPerformed
+    private void supplierNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoProv1ActionPerformed
+    }//GEN-LAST:event_supplierNameFieldActionPerformed
 
     private void botonBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscar1ActionPerformed
-        // TODO add your handling code here:
+        searchSupplier.setVisible(true);
+        if (searchSupplier.supplier != null) {
+            supplierIdField.setText(String.valueOf(searchSupplier.supplier.getId()));
+            supplierNameField.setText(searchSupplier.supplier.getName());
+        } 
     }//GEN-LAST:event_botonBuscar1ActionPerformed
 
     /**
@@ -772,8 +778,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JTextField campoCodProd;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoPrecio;
-    private javax.swing.JTextField campoProv;
-    private javax.swing.JTextField campoProv1;
     private javax.swing.JTextField fechaExp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -791,6 +795,8 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable productsOrderTable;
     private javax.swing.JTable productsTable;
+    private javax.swing.JTextField supplierIdField;
+    private javax.swing.JTextField supplierNameField;
     private javax.swing.JMenu tabAgregar;
     private javax.swing.JMenu tabBuscar;
     private javax.swing.JLabel titulo;
