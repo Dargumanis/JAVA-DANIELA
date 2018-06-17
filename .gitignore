@@ -1,2 +1,4 @@
 *.class
 /LaAlternativa/dist/
+/LaAlternativa/nbproject/private/
+/LaAlternativa/build/

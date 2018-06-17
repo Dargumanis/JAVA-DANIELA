@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c89efc24-23c4-4433-bfbd-6363f6a814fe">
+	<parameter name="Fecha_Inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Fecha_Final" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT pre.Name, pre.VentaTotal
+FROM Ticket t
+INNER JOIN
+(SELECT p.Name, sum(pt.Subtotal) as VentaTotal, pt.Ticket_idTicket
+FROM ProductXTicket pt
+INNER JOIN Product p ON pt.Product_IdProduct= p.IdProduct 
+and pt.State=1
+group by pt.Product_IdProduct) as pre
+ON t.idTicket=pre.Ticket_idTicket
+and t.Date between date_format($P{Fecha_Inicial},'%Y-%m-%d') and date_format($P{Fecha_Final},'%Y-%m-%d') 
+order by pre.VentaTotal desc;]]>
+	</queryString>
+	<field name="Name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VentaTotal" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="147" y="0" width="263" height="61" uuid="c9c21004-a35b-4a43-a636-87f1d9b32b4d"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ventas por producto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="177" y="31" width="100" height="20" uuid="0ad2254a-47ac-45ca-bd4e-0e5ce9e30bba"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha_Inicial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="31" width="100" height="20" uuid="b3bb91e7-e24c-4f30-93cf-ccfa9f24e22d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha_Final}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="2" width="100" height="20" uuid="b609de78-20fd-4d03-a4f6-dfda8e2bcb43"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="2" width="100" height="20" uuid="f6d9a737-62fd-4a0f-b58c-8ee3ffb8c788"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[VentaTotal(en soles)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="51" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="15" width="100" height="20" uuid="45b1cfa2-fbdc-483b-b5c9-7375f639b9e4"/>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="12" width="100" height="20" uuid="1f2893c8-ec5e-42f2-95e3-6ee0d8637762"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{VentaTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

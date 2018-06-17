@@ -5,7 +5,9 @@
  */
 package model;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
+import reports.ReportGenerator;
 
 /**
  *
@@ -14,11 +16,20 @@ import javax.swing.JOptionPane;
 
 public class PantallaReporte extends javax.swing.JFrame {
 
+    ReportGenerator rG = new ReportGenerator();
     /**
      * Creates new form Reporte
      */
     public PantallaReporte() {
         initComponents();
+        initDate.setText("2000-01-01");
+        endingDate.setText("2018-12-31");
+        initDate.setForeground(Color.darkGray);
+        endingDate.setForeground(Color.darkGray);
+        cbReportes.addItem("Lotes por expirar");
+        cbReportes.addItem("Compras por proveedor");
+        cbReportes.addItem("Ventas por producto");
+        cbReportes.addItem("Reporte general de compras");        
         this.setLocationRelativeTo(null);
     }
 
@@ -33,9 +44,9 @@ public class PantallaReporte extends javax.swing.JFrame {
 
         titulo = new javax.swing.JLabel();
         botonBuscar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        cbReportes = new javax.swing.JComboBox<>();
+        initDate = new javax.swing.JFormattedTextField();
+        endingDate = new javax.swing.JFormattedTextField();
         botonRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,24 +61,36 @@ public class PantallaReporte extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbReportes.setName("ReportsType"); // NOI18N
+        cbReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbReportesActionPerformed(evt);
             }
         });
 
-        jFormattedTextField1.setText("Fecha de inicio");
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        initDate.setForeground(new java.awt.Color(204, 204, 204));
+        initDate.setToolTipText("");
+        initDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
+                initDateActionPerformed(evt);
+            }
+        });
+        initDate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                initDateKeyTyped(evt);
             }
         });
 
-        jFormattedTextField2.setText("Fecha de fin");
-        jFormattedTextField2.addActionListener(new java.awt.event.ActionListener() {
+        endingDate.setForeground(new java.awt.Color(204, 204, 204));
+        endingDate.setToolTipText("");
+        endingDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField2ActionPerformed(evt);
+                endingDateActionPerformed(evt);
+            }
+        });
+        endingDate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                endingDateKeyTyped(evt);
             }
         });
 
@@ -85,21 +108,23 @@ public class PantallaReporte extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(botonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(418, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titulo)
+                    .addComponent(cbReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(titulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(initDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(endingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(botonBuscar))
-                    .addComponent(botonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addComponent(botonBuscar)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +133,9 @@ public class PantallaReporte extends javax.swing.JFrame {
                 .addComponent(titulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(initDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -122,26 +147,95 @@ public class PantallaReporte extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
-        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+        switch (cbReportes.getSelectedIndex()){            
+                case 0:
+                    try{
+                        rG.reporteBundles(initDate.getText());
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                    }
+                    break;
+                case 1:
+                    try{
+                        rG.reporteCostos(initDate.getText(), endingDate.getText());
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                case 2:
+                    try{
+                        rG.reporteVentas(initDate.getText(), endingDate.getText());
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                case 3:
+                    try{
+                        rG.reporteCompras(initDate.getText(), endingDate.getText());
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Elija una opcion correcta", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+        }
+                    
     }//GEN-LAST:event_botonBuscarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void cbReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbReportesActionPerformed
+        if(cbReportes.getSelectedIndex()==0){
+            endingDate.setEnabled(false);
+            endingDate.setText("2018-12-31");
+        }
+        else endingDate.setEnabled(true);
+    }//GEN-LAST:event_cbReportesActionPerformed
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+    private void initDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initDateActionPerformed
+        
+    }//GEN-LAST:event_initDateActionPerformed
 
-    private void jFormattedTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField2ActionPerformed
+    private void endingDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endingDateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField2ActionPerformed
+    }//GEN-LAST:event_endingDateActionPerformed
 
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
         this.dispose();
         AdminScreen atras = new AdminScreen();
         atras.setVisible(true);
     }//GEN-LAST:event_botonRegresarActionPerformed
+
+    private void initDateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_initDateKeyTyped
+        initDate.setForeground(Color.black);
+        if(initDate.getText().equals("2000-01-01")) initDate.setText("");
+    }//GEN-LAST:event_initDateKeyTyped
+
+    private void endingDateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_endingDateKeyTyped
+        endingDate.setForeground(Color.black);
+        if(endingDate.getText().equals("2018-12-31")) endingDate.setText("");
+    }//GEN-LAST:event_endingDateKeyTyped
 
     /**
      * @param args the command line arguments
@@ -182,9 +276,9 @@ public class PantallaReporte extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonRegresar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
+    private javax.swing.JComboBox<String> cbReportes;
+    private javax.swing.JFormattedTextField endingDate;
+    private javax.swing.JFormattedTextField initDate;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
