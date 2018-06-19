@@ -11,6 +11,6 @@ package utils;
  */
 public class Enumerators {
     public enum EmployeeType {User, Admin}
-    public enum RequirementType {Issue, Suggestion, StockRequirement}
+    public enum RequirementType {Sugerencia, Problema, Otro}
     
 }

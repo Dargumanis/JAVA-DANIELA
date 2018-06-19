@@ -203,7 +203,10 @@ public class AdminScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSolicitudesActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        AdminRequest ar = new AdminRequest();
+        ar.setVisible(true);
+        
     }//GEN-LAST:event_botonSolicitudesActionPerformed
 
     private void botonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVentasActionPerformed
