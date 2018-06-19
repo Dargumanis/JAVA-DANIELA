@@ -257,7 +257,7 @@ public class AddSupplier extends javax.swing.JFrame {
         try {
         supplierbl.addSupplier(s);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al agregar proveedor: " + ex);
             return;
         }

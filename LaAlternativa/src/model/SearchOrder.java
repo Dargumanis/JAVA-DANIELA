@@ -255,8 +255,8 @@ public class SearchOrder extends javax.swing.JDialog {
         try {
         orders = orderbl.searchOrders(orderId, supplierId, date, supplierName);
         } catch (Exception ex) {
-            System.out.println("Error en base de datos " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -283,7 +283,7 @@ public class SearchOrder extends javax.swing.JDialog {
         try {
             list = orderbl.searchOrders((Integer) ordersModel.getValueAt(index, 0), null, null, null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar orden de compra: " + ex);
             return;
         }

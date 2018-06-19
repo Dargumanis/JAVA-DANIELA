@@ -49,10 +49,10 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         } catch (Exception ex) {
             System.out.println("Error en síntomas: " + ex);
         }
+        symptomCombo.addItem("+ Nuevo Síntoma");
         for (Symptom item : list) {
             symptomCombo.addItem(item.getName());
         }
-        symptomCombo.addItem("NUEVO SINTOMA");
     }
 
     /**
@@ -229,7 +229,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        if (symptomCombo.getSelectedItem().equals("NUEVO SINTOMA")) {
+        if (symptomCombo.getSelectedItem().equals("+ Nuevo Síntoma")) {
             if (symptomField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Debe definir el nombre del nuevo síntoma.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -254,7 +254,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
         if (symptomCombo.getSelectedItem() == null) {
             return;
         }
-        if (symptomCombo.getSelectedItem().toString().equals("NUEVO SINTOMA")) {
+        if (symptomCombo.getSelectedItem().toString().equals("+ Nuevo Síntoma")) {
             symptomField.setEditable(true);
             symptomField.setEnabled(true);
         } else {

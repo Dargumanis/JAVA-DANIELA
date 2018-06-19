@@ -355,8 +355,8 @@ public class AddProduct extends javax.swing.JFrame {
         try {
             id = productbl.addProduct(p);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en base de datos " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos " + ex);
             return;
         }
         
@@ -366,12 +366,13 @@ public class AddProduct extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             System.out.println("Error al agregar síntomas." + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el producto.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
         emptyFields();
+        addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, null);
     }//GEN-LAST:event_addProductActionPerformed
 
     private void symptomsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomsButtonActionPerformed

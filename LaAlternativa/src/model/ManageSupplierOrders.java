@@ -485,8 +485,8 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
             orderbl.deleteOrder(Integer.parseInt(idField.getText()));
             bundlebl.deleteBundles(Integer.parseInt(idField.getText()));
         } catch (SQLException ex) {
-            System.out.println("Error en base de datos: " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         JOptionPane.showMessageDialog(null, "Se anuló correctamente la orden de compra.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
@@ -533,8 +533,8 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
         try {
             bundles = bundlebl.searchBundles(searchOrder.order.getId());
         } catch (Exception ex) {
-            System.out.println("Error en base de datos: " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -546,8 +546,8 @@ public class ManageSupplierOrders extends javax.swing.JFrame {
             try {
             name = productbl.searchProducts(b.getIdProduct(), null, null).get(0).getName();
             } catch (Exception ex) {
-                System.out.println("Error en base de datos: " + ex);
-                JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Error al consultar los datos: " + ex);
+                JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             

@@ -21,6 +21,7 @@ public class SearchProducts extends javax.swing.JDialog {
     ProductBL productbl;
     DefaultTableModel model;
     public Product product;
+
     /**
      * Creates new form SearchProducts
      */
@@ -117,7 +118,7 @@ public class SearchProducts extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -250,7 +251,7 @@ public class SearchProducts extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "El precio debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (price <= 0) {
+        if (price != null && price <= 0) {
             JOptionPane.showMessageDialog(null, "El precio debe ser un valor positivo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -259,7 +260,7 @@ public class SearchProducts extends javax.swing.JDialog {
             products = productbl.searchProducts(id, name, price);
         } catch (Exception ex) {
             System.out.println("Error al buscar producto " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -267,9 +268,15 @@ public class SearchProducts extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "No se encontraron productos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        String prescription;
 
         for (Product fila : products) {
-            model.addRow(new Object[]{fila.getId(), fila.getName(), fila.getPrice(), fila.getNeedsPrescription()});
+            if (fila.getNeedsPrescription()== 0) {
+                prescription = "NO";
+            } else {
+                prescription = "SI";
+            }
+            model.addRow(new Object[]{fila.getId(), fila.getName(), fila.getPrice(), prescription});
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -283,7 +290,7 @@ public class SearchProducts extends javax.swing.JDialog {
         try {
             list = productbl.searchProducts((Integer) productTable.getValueAt(index, 0), null, null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar producto: " + ex);
             return;
         }

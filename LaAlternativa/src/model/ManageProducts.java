@@ -69,7 +69,7 @@ public class ManageProducts extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         minStockField = new javax.swing.JTextField();
-        idField1 = new javax.swing.JTextField();
+        idField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         totalField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -162,10 +162,10 @@ public class ManageProducts extends javax.swing.JFrame {
             }
         });
 
-        idField1.setEnabled(false);
-        idField1.addActionListener(new java.awt.event.ActionListener() {
+        idField.setEnabled(false);
+        idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idField1ActionPerformed(evt);
+                idFieldActionPerformed(evt);
             }
         });
 
@@ -222,7 +222,7 @@ public class ManageProducts extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel14)
-                                    .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel15)
@@ -280,7 +280,7 @@ public class ManageProducts extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -356,7 +356,7 @@ public class ManageProducts extends javax.swing.JFrame {
         try {
             codSymptoms = symptombl.searchProductSymptoms(p.getId());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar sintomas: " + ex);
             return;
         }
@@ -367,12 +367,12 @@ public class ManageProducts extends javax.swing.JFrame {
                 symptomsList.add(symptomName);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar nombres de sintomas: " + ex);
             return;
         }
 
-        idField1.setText(String.valueOf(p.getId()));
+        idField.setText(String.valueOf(p.getId()));
         totalField.setText(String.valueOf(p.getTotalItems()));
         nameField1.setText(p.getName());
         priceField1.setText(String.valueOf(p.getPrice()));
@@ -428,7 +428,7 @@ public class ManageProducts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El producto debe tener al menos un síntoma.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int id = Integer.parseInt(idField1.getText());
+        int id = Integer.parseInt(idField.getText());
         int totalItems = Integer.parseInt(totalField.getText());
         String name = nameField1.getText();
         double price;
@@ -479,7 +479,7 @@ public class ManageProducts extends javax.swing.JFrame {
             productbl.updateProduct(p);
         } catch (Exception ex) {
             System.out.println("Error al modificar producto " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -492,7 +492,7 @@ public class ManageProducts extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             System.out.println("Error al agregar síntomas " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
@@ -500,12 +500,12 @@ public class ManageProducts extends javax.swing.JFrame {
                 if (!addSymptoms.symptoms.contains(symptom)) {
                     int symId = symptombl.searchSymptom(symptom);
                     System.out.println(symId);
-                    symptombl.deleteProductXTag(Integer.parseInt(idField1.getText()), symId);
+                    symptombl.deleteProductXTag(Integer.parseInt(idField.getText()), symId);
                 }
             }
         } catch (Exception ex) {
             System.out.println("Error al eliminar síntomas " + ex);
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -524,26 +524,26 @@ public class ManageProducts extends javax.swing.JFrame {
         try {
             for (String symptom : symptomsList) {
                 int id = symptombl.searchSymptom(symptom);
-                symptombl.deleteProductXTag(Integer.parseInt(idField1.getText()), id);
+                symptombl.deleteProductXTag(Integer.parseInt(idField.getText()), id);
             }
         } catch (Exception ex) {
             System.out.println("Error al eliminar síntoma del producto: " + ex.toString());
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
-            discountbl.deleteAllForProduct(Integer.parseInt(idField1.getText()));
+            discountbl.deleteAllForProduct(Integer.parseInt(idField.getText()));
         } catch (Exception ex) {
             System.out.println("Error al eliminar descuentos del producto: " + ex.toString());
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
-            productbl.deleteProduct(Integer.parseInt(idField1.getText()));
+            productbl.deleteProduct(Integer.parseInt(idField.getText()));
         } catch (Exception ex) {
             System.out.println("Error al eliminar producto: " + ex.toString());
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -582,15 +582,19 @@ public class ManageProducts extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_minStockFieldActionPerformed
 
-    private void idField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idField1ActionPerformed
+    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idField1ActionPerformed
+    }//GEN-LAST:event_idFieldActionPerformed
 
     private void totalFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalFieldActionPerformed
 
     private void symptomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_symptomButtonActionPerformed
+        if (idField.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         addSymptoms.setVisible(true);
     }//GEN-LAST:event_symptomButtonActionPerformed
 
@@ -695,7 +699,7 @@ public class ManageProducts extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JTextField idField1;
+    private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

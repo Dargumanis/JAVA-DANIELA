@@ -426,8 +426,8 @@ public class ManageSuppliers extends javax.swing.JFrame {
         try {
             suppliers = supplierbl.searchSuppliers(id, ruc, name);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         if (suppliers.isEmpty()) {
@@ -451,8 +451,8 @@ public class ManageSuppliers extends javax.swing.JFrame {
         try {
             list = supplierbl.searchSuppliers((Integer) supplierTable.getValueAt(index, 0), null, null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         
@@ -493,7 +493,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
         try {
             supplierbl.modifySupplier(s);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al modificar proveedor " + ex);
             return;
         }
@@ -511,8 +511,8 @@ public class ManageSuppliers extends javax.swing.JFrame {
         try {
             supplierbl.deleteSupplier(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         enableFields(false);

@@ -181,7 +181,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
         jLabel5.setText("Seleccione un descuento:");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Código");
+        jLabel7.setText("Cod. Descuento");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Código");
@@ -270,7 +270,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addGap(123, 346, Short.MAX_VALUE))
+                                .addGap(123, 320, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -315,7 +315,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
                                         .addComponent(searchButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(acceptButton, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,7 +390,9 @@ public class ManageDiscounts extends javax.swing.JFrame {
 
     private void emptyFields() {
         idField.setText("");
-
+        prodIdField.setText("");
+        nameField.setText("");
+        
         idField1.setText("");
         productField1.setText("");
         pointsField.setText("");
@@ -398,6 +400,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
         factorField.setText("");
 
         model.setRowCount(0);
+        searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
     }
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
@@ -414,8 +417,8 @@ public class ManageDiscounts extends javax.swing.JFrame {
         try {
             list = discountbl.searchDiscounts((Integer) discountTable.getValueAt(index, 0), null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         Discount d = list.get(0);
@@ -476,8 +479,8 @@ public class ManageDiscounts extends javax.swing.JFrame {
         try {
             discountbl.modifyDiscount(d);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         enableFields(false);
@@ -494,14 +497,14 @@ public class ManageDiscounts extends javax.swing.JFrame {
         try {
             discountbl.deleteDiscount(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         enableFields(false);
         emptyFields();
         JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente el descuento.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-
+        model.setRowCount(0);
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
@@ -528,8 +531,8 @@ public class ManageDiscounts extends javax.swing.JFrame {
         try {
             listD = discountbl.searchDiscounts(id, productId);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         if (listD.isEmpty()) {

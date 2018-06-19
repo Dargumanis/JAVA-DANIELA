@@ -41,6 +41,9 @@ public class AddDiscount extends javax.swing.JFrame {
         factorField.setText("");
         pointsField.setText("");
         descriptionField.setText("");
+        idField.setText("");
+        nameField.setText("");
+        searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
     }
     
     
@@ -49,7 +52,7 @@ public class AddDiscount extends javax.swing.JFrame {
         try {
             list = productbl.searchProducts(null, null, null);
         } catch (SQLException ex) {
-            System.out.println("Error en base de datos: " + ex);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
     }
@@ -308,8 +311,8 @@ public class AddDiscount extends javax.swing.JFrame {
         try {
             discountbl.addDiscount(d);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el descuento.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);

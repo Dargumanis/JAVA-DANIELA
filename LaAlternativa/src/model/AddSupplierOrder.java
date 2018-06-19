@@ -288,6 +288,8 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
+        expirationField.setEnabled(false);
+
         jLabel7.setText("Precio de Venta");
 
         productSaleField.setEnabled(false);
@@ -446,6 +448,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         productNameField.setText("");
         quantityField.setText("");
         priceField.setText("");
+        productSaleField.setText("");
         expirationField.setDate(null);
 
         productIdField.setEnabled(false);
@@ -454,14 +457,14 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         priceField.setEnabled(false);
         expirationField.setEnabled(false);
 
-        searchProduct.product = null;
+        searchProduct = new SearchProducts(this, rootPaneCheckingEnabled);
     }
     
     private void resetSupplier() {
         supplierIdField.setText("");
         supplierNameField.setText("");
         
-        searchSupplier.supplier = null;
+        searchSupplier = new SearchSupplier(this, rootPaneCheckingEnabled);
     }
     
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
@@ -546,7 +549,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             try {
                 idOrder = orderBL.addOrder(order);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error en base de datos al agregar orden de compra.", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al consultar los datos al agregar orden de compra.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             for (int i = 0; i < productsOrderModel.getRowCount(); i++) {
@@ -571,7 +574,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Registro exitoso de suministros", "Operacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al consultar los datos", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 

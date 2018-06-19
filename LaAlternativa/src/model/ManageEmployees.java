@@ -536,8 +536,8 @@ public class ManageEmployees extends javax.swing.JFrame {
         try {
             employees = employeebl.searchEmployees(id, dni, name, surname);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         
@@ -561,8 +561,8 @@ public class ManageEmployees extends javax.swing.JFrame {
         try {
             list = employeebl.searchEmployees(Integer.parseInt((String) employeeTable.getValueAt(index, 0)), null, null, null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         
@@ -672,8 +672,8 @@ public class ManageEmployees extends javax.swing.JFrame {
         try {
             employeebl.modifyEmployee(e);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         
@@ -699,8 +699,8 @@ public class ManageEmployees extends javax.swing.JFrame {
         try {
             employeebl.deleteEmployee(Integer.parseInt(idField1.getText()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         

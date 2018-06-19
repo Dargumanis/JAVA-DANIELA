@@ -133,9 +133,14 @@ public class SearchSupplier extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(cancelButton)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(confirmButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton)))
+                .addContainerGap(217, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(29, 29, 29)
@@ -149,22 +154,24 @@ public class SearchSupplier extends javax.swing.JDialog {
                         .addComponent(titulo)
                         .addComponent(jLabel5)
                         .addComponent(jLabel3)
-                        .addComponent(confirmButton)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel15)
                             .addGap(85, 85, 85)
                             .addComponent(jLabel14)
                             .addGap(95, 95, 95)
                             .addComponent(jLabel16))
-                        .addComponent(searchButton)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(29, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(303, Short.MAX_VALUE)
-                .addComponent(cancelButton)
+                .addGap(118, 118, 118)
+                .addComponent(searchButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancelButton)
+                    .addComponent(confirmButton))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -183,15 +190,11 @@ public class SearchSupplier extends javax.swing.JDialog {
                                 .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(rucField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(searchButton)
-                    .addGap(12, 12, 12)
+                    .addGap(41, 41, 41)
                     .addComponent(jLabel3)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(confirmButton)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(45, Short.MAX_VALUE)))
         );
 
         pack();
@@ -207,8 +210,8 @@ public class SearchSupplier extends javax.swing.JDialog {
         try {
             list = supplierbl.searchSuppliers((Integer) supplierTable.getValueAt(index, 0), null, null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
 
@@ -250,8 +253,8 @@ public class SearchSupplier extends javax.swing.JDialog {
         try {
             suppliers = supplierbl.searchSuppliers(id, ruc, name);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         if (suppliers.isEmpty()) {

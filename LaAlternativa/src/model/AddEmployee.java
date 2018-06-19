@@ -332,8 +332,8 @@ public class AddEmployee extends javax.swing.JFrame {
         try {
             employeebl.addEmployee(e);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Error en la base de datos: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Error al consultar los datos: " + ex);
             return;
         }
         JOptionPane.showMessageDialog(null, "Se agregó correctamente el empleado.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
