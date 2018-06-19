@@ -27,7 +27,8 @@ public class AddProduct extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         addSymptoms = new AddSymptomsToProduct(this, rootPaneCheckingEnabled, null);
         productbl = new ProductBL();
-        symptombl = new SymptomBL();       
+        symptombl = new SymptomBL();     
+        this.setResizable(false);
     }
 
     private void emptyFields() {

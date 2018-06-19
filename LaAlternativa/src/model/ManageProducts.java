@@ -41,6 +41,7 @@ public class ManageProducts extends javax.swing.JFrame {
         searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
         addSymptoms = null;
         enableFields(false);
+        this.setResizable(false);
     }
 
     /**
@@ -348,7 +349,6 @@ public class ManageProducts extends javax.swing.JFrame {
         searchProducts.setVisible(true);
         Product p = searchProducts.product;
         if (p == null)  {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         enableFields(true);

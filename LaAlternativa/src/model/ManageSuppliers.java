@@ -31,6 +31,7 @@ public class ManageSuppliers extends javax.swing.JFrame {
         supplierbl = new SupplierBL();
         enableFields(false);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     private void enableFields(Boolean b) {

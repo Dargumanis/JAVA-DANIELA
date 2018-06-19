@@ -21,7 +21,7 @@ public class SupplierBL {
     public SupplierBL() {
         dataAccess = new SupplierDA();
     }
-
+    
     public void addSupplier(Supplier s) throws SQLException {
         dataAccess.addSupplier(s);
     }

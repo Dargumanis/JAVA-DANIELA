@@ -31,6 +31,7 @@ public class SearchProducts extends javax.swing.JDialog {
         model = (DefaultTableModel) productTable.getModel();
         productbl = new ProductBL();
         product = null;
+        this.setResizable(false);
     }
 
     /**
@@ -247,6 +248,10 @@ public class SearchProducts extends javax.swing.JDialog {
         } catch (Exception ex) {
             System.out.println("Error en codigo: " + ex);
             JOptionPane.showMessageDialog(null, "El precio debe ser un valor decimal.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (price <= 0) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser un valor positivo.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         ArrayList<Product> products;

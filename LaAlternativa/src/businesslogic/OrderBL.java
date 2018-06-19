@@ -20,6 +20,11 @@ public class OrderBL {
     public OrderBL(){
         orderDA= new OrderDA();
     }
+    
+    public String getSupplierName(int idSupplier){
+        return orderDA.getSupplierName(idSupplier);
+    }
+    
     public int addOrder(Order o) throws SQLException {
         return orderDA.addOrderDA(o);
     }
@@ -30,7 +35,7 @@ public class OrderBL {
     public void deleteOrder(int id) throws SQLException{
         orderDA.deleteOrder(id);
     }
-    public ArrayList<Order> searchOrders(Integer idOrder, Integer idSupplier, String transactionDate) throws SQLException{
-        return orderDA.searchOrders(idOrder, idSupplier, transactionDate);
+    public ArrayList<Order> searchOrders(Integer idOrder, Integer idSupplier, String transactionDate, String supplierName) throws SQLException{
+        return orderDA.searchOrders(idOrder, idSupplier, transactionDate,supplierName);
     }
 }

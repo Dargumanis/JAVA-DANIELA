@@ -31,6 +31,7 @@ public class ManageEmployees extends javax.swing.JFrame {
         employeebl = new EmployeeBL();
         model = (DefaultTableModel) employeeTable.getModel();
         enableFields(false);
+        this.setResizable(false);
     }
 
     /**

@@ -1,5 +1,7 @@
 package model;
 
+import utils.Constants;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,7 +19,9 @@ public class AdminScreen extends javax.swing.JFrame {
      */
     public AdminScreen() {
         initComponents();
+        jLabel2.setText(Constants.getCurrentUserText());
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**
@@ -71,6 +75,7 @@ public class AdminScreen extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Administrador: Daniela Argumanis");
 
         botonDescuentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -240,7 +245,9 @@ public class AdminScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_botonOrdenesActionPerformed
 
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Login atras = new Login();
+        atras.setVisible(true);
     }//GEN-LAST:event_botonRegresarActionPerformed
 
     private void botonReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReporteActionPerformed

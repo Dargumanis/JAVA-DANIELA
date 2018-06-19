@@ -38,6 +38,7 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
             }
         }
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     public void defineSymptomCombo() {

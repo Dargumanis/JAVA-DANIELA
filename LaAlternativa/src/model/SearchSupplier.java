@@ -32,6 +32,7 @@ public class SearchSupplier extends javax.swing.JDialog {
         supplierbl = new SupplierBL();
         supplier = null;
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**

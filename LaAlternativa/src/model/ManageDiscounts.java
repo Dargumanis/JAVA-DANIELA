@@ -34,6 +34,7 @@ public class ManageDiscounts extends javax.swing.JFrame {
         enableFields(false);
         model = (DefaultTableModel) discountTable.getModel();
         searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
+        this.setResizable(false);
     }
 
 

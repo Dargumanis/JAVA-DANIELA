@@ -33,6 +33,7 @@ public class AddDiscount extends javax.swing.JFrame {
         productbl = new ProductBL();
         defineProductCombo(); 
         searchProducts = new SearchProducts(this, rootPaneCheckingEnabled);
+        this.setResizable(false);
     }
     
     private void emptyFields() {

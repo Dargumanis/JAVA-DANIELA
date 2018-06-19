@@ -21,6 +21,7 @@ public class AddEmployee extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         employeebl = new EmployeeBL();
+        this.setResizable(false);
     }
 
     private void emptyFields() {

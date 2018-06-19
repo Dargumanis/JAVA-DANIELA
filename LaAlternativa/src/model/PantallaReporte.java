@@ -31,6 +31,7 @@ public class PantallaReporte extends javax.swing.JFrame {
         cbReportes.addItem("Ventas por producto");
         cbReportes.addItem("Reporte general de compras");        
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**

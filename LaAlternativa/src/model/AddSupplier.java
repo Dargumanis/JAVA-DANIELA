@@ -22,6 +22,7 @@ public class AddSupplier extends javax.swing.JFrame {
         initComponents();
         supplierbl = new SupplierBL();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
     }
 
     /**
