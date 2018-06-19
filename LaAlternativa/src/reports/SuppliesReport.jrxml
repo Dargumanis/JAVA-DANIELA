@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ba54abb-663a-4267-82ea-1ed448fab0f9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Fecha_Inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Fecha_Final" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT s.Name as Proveedor, r.idBundle,r.idSupplierOrder,r.ProductQuantity,r.ExpirationDate,r.CostUnit,
+	(r.ProductQuantity*r.CostUnit)as subtotal,r.RegisterDate,r.TransactionDate,r.Producto
+FROM Supplier s
+INNER JOIN (select p.Name as Producto, main.*
+			FROM Product p
+			INNER JOIN (select b.idBundle, b.idSupplierOrder, b.idProduct, b.ProductQuantity,
+							b.ExpirationDate, b.CostUnit, b.RegisterDate, so.TransactionDate, so.Supplier_IdSupplier
+						FROM Bundle b
+						INNER JOIN SupplierOrder so ON so.IdSupplierOrder=b.idSupplierOrder 
+						and so.TransactionDate between date_format($P{Fecha_Inicial},'%Y-%m-%d') and date_format($P{Fecha_Final},'%Y-%m-%d')
+                        and so.State=1) as main
+			ON main.idProduct= p.IdProduct) as r
+            ON r.Supplier_IdSupplier=s.IdSupplier;
+]]>
+	</queryString>
+	<field name="Proveedor" class="java.lang.String"/>
+	<field name="idBundle" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idSupplierOrder" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ProductQuantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ExpirationDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CostUnit" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RegisterDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TransactionDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Producto" class="java.lang.String"/>
+	<group name="Compra">
+		<groupExpression><![CDATA[$F{idSupplierOrder}]]></groupExpression>
+		<groupHeader>
+			<band height="90">
+				<textField>
+					<reportElement x="134" y="7" width="100" height="20" uuid="2ebcc492-bc7d-450a-86f4-a65c64d46c7f"/>
+					<textFieldExpression><![CDATA[$F{idSupplierOrder}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="134" y="27" width="100" height="20" uuid="ea4feac7-59f4-4c70-8cea-4f13f0b0d341"/>
+					<textFieldExpression><![CDATA[$F{TransactionDate}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="134" y="47" width="100" height="20" uuid="16acda23-ad37-4897-b00d-4066f600f7ae"/>
+					<textFieldExpression><![CDATA[$F{RegisterDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="7" width="134" height="20" uuid="378feeea-2708-4092-9b00-14ca8e32f488"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ID de Orden de Compra:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="28" width="134" height="17" uuid="050a77a2-9e4f-42b3-9336-064551ad9743"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de Transacción:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="45" width="134" height="17" uuid="b1220c96-18a5-4f0d-9e8f-6c02c12668e8"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha de Registro:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="60" y="67" width="100" height="20" uuid="dd52e092-d3e6-43b0-93d8-a1cb9c31c4a2"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Producto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="455" y="67" width="100" height="20" uuid="350491c7-68ea-4328-9479-f0fa76557c9e"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[ExpirationDate]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="67" width="59" height="20" uuid="7f1c0c5b-6569-4863-bec1-bdd01aa630dd"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Subtotal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="272" y="67" width="62" height="20" uuid="af129e03-9c44-4c9c-beee-03c7d4102b1a"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[CostUnit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="334" y="67" width="62" height="20" uuid="09a6509b-2a0a-4ab3-ae67-f22b78c3a3ea"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[ProductQuantity]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="149" y="67" width="100" height="20" uuid="465e86c3-6f06-4a04-bf4d-4149882bb582"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Proveedor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="67" width="60" height="20" uuid="9fc9ea34-802a-4e82-aa2b-30342c1c3961"/>
+					<textElement>
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[idBundle]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="149" y="0" width="263" height="61" uuid="cf4d52f5-696b-43e2-9731-6916d82b5e5e"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Detallado de Compras]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="172" y="69" width="100" height="20" uuid="8b075094-152a-4b23-a2e5-c0377cb60e80"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha_Inicial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="296" y="69" width="100" height="20" uuid="82e89494-f9e8-448c-a8bf-a831ff2dae33"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{Fecha_Final}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="62" y="0" width="89" height="20" uuid="943fee31-1c7f-4275-970b-1170d9ff7cfe"/>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="100" height="20" uuid="be0d59e9-77f4-41d6-8f70-4b075a87e3a1"/>
+				<textFieldExpression><![CDATA[$F{ExpirationDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="0" width="59" height="20" uuid="31b49b6f-2cb2-41e3-a1b0-9fa30dea0b00"/>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="0" width="62" height="20" uuid="4ca2292e-72ad-4de6-a2c7-de38117c5d2e"/>
+				<textFieldExpression><![CDATA[$F{CostUnit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="62" height="20" uuid="52560e6a-7715-40ba-940e-77160ba97778"/>
+				<textFieldExpression><![CDATA[$F{ProductQuantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="60" height="20" uuid="7618570e-30f0-473a-bf0f-f3d1cb49fc31"/>
+				<textFieldExpression><![CDATA[$F{idBundle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="100" height="20" uuid="6a49dbdb-e4fa-426d-b257-0d3afdd366e6"/>
+				<textFieldExpression><![CDATA[$F{Proveedor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

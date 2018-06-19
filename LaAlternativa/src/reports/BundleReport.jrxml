@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bff6b48-dbef-4b25-94cd-4a3a62df64d1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Fecha_Inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.Name as Product, p.Price, b.ProductQuantity as Quantity , b.ExpirationDate, b.idBundle, s2.Name as Supplier FROM Bundle b, Product p, SupplierOrder s, Supplier s2 WHERE b.state=1 and b.idProduct = p.idProduct and b.idSupplierOrder=s.idSupplierOrder and s.Supplier_IdSupplier=s2.IdSupplier and b.ExpirationDate > date_format($P{Fecha_Inicial},'%Y-%m-%d')
+order by b.ExpirationDate;]]>
+	</queryString>
+	<field name="Product" class="java.lang.String"/>
+	<field name="Price" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Quantity" class="java.lang.Integer"/>
+	<field name="ExpirationDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idBundle" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Supplier" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="151" y="0" width="263" height="61" uuid="dd8ba6fc-d4c6-4b3e-aeb7-ec5e5734b0ad"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Bundles por expirar:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="112" y="0" width="100" height="20" uuid="78930567-187c-4d08-9f4e-f67f6894b9ec"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="100" height="20" uuid="c2780182-4466-4abd-8b18-4f7c561bb6d0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="67" height="20" uuid="9b3bb0ed-279d-4b32-912a-fb67560c33c0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[idBundle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="0" width="100" height="20" uuid="3e776dfc-1650-4d82-9f4e-36cdca4e5b2b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Supplier]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="bd3da354-cf1f-4d3f-a787-73bb776cf429"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ExpirationDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="45" height="20" uuid="e6eb7651-5c00-4092-b02b-408bbac98d92"/>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="115" y="3" width="97" height="20" uuid="16ca1612-5196-4f33-af87-617d7fb1d10c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Product}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="3" width="100" height="20" uuid="d34f8440-9296-4367-a096-d3aed8e9e524"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="6" width="65" height="19" uuid="50dd5410-2366-428e-9fc7-5c57861e8a15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{idBundle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="339" y="4" width="100" height="20" uuid="a3ef9abe-ff0d-41f7-babb-353de9ace88e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Supplier}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="5" width="100" height="20" uuid="5930d476-9a30-4147-ba61-286b04d3962b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ExpirationDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="5" width="45" height="20" uuid="cd1b8c74-3542-4846-b416-a6df267fed68"/>
+				<textFieldExpression><![CDATA[$F{Price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
