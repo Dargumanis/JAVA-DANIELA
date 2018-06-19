@@ -35,14 +35,14 @@ public class AdminRequest extends javax.swing.JFrame {
         ArrayList<Request> req;
         try{
             req = businessLogic.listRequest(fullName);
-        }catch (Exception e){
+        }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         } 
         int i = 0;
-        for (Request fila : req) {
-            for(String name : fullName)
-                model.addRow(new Object[]{i+1, name, fila.getDescription(), fila.getType()});
+        for (Request fila : req ) {
+            model.addRow(new Object[]{i+1, fullName.get(i), fila.getDescription(), fila.getType()});
+            i++;
         }
     }
 
