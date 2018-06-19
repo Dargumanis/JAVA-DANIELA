@@ -21,9 +21,7 @@ public class Employee {
     private String password; 
     private int type; 
     private int changePassword;
-    
-    public Employee(){}
-    
+
     public Employee(String dni, String name, String surname, String address, String phoneNumber, String email, String password, int type) {
         this.dni = dni;
         this.name = name;
@@ -201,7 +199,4 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
     
-    public String getFullName(){
-        return this.name + " " + this.surname;
-    }
 }

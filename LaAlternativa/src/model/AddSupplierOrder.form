@@ -62,9 +62,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="productNameField" max="32767" attributes="0"/>
@@ -72,28 +71,20 @@
                                   <Component id="priceField" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel9" alignment="0" pref="121" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="productSaleField" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="searchProductButton" min="-2" pref="131" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                          <Component id="expirationField" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel10" max="32767" attributes="0"/>
+                                      <Component id="expirationField" min="-2" pref="145" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -164,30 +155,24 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="productIdField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="productNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="searchProductButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="productIdField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="productNameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="searchProductButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="productSaleField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="quantityField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="priceField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Component id="expirationField" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="quantityField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="priceField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="expirationField" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="addButton" min="-2" max="-2" attributes="0"/>
@@ -431,8 +416,19 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Fecha Caducidad"/>
+        <Property name="text" type="java.lang.String" value="Fec. Caducidad (dd-MM-yyyy)"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="expirationField">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="expirationFieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="expirationFieldFocusLost"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="expirationFieldMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="expirationFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
@@ -456,18 +452,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchSupplierButtonActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="expirationField">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Precio de Venta"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="productSaleField">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

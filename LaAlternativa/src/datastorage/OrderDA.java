@@ -16,22 +16,6 @@ import utils.Constants;
  */
 public class OrderDA {
     
-    public String getSupplierName(int idSupplier){
-        String supplierName = null;
-        try{
-            Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-            CallableStatement cs = con.prepareCall(Constants.getSupplierNameProcedure);
-            cs.setInt(1, idSupplier);
-            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
-            cs.executeUpdate();
-            supplierName = cs.getString("supplierName");
-            con.close();
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage() + " \nError de retorno de password\n");
-        }        
-        return supplierName;
-    }
-    
     public int addOrderDA(Order o) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         CallableStatement cst = con.prepareCall(Constants.addOrderProcedure);
@@ -61,7 +45,7 @@ public class OrderDA {
         con.close();
     }
     
-    public ArrayList<Order> searchOrders(Integer _idOrder, Integer _idSupplier, String _transactionDate, String _supplierName) throws SQLException {
+    public ArrayList<Order> searchOrders(Integer _idOrder, Integer _idSupplier, String _transactionDate) throws SQLException {
         ArrayList<Order> list = new ArrayList<>();
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
         CallableStatement cst = con.prepareCall(Constants.searchOrdersProcedure);
@@ -80,11 +64,6 @@ public class OrderDA {
         } else {
             cst.setDate("_fecha", Date.valueOf(_transactionDate));
         }
-        if (_supplierName == null) {
-            cst.setNull("_nameSupplier", Types.VARCHAR);
-        } else {
-            cst.setString("_nameSupplier", _supplierName);
-        }
         
         ResultSet rs = cst.executeQuery();
         while (rs.next()) {
@@ -95,12 +74,10 @@ public class OrderDA {
             int id = rs.getInt("IdSupplierOrder");
             int idSupplier = rs.getInt("Supplier_IdSupplier");
             Date fecha = rs.getDate("TransactionDate");
-            String nameSupplier = rs.getString("Name");
             Order o = new Order();
             o.setId(id);
             o.setIdSupplier(idSupplier);
             o.setTransactionDate(fecha);
-            o.setNameSupplier(nameSupplier);
             list.add(o);
         }
         con.close();

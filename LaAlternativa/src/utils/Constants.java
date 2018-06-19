@@ -22,9 +22,6 @@ public class Constants {
     public static String searchDiscountProcedure = "{call listDiscounts(?,?)}";
     
     //STORED PROCEDURES: EMPLOYEE
-    
-    public static String getPasswordProcedure = "{call getPassword(?,?)}";
-    public static String getEmployeeProcedure = "{call getEmployee(?,?,?,?)}";
     public static String addEmployeeProcedure = "{call addToBDEmployee(?,?,?,?,?,?,?,?,?)}";
     public static String modifyEmployeeProcedure = "{call updateInBDEmployee(?,?,?,?,?,?,?,?,?)}";
     public static String deleteEmployeeProcedure = "{call deleteInBDEmployee(?)}";
@@ -56,11 +53,10 @@ public class Constants {
     public static String deleteProductXTagProcedure = "{call deleteInBDProductXTag(?,?)}";
     
     //ORDERS
-    public static String getSupplierNameProcedure = "{call getSupplierName(?,?)}";
     public static String addOrderProcedure = "{call addToBDSupplierOrder(?,?,?)}";
     public static String modifyOrderProcedure = "{call updateInBDSupplierOrder(?,?,?)}";
     public static String deleteOrderProcedure = "{call deleteInBDSupplierOrder(?)}";
-    public static String searchOrdersProcedure= "{call listSupplierOrder(?,?,?,?)}";
+    public static String searchOrdersProcedure= "{call listSupplierOrder(?,?,?)}";
     
     //BUNDLES
     public static String addBundleProcedure = "{call addToBDBundle(?,?,?,?,?)}";
@@ -68,42 +64,4 @@ public class Constants {
     //public static String deleteBundleProcedure = "{call deleteInBDBundle(?)}";
     public static String deleteBundlesProcedure = "{call deleteInBDBundles(?)}";
     public static String searchBundleQuery = "SELECT * FROM Bundle WHERE idSupplierOrder = ";
-    
-    //LOGIN
-    private static String CurrentUserText;
-    private static String CurrentUserName;
-    private static String CurrentPassword;
-    private static int CurrentUserID;
-
-    public static String getCurrentUserText() {
-        return CurrentUserText;
-    }
-
-    public static void setCurrentUserText(String aCurrentUserText) {
-        CurrentUserText = aCurrentUserText;
-    }
-
-    public static String getCurrentUserName() {
-        return CurrentUserName;
-    }
-
-    public static void setCurrentUserName(String aCurrentUserName) {
-        CurrentUserName = aCurrentUserName;
-    }
-
-    public static String getCurrentPassword() {
-        return CurrentPassword;
-    }
-
-    public static void setCurrentPassword(String aCurrentPassword) {
-        CurrentPassword = aCurrentPassword;
-    }
-
-    public static int getCurrentUserID() {
-        return CurrentUserID;
-    }
-
-    public static void setCurrentUserID(int aCurrentUserID) {
-        CurrentUserID = aCurrentUserID;
-    }
 }

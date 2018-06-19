@@ -12,11 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utils.Constants;
 
 /**
@@ -24,25 +21,6 @@ import utils.Constants;
  * @author Usuario
  */
 public class EmployeeDA {
-    
-    public EmployeeDA(){}
-    
-    public String returnPassword(String user){
-        String passwordBD = null;
-        try{
-            Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-            CallableStatement cs = con.prepareCall(Constants.getPasswordProcedure);
-            cs.setString(1, user);
-            cs.registerOutParameter(2, java.sql.Types.VARCHAR);
-            cs.executeUpdate();
-            passwordBD = cs.getString("contraseñaBD");
-            con.close();
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage() + " \nError de retorno de password\n");
-            passwordBD = "hWWelzAlRgVkPUj";
-        }        
-        return passwordBD;
-    }
 
     public int addEmployee(Employee e) throws SQLException {
         Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
@@ -130,25 +108,5 @@ public class EmployeeDA {
         }
         con.close();
         return list;
-    }
-
-    public Employee getEmployee(String user) throws SQLException{
-        Employee e = new Employee();
-        try {
-            Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
-            CallableStatement st = con.prepareCall(Constants.getEmployeeProcedure);
-            st.setString(1, user);
-            st.registerOutParameter("id", java.sql.Types.INTEGER);
-            st.registerOutParameter("nombre", java.sql.Types.VARCHAR);
-            st.registerOutParameter("apellido", java.sql.Types.VARCHAR);
-            st.executeUpdate();
-            e.setId(st.getInt("id"));
-            e.setName(st.getString("nombre"));
-            e.setSurname(st.getString("apellido"));
-            con.close();
-        }catch(SQLException sq){
-            System.out.println(sq.getMessage());
-        }
-        return e;        
     }
 }

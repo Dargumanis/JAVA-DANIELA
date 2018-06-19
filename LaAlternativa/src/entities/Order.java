@@ -69,24 +69,13 @@ public class Order {
     public void setIdSupplier(int idSupplier) {
         this.idSupplier = idSupplier;
     }
-    
-    
     private int id;
     private ArrayList<Bundle> bundles;
     private int idSupplier;
     private Date transactionDate;
-    private String nameSupplier;
     
     public Order(){
         bundles= new ArrayList<>();
-    }
-
-    public String getNameSupplier() {
-        return nameSupplier;
-    }
-
-    public void setNameSupplier(String nameSupplier) {
-        this.nameSupplier = nameSupplier;
     }
     
 }

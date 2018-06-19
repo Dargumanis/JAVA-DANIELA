@@ -29,7 +29,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private DefaultTableModel productsOrderModel;
     private SearchSupplier searchSupplier;
     private SearchProducts searchProduct;
-    SimpleDateFormat formatofecha;
 
     public AddSupplierOrder() {
         initComponents();
@@ -70,12 +69,10 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        expirationField = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         supplierNameField = new javax.swing.JTextField();
         searchSupplierButton = new javax.swing.JButton();
-        expirationField = new com.toedter.calendar.JDateChooser();
-        jLabel7 = new javax.swing.JLabel();
-        productSaleField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         tabAgregar = new javax.swing.JMenu();
         tabBuscar = new javax.swing.JMenu();
@@ -261,7 +258,27 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Fecha Caducidad");
+        jLabel10.setText("Fec. Caducidad (dd-MM-yyyy)");
+
+        expirationField.setEnabled(false);
+        expirationField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                expirationFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                expirationFieldFocusLost(evt);
+            }
+        });
+        expirationField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                expirationFieldMouseClicked(evt);
+            }
+        });
+        expirationField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expirationFieldActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Nombre del Proveedor");
 
@@ -286,10 +303,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 searchSupplierButtonActionPerformed(evt);
             }
         });
-
-        jLabel7.setText("Precio de Venta");
-
-        productSaleField.setEnabled(false);
 
         tabAgregar.setText("Agregar");
         tabAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -327,8 +340,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(150, 150, 150)
-                                .addComponent(jLabel3)
-                                .addContainerGap())
+                                .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -336,21 +348,15 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(priceField)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(productSaleField)
-                                        .addGap(18, 18, 18)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(searchProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(48, 48, 48))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addGap(14, 14, 14))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addButton)
@@ -402,25 +408,21 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(productIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(productNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(searchProductButton)
-                            .addComponent(productSaleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(productIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(productNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchProductButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(quantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addButton)
@@ -445,7 +447,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         productNameField.setText("");
         quantityField.setText("");
         priceField.setText("");
-        expirationField.setDate(null);
+        expirationField.setText("");
 
         productIdField.setEnabled(false);
         productNameField.setEnabled(false);
@@ -469,12 +471,12 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         atras.setVisible(true);
     }//GEN-LAST:event_botonRegresarActionPerformed
 
+    
     private void searchProductButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchProductButtonActionPerformed
         searchProduct.setVisible(true);
         if (searchProduct.product != null) {
             productIdField.setText(String.valueOf(searchProduct.product.getId()));
             productNameField.setText(searchProduct.product.getName());
-            productSaleField.setText(String.valueOf(searchProduct.product.getPrice()));
             quantityField.setEnabled(true);
             priceField.setEnabled(true);
             expirationField.setEnabled(true);
@@ -555,7 +557,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 String fecha = (String) productsOrderModel.getValueAt(i, 2);
                 bundle.setAdqPrice((double) productsOrderModel.getValueAt(i, 3));
                 bundle.setQuantity((int) productsOrderModel.getValueAt(i, 4));
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
                 try {
                     java.util.Date dateUtil = sdf1.parse(fecha);
                     java.sql.Date sqlDate = new java.sql.Date(dateUtil.getTime());
@@ -574,7 +576,8 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 return;
             }
 
-        }        
+        }
+        
         resetProducts();
         resetSupplier();
         while (productsOrderModel.getRowCount() != 0) {
@@ -632,7 +635,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (quantityField.getText().equals("") || priceField.getText().equals("") || expirationField.getDate()==null) {
+        if (quantityField.getText().equals("") || priceField.getText().equals("") || expirationField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -642,11 +645,11 @@ public class AddSupplierOrder extends javax.swing.JFrame {
                 return;
             }
         }
-        formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+
         Object[] fila = new Object[7];
         fila[0] = Integer.parseInt(productIdField.getText());
         fila[1] = productNameField.getText();
-        fila[2] = formatofecha.format(expirationField.getDate());   // PROBANDO FECHA
+        fila[2] = expirationField.getText();
         double price = Double.parseDouble(priceField.getText());
         int cant = Integer.parseInt(quantityField.getText());
         fila[3] = price;
@@ -673,6 +676,22 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceFieldActionPerformed
+
+    private void expirationFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_expirationFieldFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_expirationFieldFocusGained
+
+    private void expirationFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_expirationFieldFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_expirationFieldFocusLost
+
+    private void expirationFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_expirationFieldMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_expirationFieldMouseClicked
+
+    private void expirationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expirationFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_expirationFieldActionPerformed
 
     private void supplierNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_supplierNameFieldFocusGained
         // TODO add your handling code here:
@@ -710,7 +729,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton botonRegresar;
     private javax.swing.JButton confirmButton;
-    private com.toedter.calendar.JDateChooser expirationField;
+    private javax.swing.JTextField expirationField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -719,7 +738,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
@@ -727,7 +745,6 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private javax.swing.JTextField priceField;
     private javax.swing.JTextField productIdField;
     private javax.swing.JTextField productNameField;
-    private javax.swing.JTextField productSaleField;
     private javax.swing.JTable productsOrderTable;
     private javax.swing.JTextField quantityField;
     private javax.swing.JButton removeButton;

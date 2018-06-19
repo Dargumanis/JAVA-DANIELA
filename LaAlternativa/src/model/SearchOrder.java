@@ -9,7 +9,6 @@ import businesslogic.OrderBL;
 import entities.Order;
 import entities.Product;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -49,15 +48,13 @@ public class SearchOrder extends javax.swing.JDialog {
         supplierIdField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        dateField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ordersTable = new javax.swing.JTable();
         confirmButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        supplierNameField = new javax.swing.JTextField();
-        expirationField = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,7 +80,13 @@ public class SearchOrder extends javax.swing.JDialog {
 
         jLabel2.setText("Código de Proveedor");
 
-        jLabel9.setText("Fecha (dd/MM/yyyy)");
+        jLabel9.setText("Fecha (dd-MM-yyyy)");
+
+        dateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dateFieldActionPerformed(evt);
+            }
+        });
 
         searchButton.setText("Buscar");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -100,14 +103,14 @@ public class SearchOrder extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Código", "Cod. Proveedor", "Nombre Proveedor", "Fecha"
+                "Código", "Cod. Proveedor", "Fecha"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -134,68 +137,53 @@ public class SearchOrder extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Nombre de Proveedor");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                        .addGap(273, 273, 273))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titulo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(searchButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(confirmButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cancelButton))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(supplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2)
-                                    .addComponent(supplierIdField, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(expirationField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(titulo)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel5)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(confirmButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(supplierNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(expirationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(supplierIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -220,6 +208,10 @@ public class SearchOrder extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_supplierIdFieldActionPerformed
 
+    private void dateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dateFieldActionPerformed
+
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         Integer orderId;
         try {
@@ -235,24 +227,10 @@ public class SearchOrder extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error en código del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String supplierName;
-        try {
-            supplierName = FieldGetter.getFieldString(supplierNameField);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en nombre del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String date = null;
-        try{
-            SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
-            date = formatofecha.format(expirationField.getDate());
-        }catch(Exception ex){
-            //System.out.println("Error date: " + ex.getMessage());
-        }
-                
+        String date = FieldGetter.getFieldString(dateField);
         ArrayList<Order> orders;
         try {
-        orders = orderbl.searchOrders(orderId, supplierId, date, supplierName);
+        orders = orderbl.searchOrders(orderId, supplierId, date);
         } catch (Exception ex) {
             System.out.println("Error en base de datos " + ex);
             JOptionPane.showMessageDialog(null, "Error en base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -265,7 +243,7 @@ public class SearchOrder extends javax.swing.JDialog {
         }
         
         for (Order fila : orders) {
-            ordersModel.addRow(new Object[]{fila.getId(), fila.getIdSupplier(), fila.getNameSupplier(), fila.getTransactionDate()});
+            ordersModel.addRow(new Object[]{fila.getId(), fila.getIdSupplier(), fila.getTransactionDate()});
         }
         
         
@@ -280,7 +258,7 @@ public class SearchOrder extends javax.swing.JDialog {
         
         ArrayList<Order> list = null;
         try {
-            list = orderbl.searchOrders((Integer) ordersModel.getValueAt(index, 0), null, null, null);
+            list = orderbl.searchOrders((Integer) ordersModel.getValueAt(index, 0), null, null);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al buscar orden de compra: " + ex);
@@ -340,19 +318,17 @@ public class SearchOrder extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton confirmButton;
-    private com.toedter.calendar.JDateChooser expirationField;
+    private javax.swing.JTextField dateField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable ordersTable;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField supplierIdField;
-    private javax.swing.JTextField supplierNameField;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
