@@ -33,8 +33,8 @@ public class RequestDA {
                 Request r = new Request();
                 r.setDescription(rs.getString("Description"));
                 String t = rs.getString("Type");
-                if(t.equals("sugerencia")) r.setType(Enumerators.RequirementType.Sugerencia);
-                else if(t.equals("problema")) r.setType(Enumerators.RequirementType.Problema);
+                if(t.equals("Sugerencia")) r.setType(Enumerators.RequirementType.Sugerencia);
+                else if(t.equals("Problema")) r.setType(Enumerators.RequirementType.Problema);
                 else r.setType(Enumerators.RequirementType.Otro);
                 r.setIdRequest(rs.getInt("IdRequirement"));
                 String name = rs.getString("Name");
