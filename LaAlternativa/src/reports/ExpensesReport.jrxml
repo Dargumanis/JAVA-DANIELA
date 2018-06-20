@@ -10,23 +10,21 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT so.IdSupplierOrder, s.Name, SUM(b.CostUnit*b.ProductQuantity) as CompraTotal, so.TransactionDate
-FROM SupplierOrder so, Bundle b, Supplier s 
-WHERE b.idSupplierOrder = so.IdSupplierOrder and so.Supplier_IdSupplier=s.IdSupplier
-		and so.TransactionDate between date_format($P{Fecha_Inicial},'%Y-%m-%d') and date_format($P{Fecha_Final},'%Y-%m-%d')
-group by s.Name
-order by CompraTotal desc;]]>
+		<![CDATA[SELECT lol.Name,SUM(b.CostUnit*b.ProductQuantity) as CompraTotal
+FROM Bundle b
+INNER JOIN (SELECT so.IdSupplierOrder, s.Name, so.TransactionDate
+		FROM SupplierOrder so
+		INNER JOIN Supplier s
+		ON so.Supplier_IdSupplier=s.IdSupplier) as lol
+ON  lol.IdSupplierOrder = b.idSupplierOrder and lol.TransactionDate between date_format($P{Fecha_Inicial},'%Y-%m-%d') and date_format($P{Fecha_Final},'%Y-%m-%d')
+group by lol.Name
+order by CompraTotal desc;
+]]>
 	</queryString>
-	<field name="IdSupplierOrder" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="Name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="CompraTotal" class="java.lang.Double"/>
-	<field name="TransactionDate" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -68,14 +66,7 @@ order by CompraTotal desc;]]>
 				<text><![CDATA[Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="390" y="0" width="100" height="20" uuid="75aecf5c-5fd5-4db8-ae77-02993c75f552"/>
-				<textElement textAlignment="Center">
-					<font isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[TransactionDate]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="239" y="0" width="100" height="20" uuid="5d866cd5-8ccf-4211-8ff8-947206b81ab0"/>
+				<reportElement x="379" y="0" width="100" height="20" uuid="5d866cd5-8ccf-4211-8ff8-947206b81ab0"/>
 				<textElement textAlignment="Center">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
@@ -91,12 +82,7 @@ order by CompraTotal desc;]]>
 				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="25" width="100" height="20" uuid="d979071a-6ed4-4332-bde5-e6f093fc6866"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{TransactionDate}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="239" y="25" width="100" height="20" uuid="21a153e9-57b7-4170-9db4-12d4751629f6"/>
+				<reportElement x="379" y="25" width="100" height="20" uuid="21a153e9-57b7-4170-9db4-12d4751629f6"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{CompraTotal}]]></textFieldExpression>
 			</textField>
