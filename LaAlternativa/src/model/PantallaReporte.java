@@ -8,6 +8,7 @@ package model;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import reports.ReportGenerator;
+import utils.Constants;
 
 /**
  *
@@ -49,6 +50,7 @@ public class PantallaReporte extends javax.swing.JFrame {
         initDate = new javax.swing.JFormattedTextField();
         endingDate = new javax.swing.JFormattedTextField();
         botonRegresar = new javax.swing.JButton();
+        generarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,13 +106,20 @@ public class PantallaReporte extends javax.swing.JFrame {
             }
         });
 
+        generarPDF.setText("Generar PDF");
+        generarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarPDFActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(botonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(418, Short.MAX_VALUE))
+                .addContainerGap(407, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,14 +127,17 @@ public class PantallaReporte extends javax.swing.JFrame {
                     .addComponent(cbReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(initDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonBuscar))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(initDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(endingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(generarPDF)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(botonBuscar)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(endingDate, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 67, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +150,9 @@ public class PantallaReporte extends javax.swing.JFrame {
                     .addComponent(initDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(endingDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonBuscar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonBuscar)
+                    .addComponent(generarPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonRegresar)
                 .addGap(5, 5, 5))
@@ -151,7 +165,7 @@ public class PantallaReporte extends javax.swing.JFrame {
         switch (cbReportes.getSelectedIndex()){            
                 case 0:
                     try{
-                        rG.reporteBundles(initDate.getText());
+                        rG.reporteParametrizadoUnico(initDate.getText(),Constants.reporteBundles);
                         JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
                     }catch(Exception e){
@@ -162,7 +176,7 @@ public class PantallaReporte extends javax.swing.JFrame {
                     break;
                 case 1:
                     try{
-                        rG.reporteCostos(initDate.getText(), endingDate.getText());
+                        rG.reporteParametrizado(initDate.getText(), endingDate.getText(), Constants.reporteCostos);
                         JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
                         
                     }catch(Exception e){
@@ -175,7 +189,7 @@ public class PantallaReporte extends javax.swing.JFrame {
                     break;
                 case 2:
                     try{
-                        rG.reporteVentas(initDate.getText(), endingDate.getText());
+                        rG.reporteParametrizado(initDate.getText(), endingDate.getText(), Constants.reporteVentas);
                         JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
                     }catch(Exception e){
@@ -188,7 +202,7 @@ public class PantallaReporte extends javax.swing.JFrame {
                     break;
                 case 3:
                     try{
-                        rG.reporteCompras(initDate.getText(), endingDate.getText());
+                        rG.reporteParametrizado(initDate.getText(), endingDate.getText(), Constants.reporteCompras);
                         JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
 
                     }catch(Exception e){
@@ -238,6 +252,65 @@ public class PantallaReporte extends javax.swing.JFrame {
         if(endingDate.getText().equals("2018-12-31")) endingDate.setText("");
     }//GEN-LAST:event_endingDateKeyTyped
 
+    private void generarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPDFActionPerformed
+        switch (cbReportes.getSelectedIndex()){            
+                case 0:
+                    try{
+                        rG.reporteParametrizadoUnicoPDF(initDate.getText(),Constants.reporteBundles);
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                    }
+                    break;
+                case 1:
+                    try{
+                        rG.reporteParametrizadoPDF(initDate.getText(), endingDate.getText(), Constants.reporteCostos);
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                        
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                case 2:
+                    try{
+                        rG.reporteParametrizadoPDF(initDate.getText(), endingDate.getText(), Constants.reporteVentas);
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                case 3:
+                    try{
+                        rG.reporteParametrizadoPDF(initDate.getText(), endingDate.getText(), Constants.reporteCompras);
+                        JOptionPane.showMessageDialog(null, "Se generó correctamente el reporte.", "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Ingrese una fecha correcta", "Error", JOptionPane.ERROR_MESSAGE);                        
+                        initDate.setForeground(Color.darkGray);
+                        endingDate.setForeground(Color.darkGray);
+                        initDate.setText("2000-01-01");
+                        endingDate.setText("2018-12-31");
+                    }
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Elija una opcion correcta", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+        }
+    }//GEN-LAST:event_generarPDFActionPerformed
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -279,6 +352,7 @@ public class PantallaReporte extends javax.swing.JFrame {
     private javax.swing.JButton botonRegresar;
     private javax.swing.JComboBox<String> cbReportes;
     private javax.swing.JFormattedTextField endingDate;
+    private javax.swing.JButton generarPDF;
     private javax.swing.JFormattedTextField initDate;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
