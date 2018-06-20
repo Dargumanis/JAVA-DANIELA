@@ -93,7 +93,12 @@ public class Constants {
     //REQUESTS
     public static String listRequestProcedure = "SELECT R.Description, R.Type, E.Name, E.Surname, R.IdRequirement FROM Requirement R, Employee E WHERE R.Employee_IdPerson = E.Person_IdPerson and R.State = 1;";
     public static String requestAtended = "{call requestAttended(?)}";
-
+    
+    //REPORTES
+    public static String reporteVentas="SalesReport";
+    public static String reporteCostos="ExpensesReport";
+    public static String reporteCompras="SuppliesReport";
+    public static String reporteBundles="BundleReport";
     public static String getCurrentUserText() {
         return CurrentUserText;
     }
