@@ -23,4 +23,7 @@ public class RequestBL {
     public ArrayList<Request> listRequest(ArrayList<String> fullName) throws SQLException{
         return dataAccess.listRequest(fullName);
     }
+    public void requestAttended(){
+        
+    }
 }

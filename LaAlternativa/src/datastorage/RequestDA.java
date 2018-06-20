@@ -35,9 +35,9 @@ public class RequestDA {
                 if(t.equals("sugerencia")) r.setType(Enumerators.RequirementType.Sugerencia);
                 else if(t.equals("problema")) r.setType(Enumerators.RequirementType.Problema);
                 else r.setType(Enumerators.RequirementType.Otro);
+                r.setIdRequest(rs.getInt("IdRequirement"));
                 String name = rs.getString("Name");
                 String surname = rs.getString("Surname");
-                System.out.println(r.getDescription()+" "+r.getType().toString());
                 fullName.add(name+" "+surname);
                 list.add(r);
             }
