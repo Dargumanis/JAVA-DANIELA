@@ -24,7 +24,7 @@ public class AdminRequest extends javax.swing.JFrame {
 
     private RequestBL businessLogic;
     DefaultTableModel model;
-    
+    //comentario
     private String employeeName;
     private String description;
     private String type;/**
