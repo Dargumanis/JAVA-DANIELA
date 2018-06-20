@@ -164,7 +164,27 @@ public class AdminRequest extends javax.swing.JFrame {
         }
         int num = (Integer) requestTable.getValueAt(index, 4);
         System.out.println("num: "+num);
-        businessLogic.requestAttended(num);
+        try {
+            businessLogic.requestAttended(num);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Actualizamos el JTable
+        model.setRowCount(0);
+        ArrayList<String> fullName = new ArrayList<String>();
+        ArrayList<Request> req;
+        try{
+            req = businessLogic.listRequest(fullName);
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        int i = 0;
+        for (Request fila : req ) {
+            model.addRow(new Object[]{i+1, fullName.get(i), fila.getDescription(), fila.getType(), fila.getIdRequest()});
+            i++;
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

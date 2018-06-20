@@ -23,7 +23,7 @@ public class RequestBL {
     public ArrayList<Request> listRequest(ArrayList<String> fullName) throws SQLException{
         return dataAccess.listRequest(fullName);
     }
-    public void requestAttended(int num){
+    public void requestAttended(int num) throws SQLException{
         dataAccess.requestAttended(num);
     }
 }
