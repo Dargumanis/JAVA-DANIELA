@@ -6,11 +6,13 @@
 package model;
 
 import businesslogic.SupplierBL;
+import entities.DataValidation;
 import entities.Discount;
 import entities.Supplier;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 import utils.FieldGetter;
 
 /**
@@ -407,19 +409,28 @@ public class ManageSuppliers extends javax.swing.JFrame {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         Integer id;
         model.setRowCount(0);
-        try {
-            id = FieldGetter.getFieldInt(idField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
+        DataValidation dv = new DataValidation();
+        
+        if(!dv.ValidField(Constants.IntegerRegex, idField.getText())){
             JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            idField.setText("");
             return;
-        }
-        String ruc = FieldGetter.getFieldString(rucField);
-        if (ruc != null && (ruc.length() != 11 || !ruc.matches("[0-9]+"))) {
+        }else {id= Integer.valueOf(idField.getText());}
+        
+        
+        String ruc;
+        if(!dv.ValidField(Constants.RucRegex, rucField.getText())){
             JOptionPane.showMessageDialog(null, "El ruc debe tener 11 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            rucField.setText("");
             return;
-        }
+        }else {ruc= rucField.getText();}
+        
         String name = FieldGetter.getFieldString(nameField);
+        if(!dv.ValidField(Constants.NameRegex, nameField.getText())){
+            JOptionPane.showMessageDialog(null, "El nombre ingresado no es correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField.setText("");
+            return;
+        }else {name= nameField.getText();}
 
         ArrayList<Supplier> suppliers;
 
@@ -472,17 +483,50 @@ public class ManageSuppliers extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        DataValidation dv = new DataValidation();
         
-        int id = Integer.parseInt(idField1.getText());
-        String ruc = rucField1.getText();
-        if (ruc.length() != 11 || !ruc.matches("[0-9]+")) {
-            JOptionPane.showMessageDialog(null, "El ruc debe tener 11 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+        int id;
+        
+        if(!dv.ValidField(Constants.IntegerRegex, idField1.getText())){
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            idField1.setText("");
             return;
-        }
-        String name = nameField1.getText();
-        String address = addressField.getText();
-        String phone = phoneField.getText();
-        String email = emailField.getText();
+        }else {id= Integer.valueOf(idField1.getText());}
+        
+        String ruc;
+        if(!dv.ValidField(Constants.RucRegex, rucField1.getText())){
+            JOptionPane.showMessageDialog(null, "El ruc debe tener 11 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            rucField1.setText("");
+            return;
+        }else {ruc= rucField1.getText();}
+        
+        String name;
+        if(!dv.ValidField(Constants.NameRegex, FieldGetter.getFieldString(nameField1))){
+            JOptionPane.showMessageDialog(null, "El nombre ingresado no es correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField1.setText("");
+            return;
+        }else{name = FieldGetter.getFieldString(nameField1);}
+                
+        String email;
+        if(!dv.ValidField(Constants.EmailRegex, FieldGetter.getFieldString(emailField))){
+            JOptionPane.showMessageDialog(null, "El email ingresado no es correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            emailField.setText("");
+            return;
+        }else{email = FieldGetter.getFieldString(emailField);}
+        
+        String address;
+        if(!dv.ValidField(Constants.PlaceRegex, FieldGetter.getFieldString(addressField))){
+            JOptionPane.showMessageDialog(null, "La direccion ingresada no es correcta.", "Error", JOptionPane.ERROR_MESSAGE);
+            addressField.setText("");
+            return;
+        }else{address = FieldGetter.getFieldString(addressField);}
+        
+        String phone;
+        if(!dv.ValidField(Constants.PhoneRegex, FieldGetter.getFieldString(phoneField))){
+            JOptionPane.showMessageDialog(null, "El telefono ingresado no es correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            phoneField.setText("");
+            return;
+        }else{phone = FieldGetter.getFieldString(phoneField);}
         
         int response = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere modificar este proveedor?", "Modificar", JOptionPane.YES_NO_OPTION);
         if (response == JOptionPane.NO_OPTION) {
@@ -508,8 +552,16 @@ public class ManageSuppliers extends javax.swing.JFrame {
         if (response == JOptionPane.NO_OPTION) {
             return;
         }
+        DataValidation dv = new DataValidation();
+        
+        int id;
+        if(!dv.ValidField(Constants.IntegerRegex, idField1.getText())){
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            idField1.setText("");
+            return;
+        }else {id= Integer.parseInt(idField1.getText());}
         try {
-            supplierbl.deleteSupplier(Integer.parseInt(idField1.getText()));
+            supplierbl.deleteSupplier(id);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al consultar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Error al consultar los datos: " + ex);

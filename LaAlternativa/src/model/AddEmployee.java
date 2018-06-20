@@ -6,8 +6,10 @@
 package model;
 
 import businesslogic.EmployeeBL;
+import entities.DataValidation;
 import entities.Employee;
 import javax.swing.JOptionPane;
+import utils.Constants;
 
 /**
  *
@@ -16,12 +18,14 @@ import javax.swing.JOptionPane;
 public class AddEmployee extends javax.swing.JFrame {
 
     private static EmployeeBL employeebl;
+    private DataValidation dv;
 
     public AddEmployee() {
         initComponents();
         this.setLocationRelativeTo(null);
         employeebl = new EmployeeBL();
         this.setResizable(false);
+        dv = new DataValidation();
     }
 
     private void emptyFields() {
@@ -311,16 +315,41 @@ public class AddEmployee extends javax.swing.JFrame {
         }
 
         String dni = dniField.getText();
-        if (dni.length() != 8 || !dni.matches("[0-9]+")) {
+        if (!dv.ValidField(Constants.DniRegex, dni)) {
             JOptionPane.showMessageDialog(null, "El dni debe tener 8 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            dniField.setText("");
             return;
         }
-        
         String name = nameField.getText();
+        if (!dv.ValidField(Constants.NameRegex, name)) {
+            JOptionPane.showMessageDialog(null, "El nombre no debe tener caracteres especiales.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField.setText("");
+            return;
+        }
         String surname = surnameField.getText();
+        if (!dv.ValidField(Constants.SurnameRegex, surname)) {
+            JOptionPane.showMessageDialog(null, "El apellido no debe tener caracteres especiales.", "Error", JOptionPane.ERROR_MESSAGE);
+            surnameField.setText("");
+            return;
+        }
         String address = addressField.getText();
+        if (!dv.ValidField(Constants.SurnameRegex, address)) {
+            JOptionPane.showMessageDialog(null, "El dni debe tener 8 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            addressField.setText("");
+            return;
+        }
         String phoneNumber = phoneField.getText();
+        if (!dv.ValidField(Constants.PhoneRegex, dni)) {
+            JOptionPane.showMessageDialog(null, "El numero de telefono debe ser correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            phoneField.setText("");
+            return;
+        }
         String email = emailField.getText();
+        if (!dv.ValidField(Constants.EmailRegex, dni)) {
+            JOptionPane.showMessageDialog(null, "El email debe tener formato correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            emailField.setText("");
+            return;
+        }
         String password = passwordField.getText();
         int type;
         if (adminCheckbox.isSelected()) {

@@ -7,12 +7,14 @@ package model;
 
 import businesslogic.DiscountBL;
 import businesslogic.ProductBL;
+import entities.DataValidation;
 import entities.Discount;
 import entities.Product;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 import utils.FieldGetter;
 
 /**
@@ -449,18 +451,30 @@ public class ManageDiscounts extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos los campos deben tener valores.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        int id = Integer.parseInt(idField1.getText());
-
-        int points;
-        try {
-            points = Integer.parseInt(pointsField.getText());
-        } catch (Exception ex) {
-            System.out.println("Error en puntos: " + ex);
-            JOptionPane.showMessageDialog(null, "Los puntos deben ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        DataValidation dv = new DataValidation();
+        int id;
+        if(!dv.ValidField(Constants.IntegerRegex, idField1.getText())){
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo correcto", "Error", JOptionPane.ERROR_MESSAGE);
+            idField1.setText("");
             return;
         }
-        int prod = Integer.parseInt(productField1.getText());
+        else {id = Integer.parseInt(idField1.getText());}
+
+        int points;
+        if(!dv.ValidField(Constants.IntegerRegex, pointsField.getText())){
+            JOptionPane.showMessageDialog(null, "Los puntos deben ser valores enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+            pointsField.setText("");
+            return;
+        }
+        else {points = Integer.parseInt(pointsField.getText());}
+        
+        int prod;
+        if(!dv.ValidField(Constants.IntegerRegex, productField1.getText())){
+            JOptionPane.showMessageDialog(null, "El codigo del producto debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            productField1.setText("");
+            return;
+        }
+        else {prod = Integer.parseInt(productField1.getText());}
 
         String description = descriptionField.getText();
         double factor;
@@ -509,22 +523,23 @@ public class ManageDiscounts extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         Integer id;
+        DataValidation dv = new DataValidation();
         model.setRowCount(0);
-        try {
-            id = FieldGetter.getFieldInt(idField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
-            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!dv.ValidField(Constants.IntegerRegex, idField.getText())){
+            JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero", "Error", JOptionPane.ERROR_MESSAGE);
+            idField.setText("");
             return;
         }
+        else {id = Integer.parseInt(idField.getText());}
+        
         Integer productId;
-        try {
-            productId = FieldGetter.getFieldInt(prodIdField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
-            JOptionPane.showMessageDialog(null, "El codigo del producto debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!dv.ValidField(Constants.IntegerRegex, prodIdField.getText())){
+            JOptionPane.showMessageDialog(null, "El codigo del producto debe ser un valor entero", "Error", JOptionPane.ERROR_MESSAGE);
+            prodIdField.setText("");
             return;
         }
+        else {productId = Integer.parseInt(idField.getText());}
+        
 
         ArrayList<Discount> listD;
 

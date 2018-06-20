@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 
 /**
  *
@@ -30,6 +31,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
     private SearchSupplier searchSupplier;
     private SearchProducts searchProduct;
     SimpleDateFormat formatofecha;
+    private DataValidation dv;
 
     public AddSupplierOrder() {
         initComponents();
@@ -42,6 +44,7 @@ public class AddSupplierOrder extends javax.swing.JFrame {
         searchProduct = new SearchProducts(this, rootPaneCheckingEnabled);
         this.setLocationRelativeTo(null);
         this.setResizable(false);       
+        dv = new DataValidation();
 
     }
 
@@ -647,12 +650,31 @@ public class AddSupplierOrder extends javax.swing.JFrame {
             }
         }
         formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+        String productId = productIdField.getText();
+        String productName = productNameField.getText();
+        if(!dv.ValidField(Constants.IntegerRegex, productId)){
+            JOptionPane.showMessageDialog(null, "Id de producto invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+            productIdField.setText("");
+            return;
+        }
+        if(!dv.ValidField(Constants.NameRegex, productName)){
+            JOptionPane.showMessageDialog(null, "Nombre de producto invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+            productNameField.setText("");
+            return;
+        }
+        
         Object[] fila = new Object[7];
-        fila[0] = Integer.parseInt(productIdField.getText());
-        fila[1] = productNameField.getText();
-        fila[2] = formatofecha.format(expirationField.getDate());   // PROBANDO FECHA
+        fila[0] = Integer.parseInt(productId);
+        fila[1] = productName;
+        fila[2] = formatofecha.format(expirationField.getDate());  
         double price = Double.parseDouble(priceField.getText());
-        int cant = Integer.parseInt(quantityField.getText());
+        String quantity = quantityField.getText();
+        int cant;
+        if(!dv.ValidField(Constants.IntegerRegex, quantity)){
+            JOptionPane.showMessageDialog(null, "Cantidad de producto invalida.", "Error", JOptionPane.ERROR_MESSAGE);
+            quantityField.setText("");
+            return;
+        }else{cant=Integer.valueOf(quantity);}
         fila[3] = price;
         fila[4] = cant;
         fila[5] = price * cant;

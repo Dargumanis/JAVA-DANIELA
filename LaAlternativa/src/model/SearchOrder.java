@@ -6,6 +6,7 @@
 package model;
 
 import businesslogic.OrderBL;
+import entities.DataValidation;
 import entities.Order;
 import entities.Product;
 import java.sql.Date;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 import utils.FieldGetter;
 
 /**
@@ -222,27 +224,29 @@ public class SearchOrder extends javax.swing.JDialog {
     }//GEN-LAST:event_supplierIdFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        
+        DataValidation dv = new DataValidation();
         Integer orderId;
-        try {
-            orderId = FieldGetter.getFieldInt(idField);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en código de compra.", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!dv.ValidField(Constants.IntegerRegex, idField.getText())){
+            JOptionPane.showMessageDialog(null, "Error en codigo de compra.", "Error", JOptionPane.ERROR_MESSAGE);
+            idField.setText("");
             return;
-        }
+        }else {orderId= Integer.valueOf(idField.getText());}
+        
         Integer supplierId;
-        try {
-            supplierId = FieldGetter.getFieldInt(supplierIdField);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error en código del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+        if(!dv.ValidField(Constants.IntegerRegex, supplierIdField.getText())){
+            JOptionPane.showMessageDialog(null, "Error en codigo del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+            supplierIdField.setText("");
             return;
-        }
+        }else {supplierId= Integer.valueOf(supplierIdField.getText());}
+        
         String supplierName;
-        try {
-            supplierName = FieldGetter.getFieldString(supplierNameField);
-        } catch (Exception ex) {
+        if(!dv.ValidField(Constants.NameRegex, supplierNameField.getText())){
             JOptionPane.showMessageDialog(null, "Error en nombre del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+            supplierNameField.setText("");
             return;
-        }
+        }else {supplierName= supplierNameField.getText();}
+        
         String date = null;
         try{
             SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");

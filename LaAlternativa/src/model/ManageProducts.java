@@ -8,10 +8,12 @@ package model;
 import businesslogic.DiscountBL;
 import businesslogic.ProductBL;
 import businesslogic.SymptomBL;
+import entities.DataValidation;
 import entities.Product;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 import utils.FieldGetter;
 
 /**
@@ -430,7 +432,14 @@ public class ManageProducts extends javax.swing.JFrame {
         }
         int id = Integer.parseInt(idField.getText());
         int totalItems = Integer.parseInt(totalField.getText());
-        String name = nameField1.getText();
+        DataValidation dv = new DataValidation();
+        String name;
+        if(!dv.ValidField(Constants.NameRegex, nameField1.getText())){
+            JOptionPane.showMessageDialog(null, "El nombre ingresado es invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField1.setText("");
+            return;
+        }else{name = nameField1.getText();}
+        
         double price;
         try {
             price = Double.parseDouble(priceField1.getText());
@@ -440,29 +449,26 @@ public class ManageProducts extends javax.swing.JFrame {
             return;
         }
         int points;
-        try {
-            points = Integer.parseInt(pointsField.getText());
-        } catch (Exception ex) {
-            System.out.println("Error en puntos: " + ex);
+        if(!dv.ValidField(Constants.IntegerRegex, pointsField.getText())){
             JOptionPane.showMessageDialog(null, "Los puntos deben ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            pointsField.setText("");
             return;
-        }
+        }else{points = Integer.parseInt(pointsField.getText());}
+        
         int minStock;
-        try {
-            minStock = Integer.parseInt(minStockField.getText());
-        } catch (Exception ex) {
-            System.out.println("Error en puntos: " + ex);
+        if(!dv.ValidField(Constants.IntegerRegex, minStockField.getText())){
             JOptionPane.showMessageDialog(null, "El stock mínimo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            minStockField.setText("");
             return;
-        }
+        }else{minStock = Integer.parseInt(minStockField.getText());}
+        
         int maxStock;
-        try {
-            maxStock = Integer.parseInt(maxStockField.getText());
-        } catch (Exception ex) {
-            System.out.println("Error en puntos: " + ex);
+        if(!dv.ValidField(Constants.IntegerRegex, maxStockField.getText())){
             JOptionPane.showMessageDialog(null, "El stock máximo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            minStockField.setText("");
             return;
-        }
+        }else{maxStock = Integer.parseInt(maxStockField.getText());}
+        
         int prescription;
         if (prescriptionCheckbox.isSelected()) {
             prescription = 1;

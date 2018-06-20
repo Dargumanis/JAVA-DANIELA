@@ -6,6 +6,7 @@
 package model;
 
 import businesslogic.EmployeeBL;
+import entities.DataValidation;
 import entities.Employee;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,21 +24,14 @@ public class Login extends javax.swing.JFrame {
     private String user;
     private String password;
     private EmployeeBL employeeBussinessLogic;
+    private DataValidation dv;
     
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
         employeeBussinessLogic = new EmployeeBL();
         this.setResizable(false);
-    }
-    
-    private static boolean isNumeric(String cadena){
-        try {
-           Integer.parseInt(cadena);
-           return true;
-        }catch (NumberFormatException nfe){
-            return false;
-        }
+        dv = new DataValidation();
     }
 
     @SuppressWarnings("unchecked")
@@ -129,10 +123,9 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Debe llenar los campos", "Error de Logueo", JOptionPane.WARNING_MESSAGE);
             else if(user.length()!=8)
                 JOptionPane.showMessageDialog(null, "El campo de usuario debe tener 8 digitos", "Error de Usuario", JOptionPane.WARNING_MESSAGE);
-
-            boolean flag;
-            if(isNumeric(user)) flag = true;
-            else flag = false;
+            
+            boolean flag = dv.ValidField(Constants.DniRegex, user);
+            
             if(flag==false){
                 JOptionPane.showMessageDialog(null, "Su usuario debe ser solo numeros", "Error de Usuario", JOptionPane.WARNING_MESSAGE);
                 jTxtCodigo.setText("");

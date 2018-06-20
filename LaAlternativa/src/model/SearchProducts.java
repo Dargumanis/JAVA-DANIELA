@@ -6,10 +6,12 @@
 package model;
 
 import businesslogic.ProductBL;
+import entities.DataValidation;
 import entities.Product;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 import utils.FieldGetter;
 
 /**
@@ -234,15 +236,21 @@ public class SearchProducts extends javax.swing.JDialog {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         model.setRowCount(0);
+        DataValidation dv = new DataValidation();
         Integer id;
-        try {
-            id = FieldGetter.getFieldInt(idField);
-        } catch (Exception ex) {
-            System.out.println("Error en codigo: " + ex);
+        if(!dv.ValidField(Constants.IntegerRegex, idField.getText())){
             JOptionPane.showMessageDialog(null, "El codigo debe ser un valor entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            idField.setText("");
             return;
-        }
+        }else {id= Integer.valueOf(idField.getText());}
+        
         String name = FieldGetter.getFieldString(nameField);
+        if(!dv.ValidField(Constants.NameRegex, nameField.getText())){
+            JOptionPane.showMessageDialog(null, "El nombre ingresado no es correcto.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField.setText("");
+            return;
+        }else {name= nameField.getText();}
+        
         Double price;
         try {
             price = FieldGetter.getFieldDouble(priceField);

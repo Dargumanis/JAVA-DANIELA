@@ -22,9 +22,11 @@ public class AddDiscount extends javax.swing.JFrame {
     DiscountBL discountbl;
     ProductBL productbl;
     SearchProducts searchProducts;
+    
     /**
      * Creates new form EliminarCliente
      */
+    
     public AddDiscount() {
 
         initComponents();

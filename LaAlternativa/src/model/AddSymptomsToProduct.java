@@ -6,10 +6,12 @@
 package model;
 
 import businesslogic.SymptomBL;
+import entities.DataValidation;
 import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Constants;
 
 /**
  *
@@ -234,7 +236,14 @@ public class AddSymptomsToProduct extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Debe definir el nombre del nuevo síntoma.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Symptom s = new Symptom(symptomField.getText());
+            DataValidation dv = new DataValidation();
+            String nameSymptom = symptomField.getText();
+            if(!dv.ValidField(Constants.NameRegex, nameSymptom)){
+                JOptionPane.showMessageDialog(null, "Nombre de síntoma invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+                symptomField.setText("");
+                return;
+            }
+            Symptom s = new Symptom(nameSymptom);
             symptombl.addSymptom(s);
             defineSymptomCombo();
             model.addRow(new Object[]{s.getName()});

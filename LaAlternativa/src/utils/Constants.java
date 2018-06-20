@@ -5,6 +5,9 @@
  */
 package utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author alulab14
@@ -74,6 +77,18 @@ public class Constants {
     private static String CurrentUserName;
     private static String CurrentPassword;
     private static int CurrentUserID;
+    
+    //REGEX
+    public static String DniRegex = "^\\d{8}";
+    public static String NameRegex = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z])$";
+    public static String SurnameRegex = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z])$";
+    public static String PlaceRegex = "^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$";
+    public static String PhoneRegex = "^([2-9])(\\d{2})(-?|\\040?)(\\d{4})( ?|\\040?)(\\d{1,4}?|\\040?)$";
+    public static String EmailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}";
+    public static String RucRegex = "^\\d{11}$";
+    public static String CompanyNameRegex = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z])$";
+    public static String IntegerRegex = "^\\d{1,9}";
+    public static String CompanyRegex = "^[.@&]?[a-zA-Z0-9 ]+[ !.@&()]?[ a-zA-Z0-9!()]+";
     
     //REQUESTS
     public static String listRequestProcedure = "SELECT R.Description, R.Type, E.Name, E.Surname FROM Requirement R, Employee E WHERE R.Employee_IdPerson = E.Person_IdPerson and R.State = 1;";

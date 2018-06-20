@@ -7,10 +7,12 @@ package model;
 
 import businesslogic.ProductBL;
 import businesslogic.SymptomBL;
+import entities.DataValidation;
 import entities.Product;
 import entities.Symptom;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import utils.Constants;
 
 /**
  *
@@ -21,6 +23,7 @@ public class AddProduct extends javax.swing.JFrame {
     ProductBL productbl;
     AddSymptomsToProduct addSymptoms;
     SymptomBL symptombl;
+    private DataValidation dv;
 
     public AddProduct() {
         initComponents();
@@ -29,6 +32,8 @@ public class AddProduct extends javax.swing.JFrame {
         productbl = new ProductBL();
         symptombl = new SymptomBL();     
         this.setResizable(false);
+        dv = new DataValidation();
+        
     }
 
     private void emptyFields() {
@@ -296,6 +301,12 @@ public class AddProduct extends javax.swing.JFrame {
         }
         
         String name = nameField.getText();
+        if(!dv.ValidField(Constants.NameRegex, name)){
+            JOptionPane.showMessageDialog(null, "El nombre no debe tener caracteres especiales.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField.setText("");
+            return;
+        }
+        
         double price;
         try {
             price = Double.parseDouble(priceField.getText());

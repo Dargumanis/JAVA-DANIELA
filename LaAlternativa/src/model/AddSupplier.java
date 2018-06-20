@@ -6,8 +6,10 @@
 package model;
 
 import businesslogic.SupplierBL;
+import entities.DataValidation;
 import entities.Supplier;
 import javax.swing.JOptionPane;
+import utils.Constants;
 
 
 /**
@@ -17,12 +19,14 @@ import javax.swing.JOptionPane;
 public class AddSupplier extends javax.swing.JFrame {
 
     SupplierBL supplierbl;
+    private DataValidation dv;
     
     public AddSupplier() {
         initComponents();
         supplierbl = new SupplierBL();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        dv = new DataValidation();
     }
 
     /**
@@ -250,9 +254,27 @@ public class AddSupplier extends javax.swing.JFrame {
             return;
         }
         String name = nameField.getText();
+        if(!dv.ValidField(Constants.NameRegex, name)){
+            JOptionPane.showMessageDialog(null, "Formato de nombre incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            nameField.setText("");
+            return;
+        }
+        
         String address = addressField.getText();
+        
         String phone = phoneField.getText();
+        if(!dv.ValidField(Constants.PhoneRegex, phone)){
+            JOptionPane.showMessageDialog(null, "Formato de telefono incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            phoneField.setText("");
+            return;
+        }
         String email = emailField.getText();
+        if(!dv.ValidField(Constants.EmailRegex, email)){
+            JOptionPane.showMessageDialog(null, "Formato de email incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            emailField.setText("");
+            return;
+        }
+        
         Supplier s = new Supplier(ruc, name, address, phone, email);
         try {
         supplierbl.addSupplier(s);
