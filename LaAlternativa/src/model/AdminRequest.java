@@ -95,8 +95,9 @@ public class AdminRequest extends javax.swing.JFrame {
             requestTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             requestTable.getColumnModel().getColumn(2).setPreferredWidth(600);
             requestTable.getColumnModel().getColumn(3).setPreferredWidth(70);
-            requestTable.getColumnModel().getColumn(4).setResizable(false);
-            requestTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+            requestTable.getColumnModel().getColumn(4).setMinWidth(0);
+            requestTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            requestTable.getColumnModel().getColumn(4).setMaxWidth(0);
         }
 
         jButton1.setText("Abrir");
@@ -161,7 +162,9 @@ public class AdminRequest extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        Request r = (Request) requestTable.getValueAt(ERROR, NORMAL);
+        int num = (Integer) requestTable.getValueAt(index, 4);
+        System.out.println("num: "+num);
+        businessLogic.requestAttended(num);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

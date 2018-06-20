@@ -5,13 +5,13 @@
  */
 package datastorage;
 
-import com.mysql.jdbc.CallableStatement;
 import entities.Request;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import utils.Constants;
 import utils.Enumerators;
@@ -46,5 +46,15 @@ public class RequestDA {
             System.out.println(ex.getMessage());
         }
         return list;
+    }public void requestAttended(int num){
+        try{
+            Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+            Statement st = con.createStatement();
+            String query = Constants.requestAtended + num;
+            ResultSet rs = st.executeQuery(query);
+            con.close();
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 }

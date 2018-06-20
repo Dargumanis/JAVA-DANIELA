@@ -77,6 +77,7 @@ public class Constants {
     
     //REQUESTS
     public static String listRequestProcedure = "SELECT R.Description, R.Type, E.Name, E.Surname, R.IdRequirement FROM Requirement R, Employee E WHERE R.Employee_IdPerson = E.Person_IdPerson and R.State = 1;";
+    public static String requestAtended = "UPDATE Requirement SET State = 0 WHERE IdRequirement = ";
 
     public static String getCurrentUserText() {
         return CurrentUserText;
