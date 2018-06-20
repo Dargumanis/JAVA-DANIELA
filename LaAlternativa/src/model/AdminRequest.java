@@ -101,7 +101,7 @@ public class AdminRequest extends javax.swing.JFrame {
             requestTable.getColumnModel().getColumn(0).setPreferredWidth(30);
             requestTable.getColumnModel().getColumn(1).setPreferredWidth(200);
             requestTable.getColumnModel().getColumn(2).setPreferredWidth(600);
-            requestTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+            requestTable.getColumnModel().getColumn(3).setPreferredWidth(100);
             requestTable.getColumnModel().getColumn(4).setMinWidth(0);
             requestTable.getColumnModel().getColumn(4).setPreferredWidth(0);
             requestTable.getColumnModel().getColumn(4).setMaxWidth(0);
