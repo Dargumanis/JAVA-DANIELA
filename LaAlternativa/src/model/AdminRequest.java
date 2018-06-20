@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utils.Enumerators;
+import utils.Enumerators.RequirementType;
 
 /**
  *
@@ -22,7 +24,10 @@ public class AdminRequest extends javax.swing.JFrame {
 
     private RequestBL businessLogic;
     DefaultTableModel model;
-    /**
+    
+    private String employeeName;
+    private String description;
+    private String type;/**
      * Creates new form Request
      */
     public AdminRequest() {
@@ -41,7 +46,7 @@ public class AdminRequest extends javax.swing.JFrame {
         } 
         int i = 0;
         for (Request fila : req ) {
-            model.addRow(new Object[]{i+1, fullName.get(i), fila.getDescription(), fila.getType()});
+            model.addRow(new Object[]{i+1, fullName.get(i), fila.getDescription(), fila.getType(), fila.getIdRequest()});
             i++;
         }
     }
@@ -59,37 +64,81 @@ public class AdminRequest extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         requestTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Solicitudes Recibidas");
 
-        jLabel2.setText("Seleccione la solicitud a la que desee dar el estado de atendida:");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Seleccione la solicitud a la que desee abrir o dar el estado de atendida:");
 
         requestTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "N°", "Empleado", "Descripción", "Tipo", "IdRequirement"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        requestTable.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(requestTable);
+        requestTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (requestTable.getColumnModel().getColumnCount() > 0) {
+            requestTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+            requestTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+            requestTable.getColumnModel().getColumn(2).setPreferredWidth(600);
+            requestTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+            requestTable.getColumnModel().getColumn(4).setMinWidth(0);
+            requestTable.getColumnModel().getColumn(4).setPreferredWidth(0);
+            requestTable.getColumnModel().getColumn(4).setMaxWidth(0);
+        }
+
+        jButton1.setText("Leer Descripción");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Atendido");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addComponent(jButton1)
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,11 +149,68 @@ public class AdminRequest extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int index = requestTable.getSelectedRow();
+        if(index == -1){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String employeeIndex = (String) requestTable.getValueAt(index, 1);
+        String descriptionIndex = (String) requestTable.getValueAt(index, 2);
+        RequirementType typeIndex = (RequirementType) requestTable.getValueAt(index, 3);
+        if(typeIndex==RequirementType.Sugerencia) type = "Sugerencia";
+        else if(typeIndex==RequirementType.Problema) type = "Problema";
+        else type = "Otro";
+        employeeName = employeeIndex;
+        description = descriptionIndex;
+        
+        ReadRequest rr = new ReadRequest();
+        rr.employeeName = employeeName;
+        rr.type = type;
+        rr.description = description;
+        rr.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int index = requestTable.getSelectedRow();
+        if(index == -1){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una solicitud.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int num = (Integer) requestTable.getValueAt(index, 4);
+        try {
+            businessLogic.requestAttended(num);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Actualizamos el JTable
+        model.setRowCount(0);
+        ArrayList<String> fullName = new ArrayList<String>();
+        ArrayList<Request> req;
+        try{
+            req = businessLogic.listRequest(fullName);
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        int i = 0;
+        for (Request fila : req ) {
+            model.addRow(new Object[]{i+1, fullName.get(i), fila.getDescription(), fila.getType(), fila.getIdRequest()});
+            i++;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +255,8 @@ public class AdminRequest extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

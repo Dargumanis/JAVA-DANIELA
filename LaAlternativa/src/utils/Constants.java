@@ -91,7 +91,8 @@ public class Constants {
     public static String CompanyRegex = "^[.@&]?[a-zA-Z0-9 ]+[ !.@&()]?[ a-zA-Z0-9!()]+";
     
     //REQUESTS
-    public static String listRequestProcedure = "SELECT R.Description, R.Type, E.Name, E.Surname FROM Requirement R, Employee E WHERE R.Employee_IdPerson = E.Person_IdPerson and R.State = 1;";
+    public static String listRequestProcedure = "SELECT R.Description, R.Type, E.Name, E.Surname, R.IdRequirement FROM Requirement R, Employee E WHERE R.Employee_IdPerson = E.Person_IdPerson and R.State = 1;";
+    public static String requestAtended = "{call requestAttended(?)}";
 
     public static String getCurrentUserText() {
         return CurrentUserText;

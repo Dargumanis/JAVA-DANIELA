@@ -5,13 +5,14 @@
  */
 package datastorage;
 
-import com.mysql.jdbc.CallableStatement;
 import entities.Request;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import utils.Constants;
 import utils.Enumerators;
@@ -32,12 +33,12 @@ public class RequestDA {
                 Request r = new Request();
                 r.setDescription(rs.getString("Description"));
                 String t = rs.getString("Type");
-                if(t.equals("sugerencia")) r.setType(Enumerators.RequirementType.Sugerencia);
-                else if(t.equals("problema")) r.setType(Enumerators.RequirementType.Problema);
+                if(t.equals("Sugerencia")) r.setType(Enumerators.RequirementType.Sugerencia);
+                else if(t.equals("Problema")) r.setType(Enumerators.RequirementType.Problema);
                 else r.setType(Enumerators.RequirementType.Otro);
+                r.setIdRequest(rs.getInt("IdRequirement"));
                 String name = rs.getString("Name");
                 String surname = rs.getString("Surname");
-                System.out.println(r.getDescription()+" "+r.getType().toString());
                 fullName.add(name+" "+surname);
                 list.add(r);
             }
@@ -46,5 +47,13 @@ public class RequestDA {
             System.out.println(ex.getMessage());
         }
         return list;
+    }
+    public void requestAttended(int num) throws SQLException{
+        Connection con = DriverManager.getConnection(Constants.urlBD, Constants.userBD, Constants.passwordBD);
+        CallableStatement cst = con.prepareCall(Constants.requestAtended);
+        cst.setInt(1, num);
+        cst.execute();
+        con.close();
+        
     }
 }
